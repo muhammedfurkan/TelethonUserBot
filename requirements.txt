@@ -1,0 +1,76 @@
+git+https://github.com/LonamiWebs/Telethon.git
+cryptg
+alive-progress
+Pillow
+PyDrive
+PyPDF2
+aiofiles
+aiohttp
+aria2p
+asyncio
+beautifulsoup4
+cfscrape
+coffeehouse
+convertdate
+covid
+emoji
+feedparser
+google-api-python-client
+google_images_download
+googletrans
+# googletrans==3.1.0a0
+# google_trans_new
+gtts
+gaggle
+hachoir
+httplib2==0.15.0
+humanize
+hurry.filesize
+lxml
+mtranslate
+oauth2client
+pathlib
+patool
+psutil
+psycopg2
+pySmartDL
+pydownload
+pysocks
+python-barcode
+python-magic
+pytube3
+qrcode
+regex
+remotezip
+requests
+setuptools
+spamwatch
+speedtest-cli
+spotify_token
+sqlalchemy
+telegraph
+tgcrypto
+typing
+unicode_tr
+urbandict
+urllib3
+wget
+wikipedia
+pymongo 
+dnspython
+youtube-dl
+soundcloud-lib
+JustWatch
+heroku3
+pyquery
+natsort #instadl
+instaloader #instadl
+gpytranslate #translate
+jsonpickle #storage
+# schedule
+# selenium
+# PyLyrics 
+# textblob
+
+
+
