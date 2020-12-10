@@ -479,18 +479,19 @@ async def muter(mutedMessage):
     )
     if muted:
         for i in muted:
-            if i['chat_id'] == mutedMessage.sender_id:
-                await mutedMessage.delete()
-                try:
-                    await mutedMessage.client(
-                        EditBannedRequest(mutedMessage.chat_id,
-                                          mutedMessage.sender_id, rights)
-                    )
-                except (UserAdminInvalidError, ChatAdminRequiredError, BadRequestError, UserIdInvalidError):
-                    pass
-    for i in gmuted:
-        if i['chat_id'] == mutedMessage.sender_id:
-            await mutedMessage.delete()
+            print(i)
+    #         if i['chat_id'] == mutedMessage.sender_id:
+    #             await mutedMessage.delete()
+    #             try:
+    #                 await mutedMessage.client(
+    #                     EditBannedRequest(mutedMessage.chat_id,
+    #                                       mutedMessage.sender_id, rights)
+    #                 )
+    #             except (UserAdminInvalidError, ChatAdminRequiredError, BadRequestError, UserIdInvalidError):
+    #                 pass
+    # for i in gmuted:
+    #     if i['chat_id'] == mutedMessage.sender_id:
+    #         await mutedMessage.delete()
 
 
 @bot.on(events.NewMessage(outgoing=True, pattern="^.gmute(?: |$)(.*)"))
