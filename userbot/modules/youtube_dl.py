@@ -12,10 +12,9 @@ import os
 import re
 from datetime import datetime
 
-from telethon import events
-
 from sample_config import Config
-from userbot import bot,tgbot
+from telethon import events
+from userbot import bot, tgbot
 
 logging.basicConfig(level=logging.INFO)
 logger = logging.getLogger(__name__)
@@ -25,7 +24,8 @@ if Config.TG_BOT_USER_NAME_BF_HER is not None and tgbot is not None:
         data=re.compile(b"ytdl|(.*)|(.*)|(.*)")
     ))
     async def on_plug_in_callback_query_handler(event):
-        if event.query.user_id == bot.uid:
+        me = bot.get_me()
+        if event.query.user_id == me.id:
             tg_send_type, ytdl_format_code, ytdl_extension = event.query.data.decode(
                 "UTF-8").split("|")
             try:
@@ -93,5 +93,5 @@ if Config.TG_BOT_USER_NAME_BF_HER is not None and tgbot is not None:
             else:
                 await event.delete()
         else:
-            reply_pop_up_alert = "Please get your own @Unibot, and don't waste my data! "
+            reply_pop_up_alert = "Please get your own TelethonUserBot, and don't waste my data! "
             await event.answer(reply_pop_up_alert, cache_time=0, alert=True)
