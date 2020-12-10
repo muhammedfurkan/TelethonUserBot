@@ -9,9 +9,8 @@ By:- JaskaranSM ( @Zero_cool7870 )
 import logging
 
 from pymongo import MongoClient
-from telethon import events
-
 from sample_config import Config
+from telethon import events
 from userbot import bot
 from userbot.util import admin_cmd, register
 
@@ -36,6 +35,7 @@ async def gmute_user(event):
     if event.fwd_from:
         return
     input_str = event.pattern_match.group(1)
+    me = await bot.get_me()
     if not event.reply_to_msg_id and not input_str:
         await event.edit("`Give a User id or Reply To a User Message To Mute.`")
         return
@@ -60,7 +60,7 @@ async def gmute_user(event):
                 if i['user_id'] == user_id:
                     await event.edit("`User is Already G-Muted.`")
                     return
-            if user_id == bot.me.id:
+            if user_id == me.id:
                 await event.edit("`Cant Mute Myself..`")
                 return
             else:

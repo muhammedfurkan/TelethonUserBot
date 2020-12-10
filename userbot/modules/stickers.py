@@ -11,13 +11,12 @@ import zipfile
 from collections import defaultdict
 from io import BytesIO
 
+from sample_config import Config
 from telethon.errors import MessageNotModifiedError
 from telethon.errors.rpcerrorlist import StickersetInvalidError
 from telethon.tl.functions.messages import GetStickerSetRequest
 from telethon.tl.types import (DocumentAttributeSticker, InputStickerSetID,
                                InputStickerSetShortName, MessageMediaPhoto)
-
-from sample_config import Config
 from userbot import bot
 from userbot.util import admin_cmd, register
 
@@ -34,8 +33,7 @@ async def _(event):
     input_str = event.pattern_match.group(1)
     if input_str:
         sticker_emoji = input_str
-
-    me = bot.me
+    me = await bot.get_me()
     userid = event.sender_id
     packname = "@By_Azade Pack"
     packshortname = "By_Azade"  # format: Uni_bot_userid

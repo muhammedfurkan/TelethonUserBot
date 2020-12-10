@@ -28,7 +28,8 @@ from userbot.util import admin_cmd, is_admin
 async def on_new_message(event):
     if await is_admin(event.client, event.chat_id, event.sender_id):
         return
-    if bot.me.id == event.sender_id:
+    me = await bot.get_me()
+    if me.id == event.sender_id:
         return
     name = event.raw_text
     snips = await get_chat_blacklist(event.chat_id)
