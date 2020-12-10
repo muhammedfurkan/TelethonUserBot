@@ -349,7 +349,7 @@ async def mute_chat(mute_e):
 async def unmute_chat(unm_e):
     """ For .unmutechat command, unmute a muted chat. """
     from userbot.database.mongo import cli
-    cli = cli["Userbot"]["unmute_chats"]
+    cli = cli["Userbot"]["mute_chat"]
     cli.delete_one({"chat_id": unm_e.chat_id})
     await unm_e.edit("```Unmuted this chat Successfully```")
 
