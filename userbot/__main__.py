@@ -11,7 +11,7 @@ from importlib import import_module
 
 from telethon.errors.rpcerrorlist import PhoneNumberInvalidError
 
-from userbot import bot,tgbot
+from userbot import bot, tgbot
 from userbot.modules import ALL_MODULES
 
 logging.basicConfig(format='[%(levelname) 5s/%(asctime)s] %(name)s: %(message)s',
@@ -24,6 +24,7 @@ INVALID_PH = '\nERROR: The phone no. entered is incorrect' \
 
 try:
     bot.start()
+    tgbot.start()
 except PhoneNumberInvalidError:
     print(INVALID_PH)
     exit(1)
@@ -33,7 +34,7 @@ for module_name in ALL_MODULES:
     load = "UserBot Modules Successfully Loaded: {}".format(module_name)
 
 logger.info("Paperplane is alive! Test it by typing .alive on any chat."
-          " Should you need assistance, head to https://t.me/tgpaperplane")
+            " Should you need assistance, head to https://t.me/tgpaperplane")
 
 SEM_TEST = os.environ.get("SEMAPHORE", None)
 if SEM_TEST:
