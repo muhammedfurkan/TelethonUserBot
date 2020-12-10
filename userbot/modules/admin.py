@@ -465,7 +465,7 @@ async def muter(mutedMessage):
         from userbot.database.mutedb import is_muted
     except AttributeError:
         return
-    muted = get_muted(mutedMessage.chat_id)
+    muted = await get_muted(mutedMessage.chat_id)
     gmuted = get_gmuted()
     rights = ChatBannedRights(
         until_date=None,
@@ -479,19 +479,18 @@ async def muter(mutedMessage):
     )
     if muted:
         for i in muted:
-            print(i)
-    #         if i['chat_id'] == mutedMessage.sender_id:
-    #             await mutedMessage.delete()
-    #             try:
-    #                 await mutedMessage.client(
-    #                     EditBannedRequest(mutedMessage.chat_id,
-    #                                       mutedMessage.sender_id, rights)
-    #                 )
-    #             except (UserAdminInvalidError, ChatAdminRequiredError, BadRequestError, UserIdInvalidError):
-    #                 pass
-    # for i in gmuted:
-    #     if i['chat_id'] == mutedMessage.sender_id:
-    #         await mutedMessage.delete()
+            if i['chat_id'] == mutedMessage.sender_id:
+                await mutedMessage.delete()
+                try:
+                    await mutedMessage.client(
+                        EditBannedRequest(mutedMessage.chat_id,
+                                          mutedMessage.sender_id, rights)
+                    )
+                except (UserAdminInvalidError, ChatAdminRequiredError, BadRequestError, UserIdInvalidError):
+                    pass
+    for i in gmuted:
+        if i['chat_id'] == mutedMessage.sender_id:
+            await mutedMessage.delete()
 
 
 @bot.on(events.NewMessage(outgoing=True, pattern="^.gmute(?: |$)(.*)"))
