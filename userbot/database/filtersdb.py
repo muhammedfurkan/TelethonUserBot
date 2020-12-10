@@ -39,14 +39,13 @@ async def delete_filter(chatid, keyword):
 
     if not to_check:
         return False
-    else:
-        cli.delete_one({
-            '_id': to_check["_id"],
-            'chat_id': to_check["chat_id"],
-            'keyword': to_check["keyword"]
-        })
+    cli.delete_one({
+        '_id': to_check["_id"],
+        'chat_id': to_check["chat_id"],
+        'keyword': to_check["keyword"]
+    })
 
-        return True
+    return True
 
 
 async def delete_all_filters(chatid):
