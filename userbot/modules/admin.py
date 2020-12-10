@@ -325,6 +325,45 @@ async def unban(eventUnban):
         await eventUnban.edit("`Uh oh my unban logic broke!`")
 
 
+@bot.on(events.NewMessage(outgoing=True, pattern="^.mutechat$"))
+async def mute_chat(mute_e):
+    from userbot.database.mongo import cli
+    cli = cli["Userbot"]["mute_chat"]
+    """ For .mutechat command, mute any chat. """
+    await mute_e.edit(str(mute_e.chat_id))
+    cli.insert_one({"chat_id": mute_e.chat_id})
+    user = await get_user_from_event(mute_e)
+    await mute_e.edit("`Shush! This chat will be silenced!`")
+    if ENABLE_LOG:
+        await mute_e.client.send_message(
+            LOGGING_CHATID,
+            "#CHAT_MUTE\n"
+            f"USER: [{user.first_name}](tg://user?id={user.id})\n"
+            f"CHAT: {mute_e.chat.title}(`{mute_e.chat_id}`)",
+        )
+
+
+@bot.on(events.NewMessage(outgoing=True, pattern="^.unmutechat$"))
+async def unmute_chat(unm_e):
+    """ For .unmutechat command, unmute a muted chat. """
+    from userbot.database.mongo import cli
+    cli = cli["Userbot"]["unmute_chats"]
+    cli.delete_one({"chat_id": unm_e.chat_id})
+    await unm_e.edit("```Unmuted this chat Successfully```")
+
+
+@bot.on(events.NewMessage(incoming=True, disable_errors=True))
+async def keep_read(message):
+    """ The mute logic. """
+    from userbot.database.mongo import cli
+    cli = cli["Userbot"]["mute_chats"]
+    kread = cli.find({"chat_id": message.chat_id})
+    if kread:
+        for i in kread:
+            if i["chat_id"] == message.chat_id:
+                await message.client.send_read_acknowledge(message.chat_id)
+
+
 @bot.on(events.NewMessage(outgoing=True, pattern="^.mute(?: |$)(.*)"))
 async def mute(eventMute):
     if eventMute.text[0].isalpha() or eventMute.text[0] in (
@@ -354,7 +393,7 @@ async def mute(eventMute):
         await eventMute.edit("`Hands too short, can't duct tape myself...\n(ヘ･_･)ヘ┳━┳`")
         return
     await eventMute.edit("`Gets a tape!`")
-    if mute(eventMute.chat_id, user.id) is False:
+    if await mute(eventMute.chat_id, user.id) is False:
         return await eventMute.edit("`Error! User probably already muted.`")
     else:
         try:
@@ -397,7 +436,7 @@ async def unmute(eventUnMute):
     user = await get_user_from_event(eventUnMute)
     if not user:
         return
-    if unmute(eventUnMute.chat_id, user.id) is False:
+    if await unmute(eventUnMute.chat_id, user.id) is False:
         return await eventUnMute.edit("`Error! User probably already unmuted.`")
     try:
         await eventUnMute.client(
@@ -439,15 +478,17 @@ async def muter(mutedMessage):
     )
     if muted:
         for i in muted:
-            if str(i.sender) == str(mutedMessage.sender_id):
+            if i == mutedMessage.sender_id:
                 await mutedMessage.delete()
-                await mutedMessage.client(
-                    EditBannedRequest(
-                        mutedMessage.chat_id, mutedMessage.sender_id, rights
+                try:
+                    await mutedMessage.client(
+                        EditBannedRequest(mutedMessage.chat_id,
+                                          mutedMessage.sender_id, rights)
                     )
-                )
+                except (UserAdminInvalidError, ChatAdminRequiredError, BadRequestError, UserIdInvalidError):
+                    pass
     for i in gmuted:
-        if i.sender == str(mutedMessage.sender_id):
+        if i == mutedMessage.sender_id:
             await mutedMessage.delete()
 
 
@@ -476,9 +517,9 @@ async def gmute(eventGmute):
     if not user:
         return
     await eventGmute.edit("`Grabs a huge, sticky duct tape!`")
-    if gmute(user.id) is False:
+    if await gmute(user.id) is False:
         await eventGmute.edit(
-            "`Error! User probably already gmuted.\nRe-rolls the tape.`"
+            "`Error! User probably already gmuted.`"
         )
     else:
         await eventGmute.edit("`Haha Yash! Globally taped!`")
@@ -517,7 +558,7 @@ async def ungmute_(eventUnGmute):
         return
     await eventUnGmute.edit("```Ungmuting...```")
 
-    if ungmute(user.id) is False:
+    if await ungmute(user.id) is False:
         await eventUnGmute.edit("`Error! User probably not gmuted.`")
     else:
         await eventUnGmute.edit("```Ungmuted Successfully```")
