@@ -466,7 +466,7 @@ async def muter(mutedMessage):
     except AttributeError:
         return
     muted = await get_muted(mutedMessage.chat_id)
-    gmuted = get_gmuted()
+    gmuted = await get_gmuted()
     rights = ChatBannedRights(
         until_date=None,
         send_messages=True,
