@@ -10,11 +10,9 @@ from distutils.util import strtobool as sb
 from logging import DEBUG, INFO, basicConfig, getLogger
 from sys import version_info
 
-from dotenv import load_dotenv
-from telethon import TelegramClient,events
-from telethon.sessions import StringSession
-
 from sample_config import Config
+from telethon import TelegramClient, events
+from telethon.sessions import StringSession
 
 if Config.HU_STRING_SESSION:
     bot = TelegramClient(StringSession(Config.HU_STRING_SESSION),Config.APP_ID,Config.API_HASH)
