@@ -9,18 +9,40 @@ import shutil
 import time
 import zipfile
 from datetime import datetime
+from glob import glob
 
 from hachoir.metadata import extractMetadata
 from hachoir.parser import createParser
-from telethon.tl.types import DocumentAttributeVideo
-
 from sample_config import Config
+from telethon.tl.types import DocumentAttributeVideo
 from userbot import bot
 from userbot.util import admin_cmd, progress, register
 
 logging.basicConfig(format='[%(levelname) 5s/%(asctime)s] %(name)s: %(message)s',
                     level=logging.WARNING)
 logger = logging.getLogger(__name__)
+
+# HACK :)-----------------------------------------------
+
+
+def open_zip(zip_yolu: str):
+    with open(zip_yolu, 'rb') as zip_dosyasi:
+        z = zipfile.ZipFile(zip_dosyasi, allowZip64=True)
+        for eleman in z.infolist():
+            try:
+                return z.extract(eleman)
+            except zipfile.error as hata:
+                return hata
+
+# HACK :)------------------------------------------------
+
+
+def opened_zip(zip_yolu: str):
+    for adres in os.walk(zip_yolu.split('.zip')[0]):
+        # 2. İndex Dosyalara Denk Geliyor!
+        if adres[2]:
+            for dosya in adres[2]:
+                return f"{adres[0]}/{dosya}"
 
 
 @bot.on(admin_cmd(pattern="unzip"))
@@ -53,9 +75,14 @@ async def _(event):
             ms = (end - start).seconds
             await mone.edit("Stored the zip to `{}` in {} seconds.".format(downloaded_file_name, ms))
 
-        with zipfile.ZipFile(downloaded_file_name, 'r') as zip_ref:
-            zip_ref.extractall(extracted)
-        filename = sorted(get_lst_of_files(extracted, []))
+        shutil.unpack_archive(downloaded_file_name, extracted)
+        files = [f for f in glob("./DOWNLOADS/extracted/**",
+                                 recursive=True) if os.path.isfile(f)]
+        filename = set(list(files))
+        # NOTE no need this
+        # with zipfile.ZipFile(downloaded_file_name, 'r') as zip_ref:
+        #     zip_ref.extractall(extracted)
+        # filename = sorted(get_lst_of_files(extracted, []))
         #filename = filename + "/"
         await event.edit("Unzipping now")
         # r=root, d=directories, f = files

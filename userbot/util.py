@@ -8,6 +8,7 @@ import logging
 import math
 import os
 import re
+import shutil
 import sys
 import time
 from asyncio import create_subprocess_shell as asyncsubshell
@@ -17,6 +18,7 @@ from time import gmtime, strftime
 from traceback import format_exc
 from typing import List
 
+from sample_config import Config
 from telethon import events
 from telethon.errors import MessageTooLongError
 from telethon.tl.functions.channels import GetParticipantRequest
@@ -27,7 +29,6 @@ from telethon.tl.types import (ChannelParticipantAdmin,
                                DocumentAttributeFilename, MessageEntityPre)
 from telethon.utils import add_surrogate
 
-from sample_config import Config
 from userbot import bot
 
 logging.basicConfig(
@@ -460,3 +461,9 @@ def register(**args):
         return wrapper
 
     return decorator
+
+
+# NOTE Ectract tool
+def extract_all(archives, extract_path):
+    for filename in archives:
+        shutil.unpack_archive(filename, extract_path)

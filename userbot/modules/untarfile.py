@@ -9,12 +9,12 @@ import shutil
 import tarfile
 import time
 from datetime import datetime
+from glob import glob
 
 from hachoir.metadata import extractMetadata
 from hachoir.parser import createParser
-from telethon.tl.types import DocumentAttributeVideo
-
 from sample_config import Config
+from telethon.tl.types import DocumentAttributeVideo
 from userbot import bot
 from userbot.util import admin_cmd, progress, register
 
@@ -52,15 +52,20 @@ async def _(event):
             end = datetime.now()
             ms = (end - start).seconds
             await mone.edit("Stored the tar to `{}` in {} seconds.".format(downloaded_file_name, ms))
-        with tarfile.TarFile.open(downloaded_file_name, 'r') as tar_file:
-            tar_file.extractall(path=extracted)
+
+        shutil.unpack_archive(downloaded_file_name, extracted)
+        files = [f for f in glob("./DOWNLOADS/extracted/**",
+                                 recursive=True) if os.path.isfile(f)]
+        filename = set(list(files))
+        # with tarfile.TarFile.open(downloaded_file_name, 'r') as tar_file:
+        #     tar_file.extractall(path=extracted)
         # tf = tarfile.open(downloaded_file_name)
         # tf.extractall(path=extracted)
         # tf.close()
 
         # with zipfile.ZipFile(downloaded_file_name, 'r') as zip_ref:
         #     zip_ref.extractall(extracted)
-        filename = sorted(get_lst_of_files(extracted, []))
+        # filename = sorted(get_lst_of_files(extracted, []))
         #filename = filename + "/"
         await event.edit("Untarring now")
         # r=root, d=directories, f = files

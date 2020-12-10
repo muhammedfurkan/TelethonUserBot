@@ -8,12 +8,13 @@ import os
 import shutil
 import time
 from datetime import datetime
+from glob import glob
 
 import patoolib
 from hachoir.metadata import extractMetadata
 from hachoir.parser import createParser
-
 from sample_config import Config
+from telethon.tl.types import DocumentAttributeAudio
 from userbot import bot
 from userbot.util import admin_cmd, progress, register
 
@@ -53,7 +54,10 @@ async def _(event):
             await mone.edit("Stored the rar to `{}` in {} seconds.".format(downloaded_file_name, ms))
 
         patoolib.extract_archive(downloaded_file_name, outdir=extracted)
-        filename = sorted(get_lst_of_files(extracted, []))
+        files = [f for f in glob("./DOWNLOADS/extracted/**",
+                                 recursive=True) if os.path.isfile(f)]
+        filename = set(list(files))
+        # filename = sorted(get_lst_of_files(extracted, []))
         #filename = filename + "/"
         await event.edit("Unraring now")
         # r=root, d=directories, f = files
@@ -79,7 +83,7 @@ async def _(event):
                         if metadata.has("height"):
                             height = metadata.get("height")
                     document_attributes = [
-                        DocumentAttributeVideo(
+                        DocumentAttributeAudio(
                             duration=duration,
                             w=width,
                             h=height,
