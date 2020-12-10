@@ -5,9 +5,8 @@ import logging
 import os
 import sys
 
-from telethon import events
-
 from sample_config import Config
+from telethon import events
 from userbot import bot
 
 logging.basicConfig(format='%(asctime)s - %(name)s - %(levelname)s - %(message)s',
@@ -18,9 +17,10 @@ NO_PM_LOG_USERS = []
 @bot.on(events.NewMessage(incoming=True, func=lambda e: e.is_private))
 async def monito_p_m_s(event):
     sender = await event.get_sender()
+    me = await bot.get_me()
     if Config.NC_LOG_P_M_S and not sender.bot:
         chat = await event.get_chat()
-        if chat.id not in NO_PM_LOG_USERS and chat.id != bot.uid:
+        if chat.id not in NO_PM_LOG_USERS and chat.id != me.id:
             try:
                 e = await event.client.get_entity(Config.PM_LOGGR_BOT_API_ID)
                 await event.client.forward_messages(

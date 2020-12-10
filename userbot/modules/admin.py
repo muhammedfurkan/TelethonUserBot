@@ -46,6 +46,8 @@ from telethon.tl.types import (ChannelParticipantsAdmins,
                                ChatBannedRights, MessageEntityMentionName,
                                MessageMediaPhoto, PeerChat)
 from userbot import bot
+from userbot.database.gmutedb import get_gmuted
+from userbot.database.mutedb import get_muted
 from userbot.util import admin_cmd, register
 
 LOGGING_CHATID = Config.PRIVATE_GROUP_BOT_API_ID
@@ -464,8 +466,8 @@ async def muter(mutedMessage):
     except AttributeError:
         return
     user = await get_user_from_event(mutedMessage)
-    muted = is_muted(mutedMessage.chat_id, user.id)
-    gmuted = is_gmuted(mutedMessage.sender_id)
+    muted = get_muted(mutedMessage.chat_id)
+    gmuted = get_gmuted()
     rights = ChatBannedRights(
         until_date=None,
         send_messages=True,
