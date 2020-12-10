@@ -114,7 +114,7 @@ def get_caption(post: Post) -> str:
     return caption
 
 
-async def upload_to_tg(event, dirname: str, post: Post) -> None:  # pylint: disable=R0912
+async def upload_to_tg(event, dirname: str, post: Post) -> None:    # pylint: disable=R0912
     """ uploads downloaded post from local to telegram servers """
     pto = (".jpg", ".jpeg", ".png", ".bmp")
     vdo = (".mkv", ".mp4", ".webm")
@@ -127,17 +127,13 @@ async def upload_to_tg(event, dirname: str, post: Post) -> None:  # pylint: disa
             ab_path = dirname + '/' + path
             paths.append(ab_path)
             if str(path).endswith(pto):
-                if captioned:
-                    media.append(InputMediaPhoto(ab_path))
-                else:
-                    media.append(InputMediaPhoto(ab_path))
+                if not captioned:
                     captioned = True
+                media.append(InputMediaPhoto(ab_path))
             elif str(path).endswith(vdo):
-                if captioned:
-                    media.append(InputMediaDocument(ab_path))
-                else:
-                    media.append(InputMediaDocument(ab_path))
+                if not captioned:
                     captioned = True
+                media.append(InputMediaDocument(ab_path))
         if media:
             await event.client.send_file(event.chat_id, media)
             # await event.client.send_file(Config.PRIVATE_GROUP_BOT_API_ID, media)

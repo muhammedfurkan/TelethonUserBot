@@ -140,12 +140,11 @@ def getsubitems(obj, itemkey, islast, maxlinelength, indent):
 
 def basictype2str(obj):
     if isinstance(obj, str):
-        strobj = "\"" + str(obj) + "\""
+        return "\"" + str(obj) + "\""
     elif isinstance(obj, bool):
-        strobj = {True: "true", False: "false"}[obj]
+        return {True: "true", False: "false"}[obj]
     else:
-        strobj = str(obj)
-    return strobj
+        return str(obj)
 
 
 def indentitems(items, indent, level):

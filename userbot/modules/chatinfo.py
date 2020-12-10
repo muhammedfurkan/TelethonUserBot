@@ -144,7 +144,7 @@ async def fetch_info(chat, event):
         except Exception as e:
             print("Exception:", e)
     if bots_list:
-        for bot in bots_list:
+        for _ in bots_list:
             bots += 1
 
     caption = "<b>CHAT INFO:</b>\n"
@@ -197,7 +197,6 @@ async def fetch_info(chat, event):
             caption += f", <code>{slowmode_time}s</code>\n\n"
         else:
             caption += "\n\n"
-    if not broadcast:
         caption += f"Supergroup: {supergroup}\n\n"
     if hasattr(chat_obj_info, "restricted"):
         caption += f"Restricted: {restricted}\n"
