@@ -365,7 +365,6 @@ async def keep_read(message):
             if i["chat_id"] == message.chat_id:
                 await message.client.send_read_acknowledge(
                     entity=message.chat_id,
-                    message=message.message.id,
                     clear_mentions=True
                 )
 
