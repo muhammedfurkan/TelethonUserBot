@@ -24,7 +24,6 @@ logger = logging.getLogger(__name__)
 if Config.TG_BOT_USER_NAME_BF_HER is not None:
     @tgbot.on(events.callbackquery.CallbackQuery(data=re.compile(b"ytdl|(.*)|(.*)|(.*)")))
     async def on_plug_in_callback_query_handler(event):
-        print(event)
         me = await bot.get_me()
         if event.query.user_id == me.id:
             name, tg_send_type, ytdl_format_code, ytdl_extension = event.query.data.decode(
