@@ -478,7 +478,7 @@ async def muter(mutedMessage):
         embed_links=True,
     )
     if muted:
-        for i in muted:
+        for i in muted['chat_id']:
             if i == mutedMessage.sender_id:
                 await mutedMessage.delete()
                 try:
