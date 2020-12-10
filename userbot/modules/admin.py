@@ -358,7 +358,7 @@ async def unmute_chat(unm_e):
 async def keep_read(message):
     """ The mute logic. """
     from userbot.database.mongo import cli
-    cli = cli["Userbot"]["mute_chats"]
+    cli = cli["Userbot"]["mute_chat"]
     kread = cli.find({"chat_id": message.chat_id})
     if kread:
         for i in kread:
