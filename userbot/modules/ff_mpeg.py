@@ -1,4 +1,4 @@
-"""FFMpeg for @Unibot
+"""FFMpeg
 """
 import asyncio
 import io
@@ -9,12 +9,11 @@ from datetime import datetime
 
 from hachoir.metadata import extractMetadata
 from hachoir.parser import createParser
-
 from sample_config import Config
 from userbot import bot
 from userbot.util import admin_cmd, progress, register
 
-FF_MPEG_DOWN_LOAD_MEDIA_PATH = "unibot.media.ffmpeg"
+FF_MPEG_DOWN_LOAD_MEDIA_PATH = ".media.ffmpeg"
 
 logging.basicConfig(format='[%(levelname) 5s/%(asctime)s] %(name)s: %(message)s',
                     level=logging.WARNING)
