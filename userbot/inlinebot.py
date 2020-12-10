@@ -26,7 +26,6 @@ async def inline_handler(event):
         p = re.compile("ytdl (.*)")
         r = p.search(query)
         ytdl_url = r.group(1).strip()
-        print(ytdl_url)
         if ytdl_url.startswith("http"):
             command_to_exec = [
                 "youtube-dl",
