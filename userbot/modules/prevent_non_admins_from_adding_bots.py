@@ -5,7 +5,6 @@ import logging
 from telethon import events
 from telethon.tl.functions.channels import EditBannedRequest
 from telethon.tl.types import ChatBannedRights
-
 from userbot import bot
 
 logging.basicConfig(format='[%(levelname) 5s/%(asctime)s] %(name)s: %(message)s',
@@ -25,7 +24,8 @@ CHATS_TO_MONITOR_FOR_ADDED_BOTS = [
 async def kick_if_bots(event):
     if event.user_added:
         users_added_by = event.action_message.sender_id
-        if users_added_by == bot.uid:
+        me = await bot.get_me()
+        if users_added_by == me.id:
             logger.info("Don't BAN yourself")
             return False
         is_ban_able = False

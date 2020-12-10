@@ -6,7 +6,6 @@ import logging
 
 from telethon import events
 from telethon.utils import get_peer_id
-
 from userbot import bot
 from userbot.util import admin_cmd, is_read, register
 
@@ -16,7 +15,8 @@ logger = logging.getLogger(__name__)
 
 
 async def get_target_message(event):
-    if event.is_reply and (await event.get_reply_message()).sender_id == bot.uid:
+    me = await bot.get_me()
+    if event.is_reply and (await event.get_reply_message()).sender_id == me.id:
         return await event.get_reply_message()
     async for message in bot.iter_messages(
             await event.get_input_chat(), limit=20):
