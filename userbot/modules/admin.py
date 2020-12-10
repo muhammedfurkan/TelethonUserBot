@@ -352,7 +352,7 @@ async def unmute_chat(unm_e):
     await unm_e.edit("```Unmuted this chat Successfully```")
 
 
-@bot.on(events.NewMessage(incoming=True, disable_errors=True))
+@bot.on(events.NewMessage(incoming=True))
 async def keep_read(message):
     """ The mute logic. """
     from userbot.database.mongo import cli
