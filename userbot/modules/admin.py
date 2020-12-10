@@ -363,7 +363,11 @@ async def keep_read(message):
     if kread:
         for i in kread:
             if i["chat_id"] == message.chat_id:
-                await message.client.send_read_acknowledge(message.chat_id)
+                await message.client.send_read_acknowledge(
+                    entity=message.chat_id,
+                    message=message.message.id,
+                    clear_mentions=True
+                )
 
 
 @bot.on(events.NewMessage(outgoing=True, pattern="^.mute(?: |$)(.*)"))
