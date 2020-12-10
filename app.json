@@ -65,7 +65,7 @@
         },
         "GOOGLE_CHROME_DRIVER": {
             "description": "selenium stuff",
-            v
+            "required": false
         },
         "G_BAN_LOGGER_GROUP": {
             "description": "Send .get_id in any group with all your administration bots (added)",
