@@ -465,7 +465,6 @@ async def muter(mutedMessage):
         from userbot.database.mutedb import is_muted
     except AttributeError:
         return
-    user = await get_user_from_event(mutedMessage)
     muted = get_muted(mutedMessage.chat_id)
     gmuted = get_gmuted()
     rights = ChatBannedRights(
