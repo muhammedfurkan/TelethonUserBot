@@ -1,4 +1,4 @@
-from database.mongo import cli
+from userbot.database.mongo import cli
 
 cli = cli["Userbot"]["Settings"]
 

@@ -1,7 +1,7 @@
 "blacklist mongodb support coded by @By_Azade"
 
 
-from database.mongo import cli
+from userbot.database.mongo import cli
 
 cli = cli["Userbot"]["Blacklist"]
 
