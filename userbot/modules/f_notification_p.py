@@ -1,9 +1,8 @@
+from sample_config import Config
 from telethon import custom, events
 from telethon.tl.types import Channel, Chat, User
 from telethon.utils import get_display_name
-
-from sample_config import Config
-from userbot import bot
+from userbot import bot, tgbot
 
 
 @bot.on(events.NewMessage(incoming=True, blacklist_chats=Config.UB_BLACK_LIST_CHAT, func=lambda e: (e.mentioned)))
