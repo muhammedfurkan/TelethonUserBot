@@ -9,9 +9,10 @@ from sample_config import Config
 from telethon import custom, events
 
 from userbot import bot, tgbot
-from userbot.util import humanbytes
+from userbot.util import admin_cmd, humanbytes
 
 
+# if Config.TG_BOT_USER_NAME_BF_HER is not None and tgbot is not None:
 @tgbot.on(events.InlineQuery)
 async def inline_handler(event):
     me = await bot.get_me()
@@ -52,8 +53,8 @@ async def inline_handler(event):
                     "please report this issue on https://yt-dl.org/bug . Make sure you are using the latest version; see  https://yt-dl.org/update  on how to update. Be sure to call youtube-dl with the --verbose flag and include its complete output.", "")
                 # throw error
                 result = builder.article(
-                    "YTDL Errors © @TelethonUserBot",
-                    text=f"{error_message} Powered by @TelethonUserBot",
+                    "YTDL Errors © @UserBot",
+                    text=f"{error_message} Powered by @UserBot",
                     link_preview=False
                 )
             elif t_response:

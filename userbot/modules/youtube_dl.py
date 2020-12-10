@@ -15,6 +15,7 @@ from datetime import datetime
 from sample_config import Config
 from telethon import events
 from userbot import bot, tgbot
+from userbot.inlinebot import inline_handler
 
 logging.basicConfig(level=logging.INFO)
 logger = logging.getLogger(__name__)
