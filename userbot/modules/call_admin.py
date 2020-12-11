@@ -3,7 +3,6 @@ import asyncio
 import logging
 
 from telethon.tl.types import ChannelParticipantsAdmins
-
 from userbot import bot
 from userbot.util import admin_cmd, register
 
@@ -19,7 +18,8 @@ async def _(event):
     mentions = "@admin: **Spam Spotted**"
     chat = await event.get_input_chat()
     async for x in event.client.iter_participants(chat, filter=ChannelParticipantsAdmins):
-        mentions += f"[\u2063](tg://user?id={x.id})"
+        if not x.bot:
+            mentions += f"[\u2063](tg://user?id={x.id})"
     reply_message = None
     if event.reply_to_msg_id:
         reply_message = await event.get_reply_message()
