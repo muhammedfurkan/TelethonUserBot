@@ -32,6 +32,7 @@ except PhoneNumberInvalidError:
 for module_name in ALL_MODULES:
     imported_module = import_module("userbot.modules." + module_name)
     load = "UserBot Modules Successfully Loaded: {}".format(module_name)
+    print(load)
 
 logger.info("Paperplane is alive! Test it by typing .alive on any chat."
             " Should you need assistance, head to https://t.me/tgpaperplane")
