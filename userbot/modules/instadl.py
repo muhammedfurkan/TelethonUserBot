@@ -25,11 +25,10 @@ from instaloader import (BadCredentialsException, ConnectionException,
                          TwoFactorAuthRequiredException)
 from natsort import natsorted
 from PIL import Image
+from sample_config import Config
 from telethon import errors, events
 from telethon.tl.types import (DocumentAttributeVideo, InputMediaDocument,
                                InputMediaPhoto, InputPeerSelf)
-
-from sample_config import Config
 from userbot import bot
 from userbot.util import admin_cmd, register
 
@@ -144,7 +143,7 @@ async def upload_to_tg(event, dirname: str, post: Post) -> None:    # pylint: di
             if str(path).endswith(pto):
                 ab_path = dirname + '/' + path
                 paths.append(ab_path)
-                await event.client.send_fie(
+                await event.client.send_file(
                     event.chat_id,
                     ab_path,
                     caption=get_caption(post)[:1023])
