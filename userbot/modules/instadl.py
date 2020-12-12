@@ -134,7 +134,7 @@ async def upload_to_tg(event, dirname: str, post: Post) -> None:    # pylint: di
                     captioned = True
                 media.append(InputMediaDocument(ab_path))
         if media:
-            await event.client.send_file(event.chat_id, media)
+            await bot.send_file(entity=event.chat_id, file=media)
             # await event.client.send_file(Config.PRIVATE_GROUP_BOT_API_ID, media)
 
     if post.typename == 'GraphImage':
