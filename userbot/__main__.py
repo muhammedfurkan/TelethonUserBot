@@ -5,14 +5,18 @@
 #
 """ Userbot start point """
 
+import glob
 import logging
 import os
 from importlib import import_module
+from pathlib import Path
 
+from sample_config import Config
 from telethon.errors.rpcerrorlist import PhoneNumberInvalidError
 
 from userbot import bot, tgbot
 from userbot.modules import ALL_MODULES
+from userbot.util import load_module, remove_plugin
 
 logging.basicConfig(format='[%(levelname) 5s/%(asctime)s] %(name)s: %(message)s',
                     level=logging.WARNING)
@@ -29,13 +33,24 @@ except PhoneNumberInvalidError:
     print(INVALID_PH)
     exit(1)
 
+NO_LOAD = Config.NO_LOAD
+path = 'userbot/modules/*.py'
+files = glob.glob(path)
+for name in files:
+    with open(name) as f:
+        path1 = Path(f.name)
+        shortname = path1.stem
+        load_module(shortname.replace(".py", ""))
+for noload in NO_LOAD:
+    remove_plugin(noload)
+    print(f"Removed plugin {noload}")
+
+
 for module_name in ALL_MODULES:
     imported_module = import_module("userbot.modules." + module_name)
     load = "UserBot Modules Successfully Loaded: {}".format(module_name)
     print(load)
 
-logger.info("Paperplane is alive! Test it by typing .alive on any chat."
-            " Should you need assistance, head to https://t.me/tgpaperplane")
 
 SEM_TEST = os.environ.get("SEMAPHORE", None)
 if SEM_TEST:
