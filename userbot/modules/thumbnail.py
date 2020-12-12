@@ -14,7 +14,7 @@ from PIL import Image
 
 from sample_config import Config
 from userbot import bot
-from userbot.util import admin_cmd, register, take_screen_shot
+from userbot.util import admin_cmd, take_screen_shot
 
 thumb_image_path = Config.TMP_DOWNLOAD_DIRECTORY + "/thumb_image.jpg"
 

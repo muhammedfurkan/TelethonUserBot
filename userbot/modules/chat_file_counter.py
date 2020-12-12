@@ -1,7 +1,7 @@
 """Count Number of Files in a Chat
 Original Module Credits: https://t.me/Unibot/127"""
 from userbot import bot
-from userbot.util import (admin_cmd, humanbytes, parse_pre, register,
+from userbot.util import (admin_cmd, humanbytes, parse_pre,
                           yaml_format)
 
 

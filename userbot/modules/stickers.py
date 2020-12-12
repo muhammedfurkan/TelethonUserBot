@@ -17,7 +17,7 @@ from telethon.tl.types import (DocumentAttributeFilename,
                                DocumentAttributeSticker, InputStickerSetID,
                                MessageMediaPhoto)
 from userbot import bot
-from userbot.util import admin_cmd, register
+from userbot.util import admin_cmd
 
 KANGING_STR = [
     "Using Witchery to kang this sticker...",

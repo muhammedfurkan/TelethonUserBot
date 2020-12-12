@@ -32,7 +32,7 @@ from telethon.errors.rpcerrorlist import MessageNotModifiedError
 
 from sample_config import Config
 from userbot import bot
-from userbot.util import (admin_cmd, humanbytes, progress, register,
+from userbot.util import (admin_cmd, humanbytes, progress,
                           time_formatter)
 
 space = '    '

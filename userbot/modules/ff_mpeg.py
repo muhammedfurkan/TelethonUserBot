@@ -11,7 +11,7 @@ from hachoir.metadata import extractMetadata
 from hachoir.parser import createParser
 from sample_config import Config
 from userbot import bot
-from userbot.util import admin_cmd, progress, register
+from userbot.util import admin_cmd, progress
 
 FF_MPEG_DOWN_LOAD_MEDIA_PATH = ".media.ffmpeg"
 

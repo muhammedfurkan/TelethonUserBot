@@ -12,7 +12,7 @@ from pymongo import MongoClient
 from sample_config import Config
 from telethon import events
 from userbot import bot
-from userbot.util import admin_cmd, register
+from userbot.util import admin_cmd
 
 logging.basicConfig(level=logging.INFO)
 

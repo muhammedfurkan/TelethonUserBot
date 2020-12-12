@@ -8,7 +8,7 @@ import io
 
 from sample_config import Config
 from userbot import bot
-from userbot.util import admin_cmd, parse_pre, register, yaml_format
+from userbot.util import admin_cmd, parse_pre, yaml_format
 
 
 @bot.on(admin_cmd(pattern="yaml"))

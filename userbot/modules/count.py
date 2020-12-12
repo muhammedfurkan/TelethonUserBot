@@ -9,7 +9,7 @@ from telethon.tl.custom import Dialog
 from telethon.tl.types import Channel, Chat, User
 
 from userbot import bot
-from userbot.util import admin_cmd, register
+from userbot.util import admin_cmd
 
 """Type `.count` and see Magic."""
 

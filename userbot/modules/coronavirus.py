@@ -3,7 +3,7 @@ Syntax: .coronavirus <country>"""
 from covid import Covid
 
 from userbot import bot
-from userbot.util import admin_cmd, register
+from userbot.util import admin_cmd
 
 
 @bot.on(admin_cmd(pattern="corona (.*)"))

@@ -48,7 +48,7 @@ from telethon.tl.types import (ChannelParticipantsAdmins,
 from userbot import bot
 from userbot.database.gmutedb import get_gmuted
 from userbot.database.mutedb import get_muted
-from userbot.util import admin_cmd, register
+from userbot.util import admin_cmd
 
 LOGGING_CHATID = Config.PRIVATE_GROUP_BOT_API_ID
 

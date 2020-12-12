@@ -25,7 +25,7 @@ from telethon.tl.functions.photos import (DeletePhotosRequest,
 from telethon.tl.types import InputPhoto
 
 from userbot import bot
-from userbot.util import admin_cmd, register
+from userbot.util import admin_cmd
 
 logger = logging.getLogger(__name__)
 

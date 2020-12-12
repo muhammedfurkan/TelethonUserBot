@@ -13,7 +13,7 @@ from googleapiclient.errors import HttpError
 
 from sample_config import Config
 from userbot import bot
-from userbot.util import admin_cmd, register
+from userbot.util import admin_cmd
 
 # from gtts import gTTS
 # from pytube.compat import quote
@@ -82,7 +82,6 @@ def youtube_search(query,
         for search_result in search_response.get("items", [])
         if search_result["id"]["kind"] == "youtube#video"
     ]
-
 
     try:
         nexttok = search_response["nextPageToken"]

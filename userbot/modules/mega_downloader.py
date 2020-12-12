@@ -12,7 +12,7 @@ from urllib.error import HTTPError
 
 from pySmartDL import SmartDL
 from userbot import bot
-from userbot.util import admin_cmd, humanbytes, register
+from userbot.util import admin_cmd, humanbytes
 
 logging.basicConfig(format='[%(levelname) 5s/%(asctime)s] %(name)s: %(message)s',
                     level=logging.WARNING)

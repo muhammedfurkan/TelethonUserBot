@@ -3,7 +3,7 @@ import time
 from telethon.tl.functions.channels import LeaveChannelRequest
 
 from userbot import bot
-from userbot.util import admin_cmd, register
+from userbot.util import admin_cmd
 
 
 @bot.on(admin_cmd(pattern="leave", outgoing=True))

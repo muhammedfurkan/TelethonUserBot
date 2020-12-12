@@ -7,7 +7,7 @@ import logging
 from telethon import events
 from telethon.utils import get_peer_id
 from userbot import bot
-from userbot.util import admin_cmd, is_read, register
+from userbot.util import admin_cmd, is_read
 
 logging.basicConfig(format='[%(levelname) 5s/%(asctime)s] %(name)s: %(message)s',
                     level=logging.WARNING)

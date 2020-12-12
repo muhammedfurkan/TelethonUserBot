@@ -8,7 +8,7 @@ and please read https://t.me/Unibot/39 before proceeding to run this!"""
 from telethon.tl.types import InputMediaDice
 
 from userbot import bot
-from userbot.util import admin_cmd, register
+from userbot.util import admin_cmd
 
 # EMOJI CONSTANTS
 DART_E_MOJI = "🎯"

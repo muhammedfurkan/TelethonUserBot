@@ -3,7 +3,7 @@ Syntax: .dice"""
 from telethon.tl.types import InputMediaDice
 
 from userbot import bot
-from userbot.util import admin_cmd, register
+from userbot.util import admin_cmd
 
 
 @bot.on(admin_cmd(pattern="dice ?(.*)"))

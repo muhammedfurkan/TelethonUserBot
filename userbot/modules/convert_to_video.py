@@ -15,7 +15,7 @@ from telethon.tl.types import DocumentAttributeVideo
 
 from sample_config import Config
 from userbot import bot
-from userbot.util import admin_cmd, progress, register
+from userbot.util import admin_cmd, progress
 
 logging.basicConfig(format='[%(levelname) 5s/%(asctime)s] %(name)s: %(message)s',
                     level=logging.WARNING)

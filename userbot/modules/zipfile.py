@@ -6,12 +6,11 @@ import zipfile
 
 from sample_config import Config
 from userbot import bot
-from userbot.util import admin_cmd, progress, register
+from userbot.util import admin_cmd, progress
 
 logging.basicConfig(format='[%(levelname) 5s/%(asctime)s] %(name)s: %(message)s',
                     level=logging.WARNING)
 logger = logging.getLogger(__name__)
-
 
 
 @bot.on(admin_cmd(pattern=("zip ?(.*)")))

@@ -6,7 +6,7 @@ from gtts import gTTS
 
 from sample_config import Config
 from userbot import bot
-from userbot.util import admin_cmd, register, run_command
+from userbot.util import admin_cmd, run_command
 
 
 @bot.on(admin_cmd(pattern="tts (.*)"))

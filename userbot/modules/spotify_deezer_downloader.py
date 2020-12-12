@@ -6,7 +6,7 @@ from telethon.errors.rpcerrorlist import (UserAlreadyParticipantError,
 from telethon.tl.functions.messages import ImportChatInviteRequest
 
 from userbot import bot
-from userbot.util import admin_cmd, register
+from userbot.util import admin_cmd
 
 
 @bot.on(admin_cmd(pattern="spoti ?(.*)"))

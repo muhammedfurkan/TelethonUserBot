@@ -4,7 +4,7 @@ import urllib3
 from bs4 import BeautifulSoup
 
 from userbot import bot
-from userbot.util import admin_cmd, register
+from userbot.util import admin_cmd
 
 
 def searchTureng(word):

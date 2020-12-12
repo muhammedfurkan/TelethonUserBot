@@ -8,7 +8,7 @@ from datetime import datetime
 
 from sample_config import Config
 from userbot import bot
-from userbot.util import admin_cmd, progress, register, run_command
+from userbot.util import admin_cmd, progress, run_command
 
 logging.basicConfig(format='[%(levelname) 5s/%(asctime)s] %(name)s: %(message)s',
                     level=logging.WARNING)

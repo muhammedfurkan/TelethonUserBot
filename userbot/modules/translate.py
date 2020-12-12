@@ -9,7 +9,7 @@ import asyncio
 from gpytranslate import Translator
 
 from userbot import bot
-from userbot.util import admin_cmd, register
+from userbot.util import admin_cmd
 
 
 @bot.on(admin_cmd(pattern="tr ?(.*)"))

@@ -14,7 +14,7 @@ from telethon import errors, events, functions, types
 
 from sample_config import Config
 from userbot import bot
-from userbot.util import admin_cmd, register
+from userbot.util import admin_cmd
 
 
 @bot.on(admin_cmd(pattern="eval"))

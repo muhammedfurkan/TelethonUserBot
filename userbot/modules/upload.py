@@ -17,7 +17,7 @@ from hachoir.parser import createParser
 from sample_config import Config
 from telethon.tl.types import DocumentAttributeAudio, DocumentAttributeVideo
 from userbot import bot
-from userbot.util import admin_cmd, progress, register, take_screen_shot
+from userbot.util import admin_cmd, progress, take_screen_shot
 
 thumb_image_path = Config.TMP_DOWNLOAD_DIRECTORY + "/thumb_image.jpg"
 logging.basicConfig(format='[%(levelname) 5s/%(asctime)s] %(name)s: %(message)s',

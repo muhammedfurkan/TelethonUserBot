@@ -30,7 +30,7 @@ from telethon import errors, events
 from telethon.tl.types import (DocumentAttributeVideo, InputMediaDocument,
                                InputMediaPhoto, InputPeerSelf)
 from userbot import bot
-from userbot.util import admin_cmd, register
+from userbot.util import admin_cmd
 
 logging.basicConfig(format='[%(levelname) 5s/%(asctime)s] %(name)s: %(message)s',
                     level=logging.WARNING)

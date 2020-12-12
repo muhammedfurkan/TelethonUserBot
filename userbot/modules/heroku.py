@@ -9,7 +9,7 @@ import requests
 from sample_config import Config
 from userbot import bot
 from userbot.bin.prettyjson import prettyjson
-from userbot.util import admin_cmd, register
+from userbot.util import admin_cmd
 
 # =================
 Heroku = heroku3.from_key(Config.HEROKU_API_KEY)
