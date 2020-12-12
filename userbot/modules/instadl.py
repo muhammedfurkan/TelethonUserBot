@@ -160,6 +160,8 @@ async def upload_to_tg(event, dirname: str, post: Post) -> None:    # pylint: di
                 paths.append(ab_path)
                 thumb = await get_thumb(ab_path)
                 duration = 0
+                width = 0
+                height = 0
                 metadata = extractMetadata(createParser(ab_path))
                 if metadata.has("width"):
                     width = metadata.get("width")
