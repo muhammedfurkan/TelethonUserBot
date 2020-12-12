@@ -1,7 +1,7 @@
 
 ## TelegramUserBot ❤️️
 
-  
+[![Sourcery](https://img.shields.io/badge/Sourcery-enabled-brightgreen)](https://sourcery.ai)
 
 |Deploy To Heroku|  Gitpod Online|
 |--|--|
@@ -9,7 +9,6 @@
 
 ### DeepSource
 
-  
 
 [![DeepSource](https://deepsource.io/gh/muhammedfurkan/TelethonUserBot.svg/?label=active+issues&show_trend=true)](https://deepsource.io/gh/muhammedfurkan/TelethonUserBot/?ref=repository-badge)&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;[![DeepSource](https://deepsource.io/gh/muhammedfurkan/TelethonUserBot.svg/?label=resolved+issues&show_trend=true)](https://deepsource.io/gh/muhammedfurkan/TelethonUserBot/?ref=repository-badge)
 
