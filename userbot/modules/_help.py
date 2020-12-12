@@ -11,7 +11,6 @@
 import logging
 import sys
 
-from sample_config import Config
 from telethon import __version__, functions
 from userbot import bot
 from userbot.util import admin_cmd

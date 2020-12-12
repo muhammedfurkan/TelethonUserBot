@@ -8,9 +8,6 @@ import io
 import logging
 import time
 
-from telethon.errors import (MessageEmptyError, MessageNotModifiedError,
-                             MessageTooLongError)
-
 from sample_config import Config
 from userbot import bot
 from userbot.util import admin_cmd

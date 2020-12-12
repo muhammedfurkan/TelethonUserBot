@@ -4,13 +4,9 @@ Syntax: .eval PythonCode"""
 # License, v. 2.0. If a copy of the MPL was not distributed with this
 # file, You can obtain one at http://mozilla.org/MPL/2.0/.
 
-import asyncio
-import inspect
 import io
 import sys
 import traceback
-
-from telethon import errors, events, functions, types
 
 from sample_config import Config
 from userbot import bot

@@ -3,7 +3,6 @@ import logging
 
 from telethon import events
 from telethon.errors.rpcerrorlist import YouBlockedUserError
-
 from userbot import bot
 from userbot.util import admin_cmd
 
@@ -31,17 +30,14 @@ async def _(event):
     await event.edit("```Processing```")
     async with event.client.conversation(chat) as conv:
         try:
-            response = conv.wait_event(events.NewMessage(
-                incoming=True, from_users=461843263))
-            await event.client.forward_messages(chat, reply_message)
-            response = await response
+            await conv.send_message(f"/search_id {reply_message.sender.id}")
+            conv.close()
         except YouBlockedUserError:
             await event.reply("```Please unblock @sangmatainfo_bot and try again```")
             return
-        if response.text.startswith("Forward"):
-            await event.edit("```can you kindly disable your forward privacy settings for good?```")
-        else:
-            await event.edit(f"{response.message.message}")
+    k = await event.client.get_messages(entity=chat, limit=3, reverse=False)
+    username_history = k[1].text  # NOTE for later use
+    await event.edit(k[2].text)
 
 
 @bot.on(admin_cmd(pattern=("fakemail ?(.*)")))
