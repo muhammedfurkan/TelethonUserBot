@@ -98,6 +98,17 @@ async def remove_thumb(thumb: str) -> None:
         os.remove(thumb)
 
 
+def get_lst_of_files(input_directory, output_lst):
+    filesinfolder = os.listdir(input_directory)
+    for file_name in filesinfolder:
+        if not file_name.endswith(".txt"):
+            current_file_name = os.path.join(input_directory, file_name)
+            if os.path.isdir(current_file_name):
+                return get_lst_of_files(current_file_name, output_lst)
+            output_lst.append(current_file_name)
+    return output_lst
+
+
 def get_caption(post: Post) -> str:
     """ adds link to profile for tagged users """
     caption = post.caption
@@ -134,8 +145,8 @@ async def upload_to_tg(event, dirname: str, post: Post) -> None:    # pylint: di
                     captioned = True
                 media.append(InputMediaDocument(ab_path))
         if media:
-            await bot.send_file(entity=event.chat_id, file=media)
-            # await event.client.send_file(Config.PRIVATE_GROUP_BOT_API_ID, media)
+            mdia = get_lst_of_files(media, [])
+            await bot.send_file(entity=event.chat_id, file=mdia)
 
     if post.typename == 'GraphImage':
         # upload a photo
@@ -305,7 +316,6 @@ async def _insta_post_downloader(event):
 
     p = r'^(?:https?:\/\/)?(?:www\.)?(?:instagram\.com.*\/(p|tv|reel)\/)([\d\w\-_]+)(?:\/)?(\?.*)?$'
     match = re.search(p, event.pattern_match.group(1))
-    print(match)
     if match:
         dtypes = {
             'p': 'POST',
@@ -323,7 +333,7 @@ async def _insta_post_downloader(event):
             download_post(insta, post)
             await upload_to_tg(event, dirname.format(target=post.owner_username), post)
         except (KeyError, LoginRequiredException):
-            await logger.error("Post is private. Login and try again")
+            logger.error("Post is private. Login and try again")
             return
         except errors.FloodWaitError:
             await asyncio.sleep(15)
