@@ -10,9 +10,8 @@ import requests
 from hachoir.metadata import extractMetadata
 from hachoir.parser import createParser
 from pyquery import PyQuery as pq
-from telethon.tl.types import DocumentAttributeVideo
-
 from sample_config import Config
+from telethon.tl.types import DocumentAttributeVideo
 from userbot import bot
 from userbot.util import admin_cmd, progress, run_command
 
@@ -83,7 +82,14 @@ async def pinterst_vid_img(event):
             os.path.dirname(os.path.abspath(j)),
             (duration / 2)
         )
-
+    width = 0
+    height = 0
+    if os.path.exists(thumb_image_path):
+        metadata = extractMetadata(createParser(thumb_image_path))
+        if metadata.has("width"):
+            width = metadata.get("width")
+        if metadata.has("height"):
+            height = metadata.get("height")
     c_time = time.time()
     await event.client.send_file(
         event.chat_id,

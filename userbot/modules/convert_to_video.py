@@ -11,9 +11,8 @@ from datetime import datetime
 
 from hachoir.metadata import extractMetadata
 from hachoir.parser import createParser
-from telethon.tl.types import DocumentAttributeVideo
-
 from sample_config import Config
+from telethon.tl.types import DocumentAttributeVideo
 from userbot import bot
 from userbot.util import admin_cmd, progress
 
