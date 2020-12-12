@@ -31,7 +31,7 @@ async def _(event):
     async with event.client.conversation(chat) as conv:
         try:
             await conv.send_message(f"/search_id {reply_message.sender.id}")
-            conv.close()
+            conv.cancel()
         except YouBlockedUserError:
             await event.reply("```Please unblock @sangmatainfo_bot and try again```")
             return
