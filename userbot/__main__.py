@@ -46,12 +46,6 @@ for noload in NO_LOAD:
     print(f"Removed plugin {noload}")
 
 
-for module_name in ALL_MODULES:
-    imported_module = import_module("userbot.modules." + module_name)
-    load = "UserBot Modules Successfully Loaded: {}".format(module_name)
-    print(load)
-
-
 SEM_TEST = os.environ.get("SEMAPHORE", None)
 if SEM_TEST:
     bot.disconnect()
