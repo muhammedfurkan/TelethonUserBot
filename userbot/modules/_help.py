@@ -29,7 +29,7 @@ async def _(event):
     help_string = """
 Python {}
 Telethon {}
-UserBot Forked from https://github.com/muhammedfurkan/TelethonUserBot""".format(
+UserBot from https://github.com/muhammedfurkan/TelethonUserBot""".format(
         sys.version,
         __version__
     )
