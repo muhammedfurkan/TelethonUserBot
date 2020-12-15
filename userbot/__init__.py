@@ -6,12 +6,13 @@
 """ Userbot initialization. """
 
 
-from generate_mongo_session import session
 from sample_config import Config
 from telethon import TelegramClient
+from telethon.sessions import StringSession
 
-if session:
-    bot = TelegramClient(session, Config.APP_ID, Config.API_HASH)
+if Config.HU_STRING_SESSION:
+    bot = TelegramClient(StringSession(
+        Config.HU_STRING_SESSION), Config.APP_ID, Config.API_HASH)
 else:
     bot = TelegramClient("userbot", Config.APP_ID, Config.API_HASH)
 
