@@ -67,8 +67,8 @@ natsort #instadl
 instaloader #instadl
 gpytranslate #translate
 jsonpickle #storage
-mongoengine #mongosession
-telemongo #mongosession
+# mongoengine #mongosession
+# telemongo #mongosession
 # schedule
 # selenium
 # PyLyrics 
