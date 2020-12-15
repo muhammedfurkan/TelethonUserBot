@@ -5,24 +5,20 @@
 #
 """ Userbot initialization. """
 
-import os
-from distutils.util import strtobool as sb
-from logging import DEBUG, INFO, basicConfig, getLogger
-from sys import version_info
 
 from sample_config import Config
-from telethon import TelegramClient, events
-from telethon.sessions import StringSession
+from telethon import TelegramClient
 
-if Config.HU_STRING_SESSION:
-    bot = TelegramClient(StringSession(Config.HU_STRING_SESSION),Config.APP_ID,Config.API_HASH)
+from ..scripts.generate_mongo_session import session
+
+if session:
+    bot = TelegramClient(session, Config.APP_ID, Config.API_HASH)
 else:
-    bot = TelegramClient("userbot", Config.APP_ID,Config.API_HASH)
+    bot = TelegramClient("userbot", Config.APP_ID, Config.API_HASH)
 
 if Config.TG_BOT_TOKEN_BF_HER:
-    tgbot = TelegramClient("bot", Config.APP_ID,Config.API_HASH).start(bot_token=Config.TG_BOT_TOKEN_BF_HER)
-
-
+    tgbot = TelegramClient("bot", Config.APP_ID, Config.API_HASH).start(
+        bot_token=Config.TG_BOT_TOKEN_BF_HER)
 
 
 # Global Variables
