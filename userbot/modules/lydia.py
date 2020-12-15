@@ -31,7 +31,7 @@ if Config.LYDIA_API is not None:
 async def lydia_enable(event):
     if event.fwd_from:
         return
-    if Config.MONGO_DB_URI and Config.LYDIA_API is None:
+    if not Config.MONGO_DB_URI and not Config.LYDIA_API:
         await event.edit("Make Sure You've added MONGO_URI and LYDIA_API env vars Correctly.")
         return
     if not event.reply_to_msg_id:
@@ -60,7 +60,7 @@ async def lydia_enable(event):
 async def lydia_disable(event):
     if event.fwd_from:
         return
-    if Config.MONGO_DB_URI and Config.LYDIA_API is None:
+    if not Config.MONGO_DB_URI and not Config.LYDIA_API:
         await event.edit("Make Sure You've added MONGO_URI and LYDIA_API env vars Correctly.")
         return
     if not event.reply_to_msg_id:
@@ -81,7 +81,7 @@ async def lydia_disable(event):
 async def lydia_list(event):
     if event.fwd_from:
         return
-    if Config.MONGO_DB_URI and Config.LYDIA_API is None:
+    if not Config.MONGO_DB_URI and not Config.LYDIA_API:
         await event.edit("Make Sure You've added MONGO_URI and LYDIA_API env vars Correctly.")
         return
     await event.edit("Processing...")
@@ -98,7 +98,7 @@ async def lydia_list(event):
 async def Lydia_bot_update(event):
     if event.fwd_from:
         return
-    if Config.MONGO_DB_URI and Config.LYDIA_API is None:
+    if not Config.MONGO_DB_URI and not Config.LYDIA_API:
         return
     if event.media is not None:
         cursor = lydia.find({})
