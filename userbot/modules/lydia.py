@@ -100,7 +100,7 @@ async def Lydia_bot_update(event):
         return
     if not Config.MONGO_DB_URI and not Config.LYDIA_API:
         return
-    if event.media is not None:
+    if not event.media:
         cursor = lydia.find({})
         for c in cursor:
             if c['user_id'] == event.sender_id and c['chat_id'] == event.chat_id:
@@ -126,7 +126,7 @@ async def Lydia_bot_update(event):
                     # CoffeeHouse related issue, session issue most likely.
                     logging.error(str(e))
 
-    # Create a new session
+        # Create a new session
                     session = lydia_session.create_session()
                     ses = {'id': session.id, 'expires': session.expires}
                     logging.info(ses)
