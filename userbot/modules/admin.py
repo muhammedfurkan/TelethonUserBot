@@ -122,7 +122,6 @@ async def delete_service_msg(event):
     creator = chat.creator
     check = await get_service(event.chat_id)
     if not admin and not creator:
-        await event.edit("`I am not an admin!`")
         return
     else:
         if check['chatid'] == event.chat_id:
