@@ -48,6 +48,8 @@ from telethon.tl.types import (ChannelParticipantsAdmins,
 from userbot import bot
 from userbot.database.gmutedb import get_gmuted
 from userbot.database.mutedb import get_muted
+from userbot.database.servicemessagesdb import (add_chat_service,
+                                                delete_service, get_service)
 from userbot.util import admin_cmd
 
 LOGGING_CHATID = Config.PRIVATE_GROUP_BOT_API_ID
@@ -79,6 +81,52 @@ UNBAN_RIGHTS = ChatBannedRights(
 KICK_RIGHTS = ChatBannedRights(until_date=None, view_messages=True)
 MUTE_RIGHTS = ChatBannedRights(until_date=None, send_messages=True)
 UNMUTE_RIGHTS = ChatBannedRights(until_date=None, send_messages=False)
+
+
+@bot.on(admin_cmd(pattern="servicemessage ?(.*)"))
+async def serv_msg(event):
+    text = event.pattern_match.group(1)
+    if text == "on":
+        chat = await event.get_chat()
+        admin = chat.admin_rights
+        creator = chat.creator
+        check = await get_service(event.chat_id)
+        if not admin and not creator:
+            await event.edit("`I am not an admin!`")
+            return
+
+        await add_chat_service(event.chat_id)
+        await event.edit("`Anti-Service messages deletion activated`")
+
+
+@bot.on(admin_cmd(pattern="servicemessage ?(.*)"))
+async def serv_msg(event):
+    text = event.pattern_match.group(1)
+    if text == "off":
+        chat = await event.get_chat()
+        admin = chat.admin_rights
+        creator = chat.creator
+        check = await get_service(event.chat_id)
+        if not admin and not creator:
+            await event.edit("`I am not an admin!`")
+            return
+        if check['chatid'] == event.chat_id:
+            await delete_service(event.chat_id)
+            await event.edit("`Anti-Service messages deletion disabled`")
+
+
+@bot.on(events.ChatAction())
+async def delete_service_msg(event):
+    chat = await event.get_chat()
+    admin = chat.admin_rights
+    creator = chat.creator
+    check = await get_service(event.chat_id)
+    if not admin and not creator:
+        await event.edit("`I am not an admin!`")
+        return
+    else:
+        if check['chatid'] == event.chat_id:
+            await event.delete()
 
 
 @bot.on(events.NewMessage(outgoing=True, pattern="^.setgic$"))
