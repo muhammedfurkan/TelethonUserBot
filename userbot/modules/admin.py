@@ -117,15 +117,18 @@ async def serv_msg(event):
 
 @bot.on(events.ChatAction())
 async def delete_service_msg(event):
-    chat = await event.get_chat()
-    admin = chat.admin_rights
-    creator = chat.creator
-    check = await get_service(event.chat_id)
-    if not admin and not creator:
-        return
-    else:
-        if check['chatid'] == event.chat_id:
-            await event.delete()
+    try:
+        chat = await event.get_chat()
+        admin = chat.admin_rights
+        creator = chat.creator
+        check = await get_service(event.chat_id)
+        if not admin and not creator:
+            return
+        else:
+            if check['chatid'] == event.chat_id:
+                await event.delete()
+    except TypeError:
+        pass
 
 
 @bot.on(events.NewMessage(outgoing=True, pattern="^.setgic$"))
