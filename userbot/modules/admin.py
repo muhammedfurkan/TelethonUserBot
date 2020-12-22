@@ -905,9 +905,8 @@ async def _(event):
 async def get_blocked(event):
     usr = "Blocked Users In My Account\n\n"
     j = await bot(functions.contacts.GetBlockedRequest(offset=100, limit=1))
-    print(j)
     k = await bot(functions.contacts.GetBlockedRequest(offset=0, limit=1000))
-    for a in range(j.count):
+    for a in range(j.count+1):
         usr += f"[{k.users[a].first_name}](tg://user?id={k.users[a].id})\n"
     for m in split_message(usr):
         await asyncio.sleep(2)
