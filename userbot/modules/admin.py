@@ -31,7 +31,7 @@ from asyncio import sleep
 from os import remove
 
 from sample_config import Config
-from telethon import events
+from telethon import events, functions
 from telethon.errors import (BadRequestError, ChatAdminRequiredError,
                              ImageProcessFailedError, PhotoCropSizeSmallError,
                              UserAdminInvalidError)
@@ -50,6 +50,7 @@ from userbot.database.gmutedb import get_gmuted
 from userbot.database.mutedb import get_muted
 from userbot.database.servicemessagesdb import (add_chat_service,
                                                 delete_service, get_service)
+from userbot.modules.who import split_message
 from userbot.util import admin_cmd
 
 LOGGING_CHATID = Config.PRIVATE_GROUP_BOT_API_ID
@@ -898,6 +899,19 @@ async def _(event):
         )
         await asyncio.sleep(3)
         await event.delete()
+
+
+@bot.on(admin_cmd(pattern="bl"))
+async def get_blocked(event):
+    usr = "Blocked Users In My Account\n\n"
+    j = await bot(functions.contacts.GetBlockedRequest(offset=100, limit=1))
+    print(j)
+    k = await bot(functions.contacts.GetBlockedRequest(offset=0, limit=1000))
+    for a in range(j.count):
+        usr += f"[{k.users[a].first_name}](tg://user?id={k.users[a].id})\n"
+    for m in split_message(usr):
+        await asyncio.sleep(2)
+        await event.reply(f"{m}")
 
 
 async def get_user_from_event(event):
