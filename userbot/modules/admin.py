@@ -906,11 +906,14 @@ async def get_blocked(event):
     usr = "Blocked Users In My Account\n\n"
     j = await bot(functions.contacts.GetBlockedRequest(offset=100, limit=1))
     k = await bot(functions.contacts.GetBlockedRequest(offset=0, limit=1000))
-    for a in range(j.count+1):
+    for a in range(j.count):
         usr += f"[{k.users[a].first_name}](tg://user?id={k.users[a].id})\n"
-    for m in split_message(usr):
-        await asyncio.sleep(2)
-        await event.reply(f"{m}")
+    try:
+        await event.edit(usr)
+    except MessageTooLongError:
+        for m in split_message(usr):
+            await asyncio.sleep(2)
+            await event.reply(f"{m}")
 
 
 async def get_user_from_event(event):
