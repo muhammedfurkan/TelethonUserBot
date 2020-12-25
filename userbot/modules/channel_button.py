@@ -28,7 +28,7 @@ async def test(event):
         data += 1
         buton = tgbot.build_reply_markup(
             [
-                Button.inline(f"👍 {data}" , data="up"), 
+                Button.inline(f"👍🏻 {data}" , data="up"), 
                 Button.inline(f"❤️ {data_1}" , data="kalp"),
                 Button.inline(f"😢 {data_2}" , data="agla")
             ]
@@ -44,7 +44,7 @@ async def test(event):
         data_1 += 1
         buton = tgbot.build_reply_markup(
             [
-                Button.inline(f"👍 {data}" , data="up"), 
+                Button.inline(f"👍🏻 {data}" , data="up"), 
                 Button.inline(f"❤️ {data_1}" , data="kalp"),
                 Button.inline(f"😢 {data_2}" , data="agla")
             ]
@@ -59,7 +59,7 @@ async def test(event):
         data_2 += 1
         buton = tgbot.build_reply_markup(
             [
-                Button.inline(f"👍 {data}" , data="up"), 
+                Button.inline(f"👍🏻 {data}" , data="up"), 
                 Button.inline(f"❤️ {data_1}" , data="kalp"),
                 Button.inline(f"😢 {data_2}" , data="agla")
             ]
@@ -76,7 +76,7 @@ async def all_messages_catcher(event):
     if channel:
         buton = tgbot.build_reply_markup(
             [
-                Button.inline(f"👍 {data}" , data="up"), 
+                Button.inline(f"👍🏻 {data}" , data="up"), 
                 Button.inline(f"❤️ {data_1}" , data="kalp"),
                 Button.inline(f"😢 {data_2}" , data="agla")
             ]
