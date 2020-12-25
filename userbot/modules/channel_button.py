@@ -35,7 +35,7 @@ async def test(event):
         )
         await tgbot.edit_message(channel, event.original_update.msg_id, buttons=buton)
         await bot.send_message(-443785781,f"Tıklayan: {msg}, 👍 e tıkladı.\n\nMesaja git: {message_link}")
-        reply_pop_up_alert = "Katılımınız için teşekkür ederiz."
+        reply_pop_up_alert = "@RetroTurk Katılımıınız İçin Teşekkür Eder."
         await event.answer(reply_pop_up_alert, cache_time=0, alert=True)
         # data += 1
 
@@ -51,7 +51,7 @@ async def test(event):
         )
         await tgbot.edit_message(channel, event.original_update.msg_id, buttons=buton)
         await bot.send_message(-443785781,f"Tıklayan: {msg}, ❤️ e tıkladı.\n\nMesaja git: {message_link}")
-        reply_pop_up_alert = "Katılımınız için teşekkür ederiz."
+        reply_pop_up_alert = "@RetroTurk Katılımıınız İçin Teşekkür Eder."
         await event.answer(reply_pop_up_alert, cache_time=0, alert=True)
         # data_1 += 1
         
@@ -66,7 +66,7 @@ async def test(event):
         )
         await tgbot.edit_message(channel, event.original_update.msg_id, buttons=buton)
         await bot.send_message(-443785781,f"Tıklayan: {msg}, 😢 e tıkladı.\n\nMesaja git: {message_link}")
-        reply_pop_up_alert = "Katılımınız için teşekkür ederiz."
+        reply_pop_up_alert = "@RetroTurk Katılımıınız İçin Teşekkür Eder."
         await event.answer(reply_pop_up_alert, cache_time=0, alert=True)
         # data_2 += 1
 
