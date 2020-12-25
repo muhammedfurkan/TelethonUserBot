@@ -34,7 +34,7 @@ async def test(event):
             ]
         )
         await tgbot.edit_message(channel, event.original_update.msg_id, buttons=buton)
-        await bot.send_message(-443785781",f"Tıklayan: {msg}, 👍 e tıkladı.\n\nMesaja git: {message_link}")
+        await bot.send_message(-443785781,f"Tıklayan: {msg}, 👍 e tıkladı.\n\nMesaja git: {message_link}")
         # data += 1
 
 
@@ -48,7 +48,7 @@ async def test(event):
             ]
         )
         await tgbot.edit_message(channel, event.original_update.msg_id, buttons=buton)
-        await bot.send_message(-443785781",f"Tıklayan: {msg}, ❤️ e tıkladı.\n\nMesaja git: {message_link}")
+        await bot.send_message(-443785781,f"Tıklayan: {msg}, ❤️ e tıkladı.\n\nMesaja git: {message_link}")
         # data_1 += 1
         
      if event.data.decode('utf-8') == "agla":
@@ -61,7 +61,7 @@ async def test(event):
             ]
         )
         await tgbot.edit_message(channel, event.original_update.msg_id, buttons=buton)
-        await bot.send_message(-443785781",f"Tıklayan: {msg}, 😢 e tıkladı.\n\nMesaja git: {message_link}")
+        await bot.send_message(-443785781,f"Tıklayan: {msg}, 😢 e tıkladı.\n\nMesaja git: {message_link}")
         # data_2 += 1
 
 @borg.on(events.NewMessage(chats=-1001477006210))
