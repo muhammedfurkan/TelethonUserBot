@@ -41,7 +41,7 @@ python-magic
 pytube3
 qrcode
 regex
-remotezip
+# remotezip
 requests
 setuptools
 spamwatch
@@ -67,6 +67,7 @@ natsort #instadl
 instaloader #instadl
 gpytranslate #translate
 jsonpickle #storage
+gitpython # github updater
 # mongoengine #mongosession
 # telemongo #mongosession
 # schedule
