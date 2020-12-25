@@ -51,7 +51,7 @@ async def test(event):
         await bot.send_message(-443785781,f"Tıklayan: {msg}, ❤️ e tıkladı.\n\nMesaja git: {message_link}")
         # data_1 += 1
         
-     if event.data.decode('utf-8') == "agla":
+    if event.data.decode('utf-8') == "agla":
         data_2 += 1
         buton = tgbot.build_reply_markup(
             [
