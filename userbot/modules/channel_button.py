@@ -30,7 +30,7 @@ async def test(event):
             [
                 Button.inline(f"👍 {data}" , data="up"), 
                 Button.inline(f"❤️ {data_1}" , data="kalp"),
-                Button.inline(f"😢 {data_2}" , data"agla")
+                Button.inline(f"😢 {data_2}" , data="agla")
             ]
         )
         await tgbot.edit_message(channel, event.original_update.msg_id, buttons=buton)
@@ -44,7 +44,7 @@ async def test(event):
             [
                 Button.inline(f"👍 {data}" , data="up"), 
                 Button.inline(f"❤️ {data_1}" , data="kalp"),
-                Button.inline(f"😢 {data_2}" , data"agla")
+                Button.inline(f"😢 {data_2}" , data="agla")
             ]
         )
         await tgbot.edit_message(channel, event.original_update.msg_id, buttons=buton)
@@ -57,7 +57,7 @@ async def test(event):
             [
                 Button.inline(f"👍 {data}" , data="up"), 
                 Button.inline(f"❤️ {data_1}" , data="kalp"),
-                Button.inline(f"😢 {data_2}" , data"agla")
+                Button.inline(f"😢 {data_2}" , data="agla")
             ]
         )
         await tgbot.edit_message(channel, event.original_update.msg_id, buttons=buton)
@@ -72,7 +72,7 @@ async def all_messages_catcher(event):
             [
                 Button.inline(f"👍 {data}" , data="up"), 
                 Button.inline(f"❤️ {data_1}" , data="kalp"),
-                Button.inline(f"😢 {data_2}" , data"agla")
+                Button.inline(f"😢 {data_2}" , data="agla")
             ]
         )
         chat = await event.get_chat()
