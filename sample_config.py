@@ -163,6 +163,8 @@ class Config:
         "FF_MPEG_DOWN_LOAD_MEDIA_PATH", None)
     INSTA_ID = os.environ.get("INSTA_ID", None)
     INSTA_PASS = os.environ.get("INSTA_PASS", None)
+    # github api and update plugin
+    UPSTREAM_REPO_URL = "https://github.com/muhammedfurkan/TelethonUserBot.git"
 
 
 class Production(Config):
