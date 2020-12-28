@@ -37,7 +37,7 @@ async def get_tz(con):
         return
 
 
-@bot.on(admin_cmd(pattern="weather (.*)"))
+@bot.on(admin_cmd(pattern="weather ?(.*)"))
 async def fetch_weather(weather):
     """ For .weather command, gets the current weather of a city. """
     if Config.OPEN_WEATHER_MAP_APPID is None:
