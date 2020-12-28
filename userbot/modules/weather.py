@@ -133,7 +133,7 @@ async def fetch_weather(weather):
         f"`{cityname}, {fullc_n}`\n" + f"`{time}`")
 
 
-@bot.on(admin_cmd(pattern="^.setcity(?: |$)(.*)"))
+@bot.on(admin_cmd(pattern="setcity ?(.*)"))
 async def set_default_city(city):
     """ For .setcity command, change the default
         city for weather command. """
