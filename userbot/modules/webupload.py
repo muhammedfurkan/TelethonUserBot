@@ -122,7 +122,7 @@ async def AioRequest_TGMedia(event, filepath):
             if str(r1.status) == "200":
                 url = 'https://'+server+'.gofile.io/uploadFile'
                 files = {'file': open(filepath, 'rb'),
-                         'email': Config.GOFILE_MAIL}
+                         'email': Config.GOFILE_EMAIL}
                 response = await session.post(url, data=files)
                 r_server = await response.json()
                 code = r_server['data']['code']

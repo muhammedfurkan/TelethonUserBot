@@ -46,7 +46,7 @@ async def stream(event):
                 stat_json = await r2.json()
                 if stat_json['result'][m['result']['id']]['status'] != 'finished':
                     await event.edit("`Uploaded to https://streamtape.com/ and getting link. Please wait.`")
-                    await asyncio.sleep(120)
+                    await asyncio.sleep(60)
                     async with aiohttp.ClientSession() as session:
                         serverf = 'https://api.streamtape.com/file/listfolder'
                         async with session.post(serverf,
