@@ -166,6 +166,8 @@ class Config:
     # github api and update plugin
     UPSTREAM_REPO_URL = "https://github.com/muhammedfurkan/TelethonUserBot.git"
     GOFILE_EMAIL = os.environ.get("GOFILE_EMAIL", None)
+    STREAM_TAPE_LOGIN = os.environ.get("STREAM_TAPE_LOGIN", None)
+    STREAM_TAPE_KEY = os.environ.get("STREAM_TAPE_KEY", None)
 
 
 class Production(Config):
