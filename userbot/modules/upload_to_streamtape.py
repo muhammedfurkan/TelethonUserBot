@@ -1,4 +1,7 @@
+import asyncio
+import json
 import logging
+import os
 
 import aiohttp
 from sample_config import Config
@@ -32,6 +35,29 @@ async def stream(event):
                     m = await k.json()
                     link = "https://streamtape.com/v/{}".format(
                         m['result']['id'])
-                    await event.edit("**Link uploaded, check it out after 1-5 min later:** {}".format(link))
+        async with aiohttp.ClientSession() as ression:
+            stat = "https://api.streamtape.com/remotedl/status"
+            async with ression.post(stat,
+                                    data={
+                                        "login": Config.STREAM_TAPE_LOGIN,
+                                        "key": Config.STREAM_TAPE_KEY,
+                                        "id": m['result']['id']
+                                    }) as r2:
+                stat_json = await r2.json()
+                if stat_json['result'][m['result']['id']]['status'] != 'finished':
+                    await event.edit("`Uploaded to https://streamtape.com/ and getting link. Please wait.`")
+                    await asyncio.sleep(120)
+                    async with aiohttp.ClientSession() as session:
+                        serverf = 'https://api.streamtape.com/file/listfolder'
+                        async with session.post(serverf,
+                                                data={
+                                                    "login": Config.STREAM_TAPE_LOGIN,
+                                                    "key": Config.STREAM_TAPE_KEY,
+                                                    "folder": "CL0Wh3BaZC4"
+                                                }) as r1:
+                            final = await r1.json()
+                            # print(final)
+                            my_link = final['result']['files'][-1]['link']
+                            await event.edit("**Link uploaded, check it out after 1-5 min later:** {}".format(my_link))
     else:
         await event.edit("There is no link to upload.")
