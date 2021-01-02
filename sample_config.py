@@ -165,6 +165,7 @@ class Config:
     INSTA_PASS = os.environ.get("INSTA_PASS", None)
     # github api and update plugin
     UPSTREAM_REPO_URL = "https://github.com/muhammedfurkan/TelethonUserBot.git"
+    GOFILE_EMAIL = os.environ.get("GOFILE_EMAIL", None)
 
 
 class Production(Config):
