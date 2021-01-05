@@ -65,6 +65,7 @@ instaloader #instadl
 gpytranslate #translate
 jsonpickle #storage
 gitpython # github updater
+appdirs #aria
 # googletrans==3.1.0a0
 # google_trans_new
 # remotezip
