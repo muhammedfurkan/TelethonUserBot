@@ -18,8 +18,6 @@ feedparser
 google-api-python-client
 google_images_download
 googletrans
-# googletrans==3.1.0a0
-# google_trans_new
 gtts
 gaggle
 hachoir
@@ -41,7 +39,6 @@ python-magic
 pytube3
 qrcode
 regex
-# remotezip
 requests
 setuptools
 spamwatch
@@ -68,6 +65,9 @@ instaloader #instadl
 gpytranslate #translate
 jsonpickle #storage
 gitpython # github updater
+# googletrans==3.1.0a0
+# google_trans_new
+# remotezip
 # mongoengine #mongosession
 # telemongo #mongosession
 # schedule

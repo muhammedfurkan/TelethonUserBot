@@ -41,7 +41,7 @@ async def ff_mpeg_save_cmd(event):
                     )
                 )
             except Exception as e:  # pylint:disable=C0103,W0703
-                event.client.send_message(event.chat_id, str(e))
+                await event.client.send_message(event.chat_id, str(e))
             else:
                 end = datetime.now()
                 ms = (end - start).seconds
