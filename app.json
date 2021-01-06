@@ -121,7 +121,7 @@
         },
         "LOGSPAMMER": {
             "description": "PM stuff",
-            "required": true
+            "required": false
         },
         "MAX_FLOOD_IN_P_M_s": {
             "description": "define the number of messages that should be considered as 'spam' in PMs",
