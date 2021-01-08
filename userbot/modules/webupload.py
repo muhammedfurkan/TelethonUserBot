@@ -86,9 +86,9 @@ async def goup(event):
             reply.media,
             Config.TMP_DOWNLOAD_DIRECTORY
         )
-        filename = os.path.basename(file_name)
-        filepath = file_name
-        await AioRequest_TGMedia(event, str(filepath))
+        # filename = os.path.basename(file_name)
+        # filepath = file_name
+        await AioRequest_TGMedia(event, str(file_name))
     if input_str:
         file_name = str(input_str)
         filepath = file_name
@@ -114,7 +114,7 @@ async def AioRequest_Local(event, file_name: str, filepath: str):
             r1.close()
 
 
-async def AioRequest_TGMedia(event, filepath: str):
+async def AioRequest_TGMedia(event, filepath):
     async with aiohttp.ClientSession() as session:
         serverf = 'https://apiv2.gofile.io/getServer'
         async with session.get(serverf) as r1:
