@@ -105,7 +105,9 @@ async def AioRequest_Local(event, file_name: str, filepath: str):
                 url = 'https://'+server+'.gofile.io/uploadFile'
                 files = {'file': open(filepath, 'rb'),
                          'email': Config.GOFILE_EMAIL}
-                response = await session.post(url, data=files)
+                data = aiohttp.FormData()
+                data.add_field(files)
+                response = await session.post(url, data=data)
                 r_server = await response.json()
                 code = r_server['data']['code']
                 msg = "Uploaded Url: {}\n**File Name: {}".format(
@@ -124,7 +126,9 @@ async def AioRequest_TGMedia(event, filepath: str):
                 url = 'https://'+server+'.gofile.io/uploadFile'
                 files = {'file': open(filepath, 'rb'),
                          'email': Config.GOFILE_EMAIL}
-                response = await session.post(url, data=files)
+                data = aiohttp.FormData()
+                data.add_field(files)
+                response = await session.post(url, data=data)
                 r_server = await response.json()
                 code = r_server['data']['code']
                 msg = "Uploaded Url: {}".format("https://gofile.io/d/"+code)
