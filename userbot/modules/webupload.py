@@ -103,7 +103,17 @@ async def _(event):
         return
     cmd = selected_one
     # start the subprocess $SHELL
-    t_response, e_response = await run_command(cmd)
+    process = await asyncio.create_subprocess_shell(
+        cmd, stdout=asyncio.subprocess.PIPE, stderr=asyncio.subprocess.PIPE
+    )
+    stdout, stderr = await process.communicate()
+    e_response = stderr.decode().strip()
+    # logger.info(e_response)
+    t_response = stdout.decode().strip()
+    # logger.info(t_response)
+    """if e_response:
+		await event.edit(f"**FAILED** to __transload__: `{e_response}`")
+		return"""
     if t_response:
         try:
             t_response = json.dumps(json.loads(
