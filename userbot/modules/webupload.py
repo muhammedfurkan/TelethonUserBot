@@ -32,7 +32,7 @@ async def _(event):
         )
     # a dictionary containing the shell commands
     CMD_WEB = {
-        "fileio": "curl -F \file=@{full_file_path}\" https://file.io?expires=3w",
+        "fileio": "curl -F \"file=@{full_file_path}\" https://file.io?expires=3w",
         "anonfiles": "curl -F \"file=@{full_file_path}\" https://anonfiles.com/api/upload",
         "transfer": "curl --upload-file \"{full_file_path}\" https://transfer.sh/{bare_local_name}",
         "filebin": "curl -X POST --data-binary \"@{full_file_path}\" -H \"filename: {bare_local_name}\" \"https://filebin.net\"",
@@ -40,7 +40,7 @@ async def _(event):
         "megaupload": "curl -F \"file=@{full_file_path}\" https://megaupload.is/api/upload",
         "bayfiles": "curl -F \"file=@{full_file_path}\" https://api.bayfiles.com/upload",
         "letsupload": " curl -F \"file=@{full_file_path}\" https://api.letsupload.cc/upload",
-        "vshare": "curl -F \"file=@{}\" https://api.vshare.is/upload",
+        "vshare": "curl -F \"file=@{full_file_path}\" https://api.vshare.is/upload",
     }
     filename = os.path.basename(file_name)
     try:
