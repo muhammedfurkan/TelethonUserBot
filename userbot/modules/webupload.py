@@ -86,13 +86,13 @@ async def goup(event):
             reply.media,
             Config.TMP_DOWNLOAD_DIRECTORY
         )
-        # filename = os.path.basename(file_name)
+        filename = os.path.abspath(file_name)
         # filepath = file_name
-        await AioRequest_TGMedia(event, str(file_name))
+        await AioRequest_TGMedia(event, str(filename))
     if input_str:
         file_name = str(input_str)
         filepath = file_name
-        await AioRequest_Local(event, file_name, str(filepath))
+        await AioRequest_Local(event, filepath, str(filepath))
 
 
 async def AioRequest_Local(event, file_name: str, filepath: str):
