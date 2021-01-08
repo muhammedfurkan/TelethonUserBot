@@ -32,15 +32,15 @@ async def _(event):
         )
     # a dictionary containing the shell commands
     CMD_WEB = {
-        "fileio": "curl -F \file=@{full_file_path}\" https://file.io?expires=3w",
-        "anonfiles": "curl -F \"file=@{full_file_path}\" https://anonfiles.com/api/upload",
-        "transfer": "curl --upload-file \"{full_file_path}\" https://transfer.sh/{bare_local_name}",
-        "filebin": "curl -X POST --data-binary \"@{full_file_path}\" -H \"filename: {bare_local_name}\" \"https://filebin.net\"",
-        "anonymousfiles": "curl -F file=\"@{full_file_path}\" https://api.anonymousfiles.io/",
-        "megaupload": "curl -F \"file=@{full_file_path}\" https://megaupload.is/api/upload",
-        "bayfiles": ".exec curl -F \"file=@{full_file_path}\" https://bayfiles.com/api/upload",
+        "fileio": ".exec curl -F \file=@{full_file_path}\" https://file.io?expires=3w",
+        "anonfiles": ".exec curl -F \"file=@{full_file_path}\" https://anonfiles.com/api/upload",
+        "transfer": ".exec curl --upload-file \"{full_file_path}\" https://transfer.sh/{bare_local_name}",
+        "filebin": ".exec curl -X POST --data-binary \"@{full_file_path}\" -H \"filename: {bare_local_name}\" \"https://filebin.net\"",
+        "anonymousfiles": ".exec curl -F file=\"@{full_file_path}\" https://api.anonymousfiles.io/",
+        "megaupload": ".exec curl -F \"file=@{full_file_path}\" https://megaupload.is/api/upload",
+        "bayfiles": ".exec curl -F \"file=@{full_file_path}\" https://api.bayfiles.com/upload",
         "letsupload": ".exec curl -F \"file=@{full_file_path}\" https://api.letsupload.cc/upload",
-        "vshare": "curl -F \"file=@{}\" https://api.vshare.is/upload",
+        "vshare": ".exec curl -F \"file=@{}\" https://api.vshare.is/upload",
     }
     filename = os.path.basename(file_name)
     try:
