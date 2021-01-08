@@ -16,7 +16,7 @@ logging.basicConfig(format='[%(levelname) 5s/%(asctime)s] %(name)s: %(message)s'
 logger = logging.getLogger(__name__)
 
 
-@bot.on(admin_cmd(pattern="webupload ?(.+?|) --(anonfiles|transfer|filebin|anonymousfiles|megaupload|bayfiles|letsupload|vshare)"))
+@bot.on(admin_cmd(pattern="webupload ?(.+?|) --(fileio|anonfiles|transfer|filebin|anonymousfiles|megaupload|bayfiles|letsupload|vshare)"))
 async def _(event):
     await event.edit("processing ...")
     PROCESS_RUN_TIME = 100
@@ -32,6 +32,7 @@ async def _(event):
         )
     # a dictionary containing the shell commands
     CMD_WEB = {
+        "fileio": "curl -F \file=@{full_file_path}\ https://file.io?expires=3w",
         "anonfiles": "curl -F \"file=@{full_file_path}\" https://anonfiles.com/api/upload",
         "transfer": "curl --upload-file \"{full_file_path}\" https://transfer.sh/{bare_local_name}",
         "filebin": "curl -X POST --data-binary \"@{full_file_path}\" -H \"filename: {bare_local_name}\" \"https://filebin.net\"",
@@ -87,14 +88,14 @@ async def goup(event):
         )
         filename = os.path.basename(file_name)
         filepath = file_name
-        await AioRequest_TGMedia(event, filepath)
+        await AioRequest_TGMedia(event, str(filepath))
     if input_str:
-        file_name = input_str
+        file_name = str(input_str)
         filepath = file_name
-        await AioRequest_Local(event, file_name, filepath)
+        await AioRequest_Local(event, file_name, str(filepath))
 
 
-async def AioRequest_Local(event, file_name, filepath):
+async def AioRequest_Local(event, file_name: str, filepath: str):
     async with aiohttp.ClientSession() as session:
         serverf = 'https://apiv2.gofile.io/getServer'
         async with session.get(serverf) as r1:
@@ -113,7 +114,7 @@ async def AioRequest_Local(event, file_name, filepath):
             r1.close()
 
 
-async def AioRequest_TGMedia(event, filepath):
+async def AioRequest_TGMedia(event, filepath: str):
     async with aiohttp.ClientSession() as session:
         serverf = 'https://apiv2.gofile.io/getServer'
         async with session.get(serverf) as r1:
