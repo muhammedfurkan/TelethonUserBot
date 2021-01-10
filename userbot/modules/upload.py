@@ -187,13 +187,6 @@ async def _(event):
     thumb = None
     file_name = input_str
     if os.path.exists(file_name):
-        if not file_name.endswith((".mkv", ".mp4", ".mp3", ".flac")):
-            await mone.edit(
-                "Sorry. But I don't think {} is a streamable file.".format(file_name) +
-                " Please try again.\n" +
-                "**Supported Formats**: MKV, MP4, MP3, FLAC"
-            )
-            return False
         start = datetime.now()
         metadata = extractMetadata(createParser(file_name))
         duration = 0

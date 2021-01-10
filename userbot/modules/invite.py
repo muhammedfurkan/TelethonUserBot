@@ -3,7 +3,6 @@ Syntax: .invite <User(s)>"""
 import logging
 
 from telethon import functions
-
 from userbot import bot
 from userbot.util import admin_cmd
 
@@ -34,12 +33,13 @@ async def _(event):
                     await event.reply(str(e))
         else:
             # https://lonamiwebs.github.io/Telethon/methods/channels/invite_to_channel.html
-            for user_id in to_add_users.split(" "):
-                try:
-                    await event.client(functions.channels.InviteToChannelRequest(
-                        channel=event.chat_id,
-                        users=[user_id]
-                    ))
-                except Exception as e:
-                    await event.reply(str(e))
+            user_id_s = to_add_users.split(" ")
+            user_ids = [user_id.strip() for user_id in user_id_s]
+            try:
+                await event.client(functions.channels.InviteToChannelRequest(
+                    channel=event.chat_id,
+                    users=user_ids
+                ))
+            except Exception as e:
+                await event.reply(str(e))
         await event.edit("Invited Successfully")
