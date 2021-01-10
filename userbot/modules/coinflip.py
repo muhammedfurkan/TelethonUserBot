@@ -2,7 +2,6 @@
 Syntax: .coinflip [optional_choice]"""
 import logging
 import random
-import re
 
 from userbot import bot
 from userbot.util import admin_cmd

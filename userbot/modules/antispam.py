@@ -1,14 +1,10 @@
 # COMBOT ANTI SPAM SYSTEM IS USED
 # created for @unibot (unfinished)
 
-import asyncio
 import json
 import logging
-import os
-import sys
 
 import aiohttp
-from requests import get
 from sample_config import Config
 from telethon import events
 from telethon.tl.functions.channels import EditBannedRequest

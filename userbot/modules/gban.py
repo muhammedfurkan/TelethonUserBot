@@ -3,7 +3,6 @@ Group Administrations bots where you are SUDO
 Available Commands:
 .gban REASON
 .ungban REASON"""
-import asyncio
 import logging
 
 from sample_config import Config

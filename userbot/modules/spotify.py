@@ -7,7 +7,6 @@ from sys import setrecursionlimit
 
 import spotify_token as st
 from requests import get
-from telethon import events
 from telethon.tl.functions.account import UpdateProfileRequest
 
 from sample_config import Config

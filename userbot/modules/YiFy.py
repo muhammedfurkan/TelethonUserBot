@@ -6,7 +6,6 @@ import logging
 
 import requests
 from bs4 import BeautifulSoup
-from telethon import events
 
 from userbot import bot
 from userbot.util import admin_cmd

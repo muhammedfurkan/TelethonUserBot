@@ -9,7 +9,6 @@ import asyncio
 import logging
 import math
 import os
-import re
 import shutil
 import time
 

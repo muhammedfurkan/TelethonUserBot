@@ -2,11 +2,9 @@
 import asyncio
 import logging
 
-import telethon.utils
-from telethon import events
 
 from userbot import bot
-from userbot.util import admin_cmd, is_read
+from userbot.util import admin_cmd
 
 logging.basicConfig(format='[%(levelname) 5s/%(asctime)s] %(name)s: %(message)s',
                     level=logging.WARNING)

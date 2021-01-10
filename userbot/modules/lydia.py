@@ -2,7 +2,6 @@ import asyncio
 import logging
 from time import time
 
-import coffeehouse as cf
 from coffeehouse.api import API
 from coffeehouse.exception import CoffeeHouseError as CFError
 from coffeehouse.lydia import LydiaAI

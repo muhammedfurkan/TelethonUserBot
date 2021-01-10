@@ -2,7 +2,7 @@
 Syntax: .cpin [LOUD]"""
 import logging
 
-from telethon.tl import functions, types
+from telethon.tl import functions
 
 from userbot import bot
 from userbot.util import admin_cmd

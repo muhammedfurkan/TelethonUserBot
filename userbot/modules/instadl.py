@@ -13,7 +13,6 @@ import os
 import re
 import shlex
 import shutil
-import subprocess
 from os.path import basename
 from typing import Optional, Tuple
 
@@ -28,7 +27,7 @@ from PIL import Image
 from sample_config import Config
 from telethon import errors, events
 from telethon.tl.types import (DocumentAttributeVideo, InputMediaDocument,
-                               InputMediaPhoto, InputPeerSelf)
+                               InputMediaPhoto)
 from userbot import bot
 from userbot.util import admin_cmd
 

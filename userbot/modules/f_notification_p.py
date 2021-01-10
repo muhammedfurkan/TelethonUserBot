@@ -1,6 +1,6 @@
 from sample_config import Config
 from telethon import custom, events
-from telethon.tl.types import Channel, Chat, User
+from telethon.tl.types import Channel
 from telethon.utils import get_display_name
 from userbot import bot, tgbot
 

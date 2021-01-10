@@ -3,7 +3,6 @@ Available Commands:
 .tr LanguageCode as reply to a message
 .tr LangaugeCode | text to translate"""
 
-import asyncio
 
 # from googletrans import LANGUAGES, Translator
 from gpytranslate import Translator

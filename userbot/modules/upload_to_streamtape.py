@@ -1,7 +1,5 @@
 import asyncio
-import json
 import logging
-import os
 
 import aiohttp
 from sample_config import Config

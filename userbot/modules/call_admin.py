@@ -1,5 +1,4 @@
 """.admin Plugin for @Unibot"""
-import asyncio
 import logging
 
 from telethon.tl.types import ChannelParticipantsAdmins

@@ -11,7 +11,6 @@ import random
 import urllib.request
 
 from PIL import Image
-from telethon import events
 from telethon.tl.functions.messages import GetStickerSetRequest
 from telethon.tl.types import (DocumentAttributeFilename,
                                DocumentAttributeSticker, InputStickerSetID,

@@ -1,14 +1,11 @@
 """FFMpeg
 """
 import asyncio
-import io
 import logging
 import os
 import time
 from datetime import datetime
 
-from hachoir.metadata import extractMetadata
-from hachoir.parser import createParser
 from sample_config import Config
 from userbot import bot
 from userbot.util import admin_cmd, progress

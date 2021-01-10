@@ -13,12 +13,9 @@ import logging
 import re
 
 from sample_config import Config
-from telethon import events
-from telethon.tl import types
 from userbot import bot
 from userbot.database.filtersdb import (add_filter, delete_all_filters,
-                                        delete_filter, get_all_filters,
-                                        get_filter)
+                                        delete_filter, get_all_filters)
 from userbot.util import admin_cmd
 
 logging.basicConfig(format='[%(levelname) 5s/%(asctime)s] %(name)s: %(message)s',

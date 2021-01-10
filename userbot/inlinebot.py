@@ -9,7 +9,7 @@ from sample_config import Config
 from telethon import custom, events
 
 from userbot import bot, tgbot
-from userbot.util import admin_cmd, humanbytes
+from userbot.util import humanbytes
 
 
 # if Config.TG_BOT_USER_NAME_BF_HER is not None and tgbot is not None:

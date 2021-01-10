@@ -1,7 +1,6 @@
 import asyncio
 import sys
-from os import environ, execle, getenv, makedirs, path, remove
-from shutil import rmtree
+from os import environ, execle, path, remove
 
 import heroku3
 from git import Repo

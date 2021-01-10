@@ -6,7 +6,6 @@ import asyncio
 import logging
 import os
 import shutil
-import tarfile
 import time
 from datetime import datetime
 from glob import glob

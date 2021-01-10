@@ -31,7 +31,7 @@ from asyncio import sleep
 from os import remove
 
 from sample_config import Config
-from telethon import events, functions
+from telethon import events
 from telethon.errors import (BadRequestError, ChatAdminRequiredError,
                              ImageProcessFailedError, PhotoCropSizeSmallError,
                              UserAdminInvalidError)
@@ -50,7 +50,6 @@ from userbot.database.gmutedb import get_gmuted
 from userbot.database.mutedb import get_muted
 from userbot.database.servicemessagesdb import (add_chat_service,
                                                 delete_service, get_service)
-from userbot.modules.who import split_message
 from userbot.util import admin_cmd
 
 LOGGING_CHATID = Config.PRIVATE_GROUP_BOT_API_ID
@@ -516,8 +515,7 @@ async def unmute(eventUnMute):
 @bot.on(events.NewMessage(incoming=True))
 async def muter(mutedMessage):
     try:
-        from userbot.database.gmutedb import is_gmuted
-        from userbot.database.mutedb import is_muted
+        pass
     except AttributeError:
         return
     muted = await get_muted(mutedMessage.chat_id)

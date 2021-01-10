@@ -1,6 +1,5 @@
 import logging
 
-from telethon.tl import types
 from telethon.tl.functions.messages import EditChatDefaultBannedRightsRequest
 from telethon.tl.types import ChatBannedRights
 from userbot import bot

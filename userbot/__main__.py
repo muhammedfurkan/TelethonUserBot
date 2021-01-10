@@ -8,14 +8,12 @@
 import glob
 import logging
 import os
-from importlib import import_module
 from pathlib import Path
 
 from sample_config import Config
 from telethon.errors.rpcerrorlist import PhoneNumberInvalidError
 
 from userbot import bot, tgbot
-from userbot.modules import ALL_MODULES
 from userbot.util import load_module, remove_plugin
 
 logging.basicConfig(format='[%(levelname) 5s/%(asctime)s] %(name)s: %(message)s',

@@ -8,7 +8,6 @@ import io
 import logging
 
 from sample_config import Config
-from telethon.tl import types
 from userbot import bot
 from userbot.database.snipsdb import add, check, check_one, delete_one
 from userbot.util import admin_cmd

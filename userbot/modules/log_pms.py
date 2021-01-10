@@ -1,6 +1,5 @@
 """Log PMs
 Check https://t.me/tgbeta/3505"""
-import asyncio
 import logging
 import os
 import sys

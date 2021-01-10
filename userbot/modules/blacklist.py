@@ -7,18 +7,13 @@ Available Commands:
 .listblacklist
 .rmblacklist"""
 
-import asyncio
 import io
 import re
 
 from sample_config import Config
-from telethon import events
-from telethon.tl import functions, types
 from userbot import bot
-from userbot.database.blacklistdb import (add_blacklist, add_to_blacklist,
-                                          blacklist_check_one, check_blacklist,
-                                          delete_one_blacklist,
-                                          get_chat_blacklist,
+from userbot.database.blacklistdb import (add_blacklist, blacklist_check_one,
+                                          delete_one_blacklist, get_chat_blacklist,
                                           num_blacklist_filters,
                                           rm_from_blacklist)
 from userbot.util import admin_cmd, is_admin
