@@ -22,6 +22,11 @@
  - And then start the bot. ( `python3 -m userbot` )
  - If you did it correctly, the bot will run successfully.
 
+
+### Create String Session
+
+[![Run on Repl.it](https://repl.it/badge/github/jasonalantolbert/replit-badger)](https://repl.it/@furki/telegram-session)
+
 ### Example Plugin
 
   ```python
