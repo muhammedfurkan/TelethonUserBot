@@ -6,11 +6,12 @@ import logging
 import os
 from datetime import datetime
 
-from telegraph import Telegraph, exceptions, upload_file
-
+from PIL import Image
 from sample_config import Config
 from userbot import bot
 from userbot.util import admin_cmd
+
+from telegraph import Telegraph, exceptions, upload_file
 
 logging.basicConfig(format='[%(levelname) 5s/%(asctime)s] %(name)s: %(message)s',
                     level=logging.WARNING)
@@ -80,7 +81,7 @@ async def _(event):
                 with open(downloaded_file_name, "rb") as fd:
                     m_list = fd.readlines()
                 for m in m_list:
-                    page_content += m.decode("UTF-8") + "\n"
+                    page_content += m.decode("UTF-8")
                 os.remove(downloaded_file_name)
             page_content = page_content.replace("\n", "<br>")
             response = telegraph.create_page(
