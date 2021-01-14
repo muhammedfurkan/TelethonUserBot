@@ -40,7 +40,7 @@ async def on_snip(event):
     if snips:
         for snip in snips:
             pattern = r"( |^|[^\w])" + \
-                         re.escape(snip['keyword']) + r"( |$|[^\w])"
+                re.escape(snip['keyword']) + r"( |$|[^\w])"
             if re.fullmatch(pattern, name, flags=re.IGNORECASE):
                 msg_o = await event.client.get_messages(
                     entity=Config.PRIVATE_CHANNEL_BOT_API_ID,
@@ -59,15 +59,15 @@ async def on_snip(event):
                     last_triggered_filters[event.chat_id] = []
                 last_triggered_filters[event.chat_id].append(name)
                 await asyncio.sleep(DELETE_TIMEOUT)
-                last_triggered_filters[event.chat_id].remove(name
+                last_triggered_filters[event.chat_id].remove(name)
 
 
-@ bot.on(admin_cmd(pattern="savefilter (.*)"))
+@bot.on(admin_cmd(pattern="savefilter (.*)"))
 async def on_snip_save(event):
-    name=event.pattern_match.group(1)
-    msg=await event.get_reply_message()
+    name = event.pattern_match.group(1)
+    msg = await event.get_reply_message()
     if msg:
-        msg_o=await event.client.forward_messages(
+        msg_o = await event.client.forward_messages(
             entity=Config.PRIVATE_CHANNEL_BOT_API_ID,
             messages=msg,
             from_peer=event.chat_id,
@@ -81,16 +81,16 @@ async def on_snip_save(event):
 
 @ bot.on(admin_cmd(pattern="listfilters"))
 async def on_snip_list(event):
-    all_snips=await get_all_filters(event.chat_id)
-    OUT_STR="Available Filters in the Current Chat:\n"
+    all_snips = await get_all_filters(event.chat_id)
+    OUT_STR = "Available Filters in the Current Chat:\n"
     if all_snips:
         for a_snip in all_snips:
             OUT_STR += f"👉 {a_snip['keyword']} \n"
     else:
-        OUT_STR="No Filters. Start Saving using `.savefilter`"
+        OUT_STR = "No Filters. Start Saving using `.savefilter`"
     if len(OUT_STR) > Config.MAX_MESSAGE_SIZE_LIMIT:
         with io.BytesIO(str.encode(OUT_STR)) as out_file:
-            out_file.name="filters.text"
+            out_file.name = "filters.text"
             await event.client.send_file(
                 event.chat_id,
                 out_file,
@@ -106,7 +106,7 @@ async def on_snip_list(event):
 
 @ bot.on(admin_cmd(pattern="clearfilter (.*)"))
 async def on_snip_delete(event):
-    name=event.pattern_match.group(1)
+    name = event.pattern_match.group(1)
     await delete_filter(event.chat_id, name)
     await event.edit(f"Delete filter **{name}** deleted successfully")
 
