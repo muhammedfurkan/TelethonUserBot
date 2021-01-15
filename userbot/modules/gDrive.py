@@ -22,18 +22,17 @@ from urllib.parse import parse_qs
 
 import aiofiles
 import aiohttp
-from userbot.database.mongo import cli
 from gaggle import Client
-from google.auth.transport.requests import Request
 from googleapiclient.http import MediaFileUpload
 from oauth2client.client import OAuth2WebServerFlow
+from sample_config import Config
 from telethon import events
 from telethon.errors.rpcerrorlist import MessageNotModifiedError
-
-from sample_config import Config
 from userbot import bot
-from userbot.util import (admin_cmd, humanbytes, progress,
-                          time_formatter)
+from userbot.database.mongo import cli
+from userbot.util import admin_cmd, humanbytes, progress, time_formatter
+
+from google.auth.transport.requests import Request
 
 space = '    '
 branch = '│   '
@@ -78,8 +77,9 @@ InitGDrive()
 
 def getProgressBarString(percentage):
     return "[{0}{1}]\n".format(
-        ''.join(["▰" for i in range(math.floor(percentage / 5))]),
-        ''.join(["▱" for i in range(18 - math.floor(percentage / 5))]))
+        ''.join("▰" for i in range(math.floor(percentage / 5))),
+        ''.join("▱" for i in range(18 - math.floor(percentage / 5))),
+    )
 
 
 async def progressSpinner(drive_obj, banner, event):

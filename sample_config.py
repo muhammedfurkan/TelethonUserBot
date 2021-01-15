@@ -29,6 +29,25 @@ class Config:
         "PRIVATE_CHANNEL_BOT_API_ID", None)
     if PRIVATE_CHANNEL_BOT_API_ID:
         PRIVATE_CHANNEL_BOT_API_ID = int(PRIVATE_CHANNEL_BOT_API_ID)
+
+    # Send .get_id in any group with all your administration bots (added)
+    G_BAN_LOGGER_GROUP = os.environ.get("G_BAN_LOGGER_GROUP", None)
+    if G_BAN_LOGGER_GROUP:
+        G_BAN_LOGGER_GROUP = int(G_BAN_LOGGER_GROUP)
+
+    PM_LOGGR_BOT_API_ID = os.environ.get("PM_LOGGR_BOT_API_ID", None)
+    if PM_LOGGR_BOT_API_ID:
+        PM_LOGGR_BOT_API_ID = int(PM_LOGGR_BOT_API_ID)
+
+    SPAM_WATCH_LOG_CHANNEL = os.environ.get("SPAM_WATCH_LOG_CHANNEL", None)
+    if SPAM_WATCH_LOG_CHANNEL:
+        SPAM_WATCH_LOG_CHANNEL = int(SPAM_WATCH_LOG_CHANNEL)
+
+    # RSS_POST_MSG_GROUP_ID = map(int, os.environ.get("RSS_POST_MSG_GROUP_ID", None).split())
+    RSS_POST_MSG_GROUP_ID = os.environ.get("RSS_POST_MSG_GROUP_ID", None)
+    if RSS_POST_MSG_GROUP_ID:
+        RSS_POST_MSG_GROUP_ID = int(RSS_POST_MSG_GROUP_ID)
+
     # This is required for the plugins involving the file system.
     TMP_DOWNLOAD_DIRECTORY = os.environ.get(
         "TMP_DOWNLOAD_DIRECTORY", "./DOWNLOADS/")
@@ -43,10 +62,7 @@ class Config:
     TELEGRAPH_SHORT_NAME = os.environ.get("TELEGRAPH_SHORT_NAME", "UniBorg")
     # Get a Free API Key from OCR.Space
     OCR_SPACE_API_KEY = os.environ.get("OCR_SPACE_API_KEY", None)
-    # Send .get_id in any group with all your administration bots (added)
-    G_BAN_LOGGER_GROUP = os.environ.get("G_BAN_LOGGER_GROUP", None)
-    if G_BAN_LOGGER_GROUP:
-        G_BAN_LOGGER_GROUP = int(G_BAN_LOGGER_GROUP)
+
     # TG API limit. An album can have atmost 10 media!
     TG_GLOBAL_ALBUM_LIMIT = int(os.environ.get("TG_GLOBAL_ALBUM_LIMIT", 9))
     # Telegram BOT Token from @BotFather
@@ -118,35 +134,25 @@ class Config:
     # define "spam" in PMs
     MAX_FLOOD_IN_P_M_s = int(os.environ.get("MAX_FLOOD_IN_P_M_s", 3))
     # leave this blank, should be automatically filled for Heroku.com users
-    PM_LOGGR_BOT_API_ID = os.environ.get("PM_LOGGR_BOT_API_ID", None)
-    if PM_LOGGR_BOT_API_ID:
-        PM_LOGGR_BOT_API_ID = int(PM_LOGGR_BOT_API_ID)
+
     # define the "types" that should be uplaoded as streamable
     TL_VID_STREAM_TYPES = ("MKV", "MP4", "WEBM")
     TL_MUS_STREAM_TYPES = ("MP3", "WAV", "FLAC")
     YOUTUBE_API_KEY = os.environ.get("YOUTUBE_API_KEY", None)
     ANTI_SPAMBOT = os.environ.get("ANTI_SPAMBOT", None)
     ANTI_SPAMBOT_SHOUT = os.environ.get("ANTI_SPAMBOT_SHOUT", None)
-    # API_TOKEN for quote plugin
     API_TOKEN = os.environ.get("API_TOKEN", None)
-    # MONGO_DB_URI = os.environ.get("MONGO_DB_URI", None)
     BOTLOG = os.environ.get("BOTLOG", None)
-    # MONGOCLIENT = pymongo.MongoClient(MONGO_DB_URI)
-    # MONGO = MONGOCLIENT.userbot
-    # MIRRORACE KEY
     MIRROR_ACE_API_KEY = os.environ.get("MIRROR_ACE_API_KEY", None)
     MIRROR_ACE_API_TOKEN = os.environ.get("MIRROR_ACE_API_TOKEN", None)
-    # RSS_POST_MSG_GROUP_ID = map(int, os.environ.get("RSS_POST_MSG_GROUP_ID", None).split())
-    RSS_POST_MSG_GROUP_ID = os.environ.get("RSS_POST_MSG_GROUP_ID", None)
-    if RSS_POST_MSG_GROUP_ID:
-        RSS_POST_MSG_GROUP_ID = int(RSS_POST_MSG_GROUP_ID)
+
     SPAM_WATCH_API = os.environ.get("SPAM_WATCH_API", None)
     SPAM_WATCHAPI = os.environ.get("SPAM_WATCHAPI", None)
-    SPAM_WATCH_LOG_CHANNEL = os.environ.get("SPAM_WATCH_LOG_CHANNEL", None)
-    if SPAM_WATCH_LOG_CHANNEL:
-        SPAM_WATCH_LOG_CHANNEL = int(SPAM_WATCH_LOG_CHANNEL)
+
     # Userbot logging feature switch.
     LOGSPAMMER = os.environ.get("LOGSPAMMER", None)
+
+    # the bot will not work unless this is set
     MONGO_DB_URI = os.environ.get("MONGO_DB_URI", None)
 
     # Google Photos ()
