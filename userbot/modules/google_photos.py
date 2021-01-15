@@ -1,15 +1,5 @@
 #!/usr/bin/env python3
 #  -*- coding: utf-8 -*-
-#  Unibot Telegram UseRBot
-#  Copyright (C) 2020 @Unibot
-#
-# This code is licensed under
-# the "you can't use this for anything - public or private,
-# unless you know the two prime factors to the number below" license
-#
-# 114994699218449095458463470499996630
-#
-# വിവരണം അടിച്ചുമാറ്റിക്കൊണ്ട് പോകുന്നവർ ക്രെഡിറ്റ് വെച്ചാൽ സന്തോഷമേ ഉള്ളു..!
 
 
 """Google Photos
@@ -25,9 +15,8 @@ import aiohttp
 from apiclient.discovery import build
 from httplib2 import Http
 from oauth2client import client, file
-from telethon import events
-
 from sample_config import Config
+from telethon import events
 from userbot import bot
 from userbot.util import admin_cmd, progress
 
@@ -45,7 +34,10 @@ REDIRECT_URI = "urn:ietf:wg:oauth:2.0:oob"
 #
 PHOTOS_BASE_URI = "https://photoslibrary.googleapis.com"
 
-TOKEN_FILE_NAME = "gPhoto_credentials_Unibot.json"
+TOKEN_FILE_NAME = os.path.join(
+    Config.TMP_DOWNLOAD_DIRECTORY,
+    "gPhoto_credentials_UserBot.json"
+)
 
 
 @bot.on(admin_cmd(pattern="gphoto setup"))
@@ -302,7 +294,7 @@ async def upload_google_photos(event):
     response_create_album = service.mediaItems().batchCreate(
         body={
             "newMediaItems": [{
-                "description": file_name,
+                "description": "uploaded using Userbot",
                 "simpleMediaItem": {
                     "fileName": file_name,
                     "uploadToken": final_response_text
