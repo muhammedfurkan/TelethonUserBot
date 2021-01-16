@@ -1,13 +1,12 @@
-"""AFK Plugin for @Unibot
+"""AFK Plugin for TelethonUserBot
 Syntax: .afk REASON"""
 import asyncio
 import datetime
 import logging
 
+from sample_config import Config
 from telethon import events
 from telethon.tl import functions, types
-
-from sample_config import Config
 from userbot import bot
 
 logging.basicConfig(format='[%(levelname) 5s/%(asctime)s] %(name)s: %(message)s',
@@ -23,24 +22,26 @@ async def set_not_afk(event):
     global USER_AFK
     global afk_time
     global last_afk_message
-    current_message = event.message.message
-    if ".afk" not in current_message and "yes" in USER_AFK:
-        try:
-            await bot.send_message(
-                Config.PRIVATE_GROUP_BOT_API_ID,
-                "Set AFK mode to False"
-            )
-        except Exception as e:
-            await bot.send_message(
-                event.chat_id,
-                "Please set `PRIVATE_GROUP_BOT_API_ID` " +
-                "for the proper functioning of afk functionality " +
-                "in @Unibot\n\n `{}`".format(str(e)),
-                reply_to=event.message.id,
-                silent=True
-            )
-        USER_AFK = {}
-        afk_time = None
+    me = await bot.get_me()
+    if me.id != event.sender_id:
+        current_message = event.message.message
+        if ".afk" not in current_message and "yes" in USER_AFK:
+            try:
+                await bot.send_message(
+                    Config.PRIVATE_GROUP_BOT_API_ID,
+                    "Set AFK mode to False"
+                )
+            except Exception as e:
+                await bot.send_message(
+                    event.chat_id,
+                    "Please set `PRIVATE_GROUP_BOT_API_ID` " +
+                    "for the proper functioning of afk functionality " +
+                    "in @Unibot\n\n `{}`".format(str(e)),
+                    reply_to=event.message.id,
+                    silent=True
+                )
+            USER_AFK = {}
+            afk_time = None
 
 
 @bot.on(events.NewMessage(pattern=r"\.afk ?(.*)", outgoing=True))
@@ -64,10 +65,12 @@ async def _(event):
         if isinstance(last_seen_status.rules, types.PrivacyValueAllowAll):
             afk_time = datetime.datetime.now()
         USER_AFK = f"yes: {reason}"
-        if reason:
+        if reason != "off":
             await event.edit(f"Set AFK mode to True, and Reason is {reason}")
         else:
-            await event.edit("Set AFK mode to True")
+            await event.edit("AFK has been disabled.")
+            USER_AFK = {}
+            afk_time = None
         await asyncio.sleep(5)
         await event.delete()
         try:
