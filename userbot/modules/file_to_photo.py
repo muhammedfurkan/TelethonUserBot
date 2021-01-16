@@ -16,7 +16,7 @@ logging.basicConfig(format='[%(levelname) 5s/%(asctime)s] %(name)s: %(message)s'
 logger = logging.getLogger(__name__)
 
 
-@bot.on(admin_cmd(pattern="f ?(.*)"))
+@bot.on(admin_cmd(pattern="fp ?(.*)"))
 async def on_file_to_photo(event):
     await event.delete()
     target = await event.get_reply_message()
