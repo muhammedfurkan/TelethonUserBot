@@ -21,7 +21,7 @@ googletrans
 gtts
 gaggle
 hachoir
-httplib2==0.13.1
+httplib2>=0.18.0
 humanize
 hurry.filesize
 lxml
