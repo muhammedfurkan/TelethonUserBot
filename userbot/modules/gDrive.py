@@ -10,6 +10,7 @@ Author:- Git: github.com/jaskaranSM | Tg:  https://t.me/Zero_cool7870
 """
 
 import asyncio
+import logging
 import math
 import mimetypes
 import os
@@ -33,6 +34,10 @@ from userbot.database.mongo import cli
 from userbot.util import admin_cmd, humanbytes, progress, time_formatter
 
 from google.auth.transport.requests import Request
+
+logging.basicConfig(format='[%(levelname) 5s/%(asctime)s] %(name)s: %(message)s',
+                    level=logging.WARNING)
+logger = logging.getLogger(__name__)
 
 space = '    '
 branch = '│   '
@@ -539,7 +544,7 @@ class GDriveHelper:
                                                  orderBy='folder,name,modifiedTime desc')
             response = await resp.json()
             err = response.get("error", None)
-            if err != None and (
+            if err is not None and (
                 "rate" in err.get("message").lower() or resp.status >= 500
             ):
                 return await self.retry(self.getFilesByParentId(folder_id, name, limit))
