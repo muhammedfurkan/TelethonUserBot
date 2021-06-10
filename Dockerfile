@@ -46,7 +46,8 @@ RUN apt-get install -y\
     megatools \
     libfreetype6-dev \
     procps \
-    policykit-1
+    policykit-1 \
+    jq
 
 #RUN pip3 install --upgrade pip setuptools 
 #RUN if [ ! -e /usr/bin/pip ]; then ln -s pip3 /usr/bin/pip ; fi 
@@ -54,10 +55,9 @@ RUN apt-get install -y\
 #RUN rm -r /root/.cache
 RUN axel https://dl.google.com/linux/direct/google-chrome-stable_current_amd64.deb && apt install -y ./google-chrome-stable_current_amd64.deb && rm google-chrome-stable_current_amd64.deb
 RUN axel https://chromedriver.storage.googleapis.com/86.0.4240.22/chromedriver_linux64.zip && unzip chromedriver_linux64.zip && chmod +x chromedriver && mv -f chromedriver /usr/bin/ && rm chromedriver_linux64.zip
-#RUN git clone -b main https://github.com/Javes786/javes-2.0 /root/userbot
-#RUN mkdir /root/userbot/bin/
-#WORKDIR /root/userbot/
-#RUN chmod +x /usr/local/bin/*
+RUN git clone https://github.com/muhammedfurkan/TelethonUserBot /root/userbot
+WORKDIR /root/userbot/
+RUN chmod +x /root/userbot/*
 RUN wget https://raw.githubusercontent.com/muhammedfurkan/TelethonUserBot/master/requirements.txt
-RUN pip3 install -r requirements.txt
-CMD ["python3","-m","userbot"]
+RUN pip3 install -r /root/userbot/requirements.txt
+CMD ["python3","-m","/root/userbot"]
