@@ -82,8 +82,7 @@ class Config:
     # folowing plugins won't work on Heroku,
     # because of their ephemeral file system
     NO_LOAD = [
-        "antispam",
-        "afk"
+        "antispam"
     ]
     # Get your own API key from https://www.remove.bg/ or
     # feel free to use http://telegram.dog/Remove_BGBot
