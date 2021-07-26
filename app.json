@@ -12,6 +12,7 @@
     "repository": "https://gitlab.com/muhammedfurkan",
     "website": "https://telegram.dog/telethon",
     "success_url": "https://t.me/telethon/",
+    "stack": "container",
     "env": {
         "API_HASH": {
             "description": "Get this value from my.telegram.org! Please do not steal",
