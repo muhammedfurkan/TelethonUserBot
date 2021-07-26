@@ -11,8 +11,7 @@ async def add_chat_gban(chatid):
     if await is_gban(chatid) is True:
         print("FAILED")
         return False
-    else:
-        cli.insert_one({'chatid': chatid})
+    cli.insert_one({'chatid': chatid})
 
 
 async def remove_chat_gban(chatid):

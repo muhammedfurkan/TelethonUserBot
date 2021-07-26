@@ -178,8 +178,7 @@ async def edit_or_reply(event, text):
     reply_to = await event.get_reply_message()
     if reply_to:
         return await reply_to.reply(text)
-    else:
-        return await event.reply(text)
+    return await event.reply(text)
 
 
 async def run_command(command: List[str]) -> (str, str):
@@ -305,11 +304,10 @@ def yaml_format(obj, indent=0, max_str_len=256, max_byte_len=64):
         # repr() bytes if it's printable, hex like "FF EE BB" otherwise
         if all(0x20 <= c < 0x7F for c in obj):
             return repr(obj)
-        else:
-            return (
-                "<…>" if len(obj) > max_byte_len else " ".join(
-                    f"{b:02X}" for b in obj)
-            )
+        return (
+            "<…>" if len(obj) > max_byte_len else " ".join(
+                f"{b:02X}" for b in obj)
+        )
     elif isinstance(obj, datetime.datetime):
         # ISO-8601 without timezone offset (telethon dates are always UTC)
         return obj.strftime("%Y-%m-%d %H:%M:%S")

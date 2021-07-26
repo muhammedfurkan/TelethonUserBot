@@ -21,17 +21,16 @@ async def add_filter(chatid, keyword, msg_id):
             'msg': msg_id
         })
         return True
-    else:
-        cli.update_one(
-            {
-                '_id': to_check["_id"],
-                'chat_id': to_check["chat_id"],
-                'keyword': to_check["keyword"],
-            }, {"$set": {
-                'msg': msg_id
-            }})
+    cli.update_one(
+        {
+            '_id': to_check["_id"],
+            'chat_id': to_check["chat_id"],
+            'keyword': to_check["keyword"],
+        }, {"$set": {
+            'msg': msg_id
+        }})
 
-        return False
+    return False
 
 
 async def delete_filter(chatid, keyword):

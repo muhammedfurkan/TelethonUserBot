@@ -22,16 +22,15 @@ async def set_ses(chat_id, ses_id, expires):
             }
         )
         return True
-    else:
-        cli.update_one(
-            {
-                '_id': check['_id'],
-            }, {'$set': {
-                'ses_id': check['ses_id'],
-                'expires': check['expires']
-            }}
-        )
-        return False
+    cli.update_one(
+        {
+            '_id': check['_id'],
+        }, {'$set': {
+            'ses_id': check['ses_id'],
+            'expires': check['expires']
+        }}
+    )
+    return False
 
 
 async def get_ses(chat_id):
