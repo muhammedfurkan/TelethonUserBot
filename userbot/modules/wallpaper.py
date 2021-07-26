@@ -121,6 +121,5 @@ async def walld(strin: str):
     del list_a_s
     if not tit_links:
         return False
-    else:
-        tit_link = choice(tit_links)
+    tit_link = choice(tit_links)
     return tit_link

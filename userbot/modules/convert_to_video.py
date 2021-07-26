@@ -172,8 +172,7 @@ async def take_screen_shot(video_file, output_directory, ttl):
     #
     if os.path.lexists(out_put_file_name):
         return out_put_file_name
-    else:
-        return None
+    return None
 
 
 def get_lst_of_files(input_directory, output_lst):

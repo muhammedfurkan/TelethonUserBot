@@ -63,10 +63,9 @@ async def gmute_user(event):
             if user_id == me.id:
                 await event.edit("`Cant Mute Myself..`")
                 return
-            else:
-                muted.insert_one({'user_id': user_id})
-                await event.edit("`G-Muted` [{}](tg://user?id={}).".format(str(user_id), str(user_id)))
-                logging.info("G-Muted {}".format(str(user_id)))
+            muted.insert_one({'user_id': user_id})
+            await event.edit("`G-Muted` [{}](tg://user?id={}).".format(str(user_id), str(user_id)))
+            logging.info("G-Muted {}".format(str(user_id)))
         except Exception as e:
             logging.error(str(e))
             await event.edit("Error: "+str(e))

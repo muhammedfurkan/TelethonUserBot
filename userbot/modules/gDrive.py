@@ -233,9 +233,8 @@ class GDriveHelper:
         if meta.get("mimeType") == self.G_DRIVE_DIR_MIME_TYPE:
             await self.getSizeDriveFolder(meta.get('id'))
             return self.size
-        else:
-            self.file_count += 1
-            return int(meta.get("size") or 0)
+        self.file_count += 1
+        return int(meta.get("size") or 0)
 
     def onTransferComplete(self):
         print("onTransferComplete...")

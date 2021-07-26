@@ -10,8 +10,7 @@ async def get_fban():
 async def add_chat_fban(chatid):
     if await is_fban(chatid) is True:
         return False
-    else:
-        cli.insert_one({'chatid': chatid})
+    cli.insert_one({'chatid': chatid})
 
 
 async def remove_chat_fban(chatid):

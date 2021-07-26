@@ -252,8 +252,7 @@ class namazvakti():
     def __sifirla(sayi):
         if sayi < 10:
             return "0" + str(sayi)
-        else:
-            return str(sayi)
+        return str(sayi)
 
     # burada direk urlyi değil tüm veriyi al! böylelikle 2 kere uğraşmamış olursun!
 

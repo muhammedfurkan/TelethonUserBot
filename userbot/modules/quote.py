@@ -147,16 +147,14 @@ if True:
 
         if resp["status"] == 500:
             return await message.respond(strings["server_error"])
-        elif resp["status"] == 401:
+        if resp["status"] == 401:
             if resp["message"] == "ERROR_TOKEN_INVALID":
                 return await message.respond(strings["invalid_token"])
-            else:
-                raise ValueError("Invalid response from server", resp)
+            raise ValueError("Invalid response from server", resp)
         elif resp["status"] == 403:
             if resp["message"] == "ERROR_UNAUTHORIZED":
                 return await message.respond(strings["unauthorized"])
-            else:
-                raise ValueError("Invalid response from server", resp)
+            raise ValueError("Invalid response from server", resp)
         elif resp["status"] == 404:
             if resp["message"] != "ERROR_TEMPLATE_NOT_FOUND":
                 raise ValueError("Invalid response from server", resp)
@@ -167,13 +165,12 @@ if True:
 
             if newreq["status"] == "NOT_ENOUGH_PERMISSIONS":
                 return await message.respond(strings["not_enough_permissions"])
-            elif newreq["status"] == "SUCCESS":
+            if newreq["status"] == "SUCCESS":
                 templates = strings["delimiter"].join(newreq["message"])
                 return await message.respond(strings["templates"].format(templates))
-            elif newreq["status"] == "INVALID_TOKEN":
+            if newreq["status"] == "INVALID_TOKEN":
                 return await message.respond(strings["invalid_token"])
-            else:
-                raise ValueError("Invalid response from server", newreq)
+            raise ValueError("Invalid response from server", newreq)
         elif resp["status"] != 200:
             raise ValueError("Invalid response from server", resp)
 

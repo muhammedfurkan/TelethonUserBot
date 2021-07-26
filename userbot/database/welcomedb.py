@@ -20,18 +20,17 @@ async def add_welcome_setting(chat_id, should_clean_welcome, previous_welcome, f
             }
         )
         return True
-    else:
-        cli.update_one(
-            {
-                '_id': check['_id'],
-                'chat_id': check['chat_id'],
-                'should_clean_welcome': should_clean_welcome,
-                'previous_welcome': check['previous_welcome']
-            }, {'$set': {
-                'f_mesg_id': f_mesg_id
-            }}
-        )
-        return False
+    cli.update_one(
+        {
+            '_id': check['_id'],
+            'chat_id': check['chat_id'],
+            'should_clean_welcome': should_clean_welcome,
+            'previous_welcome': check['previous_welcome']
+        }, {'$set': {
+            'f_mesg_id': f_mesg_id
+        }}
+    )
+    return False
 
 
 async def rm_welcome_setting(chat_id):

@@ -124,9 +124,8 @@ async def delete_service_msg(event):
         check = await get_service(event.chat_id)
         if not admin and not creator:
             return
-        else:
-            if check['chatid'] == event.chat_id:
-                await event.delete()
+        if check['chatid'] == event.chat_id:
+            await event.delete()
     except TypeError:
         pass
 
@@ -309,16 +308,15 @@ async def listbots(eventListBots):
         if isinstance(eventListBots.to_id, PeerChat):
             await eventListBots.edit("`Only Supergroups can have bots.`")
             return
-        else:
-            async for user in eventListBots.client.iter_participants(
-                eventListBots.chat_id, filter=ChannelParticipantsBots
-            ):
-                if not user.deleted:
-                    link = f'<a href="tg://user?id={user.id}">{user.first_name}</a>'
-                    userid = f"<code>{user.id}</code>"
-                    mentions += f"\n{link} {userid}"
-                else:
-                    mentions += f"\n<code>{user.id}</code>(Bot deleted by owner)"
+        async for user in eventListBots.client.iter_participants(
+            eventListBots.chat_id, filter=ChannelParticipantsBots
+        ):
+            if not user.deleted:
+                link = f'<a href="tg://user?id={user.id}">{user.first_name}</a>'
+                userid = f"<code>{user.id}</code>"
+                mentions += f"\n{link} {userid}"
+            else:
+                mentions += f"\n<code>{user.id}</code>(Bot deleted by owner)"
     except ChatAdminRequiredError as err:
         mentions += " " + str(err) + "\n"
     try:
@@ -451,21 +449,20 @@ async def mute(eventMute):
     await eventMute.edit("`Gets a tape!`")
     if await mute(eventMute.chat_id, user.id) is False:
         return await eventMute.edit("`Error! User probably already muted.`")
-    else:
-        try:
-            await eventMute.client(
-                EditBannedRequest(eventMute.chat_id, user.id, MUTE_RIGHTS)
+    try:
+        await eventMute.client(
+            EditBannedRequest(eventMute.chat_id, user.id, MUTE_RIGHTS)
+        )
+        await eventMute.edit("`Safely taped!`")
+        if ENABLE_LOG:
+            await eventMute.client.send_message(
+                LOGGING_CHATID,
+                "#MUTE\n"
+                f"USER: [{user.first_name}](tg://user?id={user.id})\n"
+                f"CHAT: {eventMute.chat.title}(`{eventMute.chat_id}`)",
             )
-            await eventMute.edit("`Safely taped!`")
-            if ENABLE_LOG:
-                await eventMute.client.send_message(
-                    LOGGING_CHATID,
-                    "#MUTE\n"
-                    f"USER: [{user.first_name}](tg://user?id={user.id})\n"
-                    f"CHAT: {eventMute.chat.title}(`{eventMute.chat_id}`)",
-                )
-        except UserIdInvalidError:
-            return await eventMute.edit("`Uh oh my mute logic broke!`")
+    except UserIdInvalidError:
+        return await eventMute.edit("`Uh oh my mute logic broke!`")
 
 
 @bot.on(events.NewMessage(outgoing=True, pattern="^.unmute(?: |$)(.*)"))
