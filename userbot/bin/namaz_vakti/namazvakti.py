@@ -29,15 +29,6 @@ class namazvakti():
         11: "Kasım",
         12: "Aralık"
     }
-    __haftaninGunleri = {
-        1: "Pazartesi",
-        2: "Salı",
-        3: "Çarşamba",
-        4: "Perşembe",
-        5: "Cuma",
-        6: "Cumartesi",
-        7: "Pazar"
-    }
     __hicriAylar = {
         1: "Muharrem",
         2: "Safer",
