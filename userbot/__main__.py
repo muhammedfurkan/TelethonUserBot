@@ -11,6 +11,7 @@ import os
 from pathlib import Path
 
 from sample_config import Config
+import sys
 from telethon.errors.rpcerrorlist import PhoneNumberInvalidError
 
 from userbot import bot, tgbot
@@ -29,7 +30,7 @@ try:
     tgbot.start()
 except PhoneNumberInvalidError:
     print(INVALID_PH)
-    exit(1)
+    sys.exit(1)
 
 NO_LOAD = Config.NO_LOAD
 path = 'userbot/modules/*.py'
