@@ -239,7 +239,7 @@ class ParallelTransferrer:
 
 
 parallel_transfer_locks: DefaultDict[int, asyncio.Lock] = defaultdict(
-    lambda: asyncio.Lock())
+    asyncio.Lock)
 
 
 async def _internal_transfer_to_telegram(client: TelegramClient,
