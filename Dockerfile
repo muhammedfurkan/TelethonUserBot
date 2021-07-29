@@ -7,7 +7,7 @@
 
 FROM ubuntu:latest
 RUN apt-get -y update
-RUN apt-get install python3 git -y
+RUN apt-get install python3 git python3-pip -y
 RUN cd /
 RUN git clone https://github.com/muhammedfurkan/TelethonUserBot.git
 RUN cd TelethonUserBot
