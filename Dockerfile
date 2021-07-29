@@ -8,6 +8,7 @@
 FROM ubuntu:latest
 RUN apt-get -y update
 RUN apt-get install python3 -y
+RUN apt-get install git
 RUN cd /
 RUN git clone https://github.com/muhammedfurkan/TelethonUserBot.git
 RUN cd TelethonUserBot
