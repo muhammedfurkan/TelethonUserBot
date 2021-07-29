@@ -8,7 +8,7 @@
 FROM ubuntu:20.04
 
 RUN apt-get update && \
-    apt-get install python3-pip python3.8-dev && \
+    apt-get install python3-pip python3.9 && \
     apt-get install vim && \
     apt-get install git
 RUN cd /
