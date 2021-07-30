@@ -7,10 +7,10 @@
 
 FROM ubuntu:latest
 RUN apt-get -y update
+RUN apt-get install python3 git python3-pip -y
 RUN apt-get update \
     && apt-get -y install libpq-dev gcc \
     && pip install psycopg2
-RUN apt-get install python3 git python3-pip -y
 RUN pip3 install -U psycopg2-binary
 RUN cd /
 RUN git clone https://github.com/muhammedfurkan/TelethonUserBot.git
