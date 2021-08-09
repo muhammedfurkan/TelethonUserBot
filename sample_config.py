@@ -173,6 +173,7 @@ class Config:
     GOFILE_EMAIL = os.environ.get("GOFILE_EMAIL", None)
     STREAM_TAPE_LOGIN = os.environ.get("STREAM_TAPE_LOGIN", None)
     STREAM_TAPE_KEY = os.environ.get("STREAM_TAPE_KEY", None)
+    GO_FILE_API = os.environ.get("GO_FILE_API", None)
 
 
 class Production(Config):
