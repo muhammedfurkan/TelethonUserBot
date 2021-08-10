@@ -42,18 +42,17 @@ async def on_snip(event):
                     msg_o.media,
                     supports_streaming=True
                 )
+        elif reply_message:
+            await event.client.send_message(
+                entity=event.chat_id,
+                message=msg_o.message,
+                reply_to=reply_message.id
+            )
         else:
-            if reply_message:
-                await event.client.send_message(
-                    entity=event.chat_id,
-                    message=msg_o.message,
-                    reply_to=reply_message.id
-                )
-            else:
-                await event.client.send_message(
-                    entity=event.chat_id,
-                    message=msg_o.message
-                )
+            await event.client.send_message(
+                entity=event.chat_id,
+                message=msg_o.message
+            )
 
 
 @bot.on(admin_cmd(pattern="snips (.*)"))

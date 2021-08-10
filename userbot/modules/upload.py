@@ -52,9 +52,7 @@ async def _(event):
             "Uploading will start soon. " +
             "Please wait!"
         )
-        thumb = None
-        if os.path.exists(thumb_image_path):
-            thumb = thumb_image_path
+        thumb = thumb_image_path if os.path.exists(thumb_image_path) else None
         for single_file in lst_of_files:
             if os.path.exists(single_file):
                 # https://stackoverflow.com/a/678242/4723940
@@ -88,15 +86,9 @@ async def _(event):
                     force_document = False
                 if single_file.upper().endswith(Config.TL_MUS_STREAM_TYPES):
                     metadata = extractMetadata(createParser(single_file))
-                    duration = 0
-                    title = ""
-                    artist = ""
-                    if metadata.has("duration"):
-                        duration = metadata.get('duration').seconds
-                    if metadata.has("title"):
-                        title = metadata.get("title")
-                    if metadata.has("artist"):
-                        artist = metadata.get("artist")
+                    duration = metadata.get('duration').seconds if metadata.has("duration") else 0
+                    title = metadata.get("title") if metadata.has("title") else ""
+                    artist = metadata.get("artist") if metadata.has("artist") else ""
                     document_attributes = [
                         DocumentAttributeAudio(
                             duration=duration,
@@ -150,9 +142,7 @@ async def _(event):
         return
     mone = await event.edit("Processing ...")
     input_str = event.pattern_match.group(1)
-    thumb = None
-    if os.path.exists(thumb_image_path):
-        thumb = thumb_image_path
+    thumb = thumb_image_path if os.path.exists(thumb_image_path) else None
     if os.path.exists(input_str):
         start = datetime.now()
         c_time = time.time()

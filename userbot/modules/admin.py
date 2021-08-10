@@ -741,9 +741,7 @@ async def pinmessage(eventPinMessage):
         await eventPinMessage.edit("`Reply to a message to pin it.`")
         return
     options = eventPinMessage.pattern_match.group(1)
-    is_silent = True
-    if options.lower() == "loud":
-        is_silent = False
+    is_silent = options.lower() != "loud"
     try:
         await eventPinMessage.client(
             UpdatePinnedMessageRequest(

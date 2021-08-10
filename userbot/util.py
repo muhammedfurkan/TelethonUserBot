@@ -34,11 +34,8 @@ logger = logging.getLogger(__name__)
 
 # the secret configuration specific things
 ENV = bool(os.environ.get("ENV", False))
-if ENV:
-    pass
-else:
-    if os.path.exists("config.py"):
-        from sample_config import Development as Config
+if not ENV and os.path.exists("config.py"):
+    from sample_config import Development as Config
 
 
 def admin_cmd(**args):
