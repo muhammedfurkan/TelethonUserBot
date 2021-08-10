@@ -1,6 +1,7 @@
 """Upload local Files to Mirrors
 Syntax:
 ."""
+
 import asyncio
 import logging
 import os
@@ -21,9 +22,8 @@ logger = logging.getLogger(__name__)
 ENV = bool(os.environ.get("ENV", False))
 if ENV:
     from sample_config import Config
-else:
-    if os.path.exists("sample_config.py"):
-        from sample_config import Development as Config
+elif os.path.exists("sample_config.py"):
+    from sample_config import Development as Config
 
 
 @bot.on(admin_cmd(pattern="mirrorace ?(.*)", allow_sudo=True))

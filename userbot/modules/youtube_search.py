@@ -36,7 +36,6 @@ async def yt_search(video_q):
         return await video_q.edit("Invalid syntax")
     resultamt = int(video_q.pattern_match.group(
         1)) if video_q.pattern_match.group(1) is not None else 10
-    result = ''
     if Config.YOUTUBE_API_KEY is None:
         await video_q.edit("`Error: YouTube API key missing!\
             Add it to environment vars or config.env.`")
@@ -47,9 +46,11 @@ async def yt_search(video_q):
     full_response = youtube_search(query, resultamt=resultamt)
     videos_json = full_response[1]
 
-    for i, video in enumerate(videos_json, start=1):
-        result += f"{i}. [{unescape(video['snippet']['title'])}]\
+    result = ''.join(
+        f"{i}. [{unescape(video['snippet']['title'])}]\
 (https://www.youtube.com/watch?v={video['id']['videoId']})\n\n"
+        for i, video in enumerate(videos_json, start=1)
+    )
 
     reply_text = f"**Search Query:**\n`{query}`\n\n**Result:**\n{result}"
 
