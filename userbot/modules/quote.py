@@ -151,11 +151,11 @@ if True:
             if resp["message"] == "ERROR_TOKEN_INVALID":
                 return await message.respond(strings["invalid_token"])
             raise ValueError("Invalid response from server", resp)
-        elif resp["status"] == 403:
+        if resp["status"] == 403:
             if resp["message"] == "ERROR_UNAUTHORIZED":
                 return await message.respond(strings["unauthorized"])
             raise ValueError("Invalid response from server", resp)
-        elif resp["status"] == 404:
+        if resp["status"] == 404:
             if resp["message"] != "ERROR_TEMPLATE_NOT_FOUND":
                 raise ValueError("Invalid response from server", resp)
             newreq = requests.post(config["api_url"] + "/api/v1/getalltemplates", data={
@@ -171,7 +171,7 @@ if True:
             if newreq["status"] == "INVALID_TOKEN":
                 return await message.respond(strings["invalid_token"])
             raise ValueError("Invalid response from server", newreq)
-        elif resp["status"] != 200:
+        if resp["status"] != 200:
             raise ValueError("Invalid response from server", resp)
 
         req = requests.get(config["api_url"] + "/cdn/" + resp["message"])
