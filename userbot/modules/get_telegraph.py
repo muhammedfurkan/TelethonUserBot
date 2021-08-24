@@ -61,9 +61,6 @@ def upload_file(f):
         error = response[0].get('error')
     else:
         error = response.get('error')
-    if error:
-        # raise TelegraphException(error)
-        pass
     return ["https://telegra.ph" + i['src'] for i in response]
 
 

@@ -22,29 +22,28 @@ CHATS_TO_MONITOR_FOR_ADDED_BOTS = [
 
 @bot.on(events.ChatAction(chats=CHATS_TO_MONITOR_FOR_ADDED_BOTS))
 async def kick_if_bots(event):
-    if event.user_added:
-        users_added_by = event.action_message.sender_id
-        me = await bot.get_me()
-        if users_added_by == me.id:
-            logger.info("Don't BAN yourself")
-            return False
-        is_ban_able = False
-        rights = ChatBannedRights(
-            until_date=None,
-            view_messages=True
-        )
-        added_users = event.action_message.action.users
-        for user_id in added_users:
-            user_obj = await event.client.get_entity(user_id)
-            if user_obj.bot:
-                is_ban_able = True
-                try:
-                    # kick the bot
-                    await event.client(EditBannedRequest(event.chat_id, user_obj, rights))
-                except Exception as e:
-                    logger.warning(str(e))
-                    # maybe you don't have admin priveleges here :\
-                    pass
-        if is_ban_able:
-            # this is required if the group has a group administration bot
-            ban_reason_msg = await event.reply("!warn [user](tg://user?id={}) Please Do Not Add BOTs to this chat.".format(users_added_by))
+    if not event.user_added:
+        return
+    users_added_by = event.action_message.sender_id
+    me = await bot.get_me()
+    if users_added_by == me.id:
+        logger.info("Don't BAN yourself")
+        return False
+    is_ban_able = False
+    rights = ChatBannedRights(
+        until_date=None,
+        view_messages=True
+    )
+    added_users = event.action_message.action.users
+    for user_id in added_users:
+        user_obj = await event.client.get_entity(user_id)
+        if user_obj.bot:
+            is_ban_able = True
+            try:
+                # kick the bot
+                await event.client(EditBannedRequest(event.chat_id, user_obj, rights))
+            except Exception as e:
+                logger.warning(str(e))
+    if is_ban_able:
+        # this is required if the group has a group administration bot
+        ban_reason_msg = await event.reply("!warn [user](tg://user?id={}) Please Do Not Add BOTs to this chat.".format(users_added_by))

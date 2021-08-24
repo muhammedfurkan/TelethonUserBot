@@ -123,18 +123,16 @@ class namazvakti():
             ulke = self.__veritabani[str(ulke_id)]
 
             # ilçeleri varsa dönelim!
-            if ulke["ilce_listesi_varmi"]:
-                # şehir id geçerliyse
-                if str(sehir_id) in ulke["sehirler"]:
-                    sonuc["durum"] = "basarili"
-                    ilceListesi = {}
-                    for ilce in ulke["sehirler"][str(sehir_id)]["ilceler"]:
-                        ilceAdi = ulke["sehirler"][str(
-                            sehir_id)]["ilceler"][ilce]
-                        if ilceAdi in self.ilceIsimleri:
-                            ilceAdi = self.ilceIsimleri[ilceAdi]
-                        ilceListesi[ilce] = ilceAdi
-                    sonuc["veri"] = ilceListesi
+            if ulke["ilce_listesi_varmi"] and str(sehir_id) in ulke["sehirler"]:
+                sonuc["durum"] = "basarili"
+                ilceListesi = {}
+                for ilce in ulke["sehirler"][str(sehir_id)]["ilceler"]:
+                    ilceAdi = ulke["sehirler"][str(
+                        sehir_id)]["ilceler"][ilce]
+                    if ilceAdi in self.ilceIsimleri:
+                        ilceAdi = self.ilceIsimleri[ilceAdi]
+                    ilceListesi[ilce] = ilceAdi
+                sonuc["veri"] = ilceListesi
         return sonuc
 
     # cache klasörünün içindeki dosyaları temizler
@@ -221,10 +219,7 @@ class namazvakti():
         with open(adresDosyasi) as adres:
             adresler = json.load(adres)
 
-        veri = {}
-        if str(sehir_id) in adresler:
-            veri = (adresler[str(sehir_id)]).copy()
-
+        veri = (adresler[str(sehir_id)]).copy() if str(sehir_id) in adresler else {}
         adresler.clear()
         return veri
 
@@ -264,10 +259,9 @@ class namazvakti():
             tablo = div.find("tbody")
 
             for tr in tablo.find_all("tr"):
-                sira = 0
                 simdikiSatir = ""
 
-                for td in tr.find_all("td"):
+                for sira, td in enumerate(tr.find_all("td")):
                     elde = td.text
                     if sira == 0:
                         tarih = self.__tarihDuzelt(elde)
@@ -305,7 +299,6 @@ class namazvakti():
                         vakitler[simdikiSatir]["aksam"] = elde
                     elif sira == 6:
                         vakitler[simdikiSatir]["yatsi"] = elde
-                    sira += 1  # td for döngüsünün sonu
                 sira = 0  # tr for döngüsünün sonu
 
             # burası if status_code == 200 ün içi

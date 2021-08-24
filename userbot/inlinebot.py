@@ -67,9 +67,7 @@ async def inline_handler(event):
                     json.dump(response_json, outfile, ensure_ascii=False)
                 # logger.info(response_json)
                 inline_keyboard = []
-                duration = None
-                if "duration" in response_json:
-                    duration = response_json["duration"]
+                duration = response_json["duration"] if "duration" in response_json else None
                 if "formats" in response_json:
                     for formats in response_json["formats"]:
                         format_id = formats.get("format_id")

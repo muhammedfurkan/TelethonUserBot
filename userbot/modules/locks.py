@@ -91,7 +91,7 @@ async def locks(event):
                                                banned_rights=lock_rights))
         await event.edit(f"Locked: {what}")
     except BaseException as e:
-        await event.edit(f"`Invalid type: {str(e)}`")
+        await event.edit(f'`Invalid type: {e}`')
         return
 
 
@@ -176,5 +176,5 @@ async def rem_locks(event):
                                                banned_rights=unlock_rights))
         await event.edit(f"`Unlocked: {what}`")
     except BaseException as e:
-        await event.edit(f"`Invalid type: {str(e)}`")
+        await event.edit(f'`Invalid type: {e}`')
         return
