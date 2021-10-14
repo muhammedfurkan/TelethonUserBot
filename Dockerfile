@@ -1,3 +1,5 @@
+#Railway.app support
+
 FROM ubuntu:latest
 RUN apt-get -y update
 RUN apt-get install python3 git python3-pip -y
