@@ -16,8 +16,7 @@ connect('telegramsession', host=Config.MONGO_DB_URI)
 session = MongoSession('telegramsession', host=Config.MONGO_DB_URI)
 
 if session:
-    bot = TelegramClient(StringSession(session),
-                         Config.APP_ID, Config.API_HASH)
+    bot = TelegramClient(session, Config.APP_ID, Config.API_HASH)
 else:
     bot = TelegramClient("userbot", Config.APP_ID, Config.API_HASH)
 
