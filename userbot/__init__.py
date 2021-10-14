@@ -5,7 +5,6 @@
 #
 """ Userbot initialization. """
 
-
 from mongoengine import connect
 from sample_config import Config
 from telemongo import MongoSession
