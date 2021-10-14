@@ -12,6 +12,7 @@ from telemongo import MongoSession
 from telethon import TelegramClient
 
 connect('telegramsession', host=Config.MONGO_DB_URI)
+
 session = MongoSession('telegramsession', host=Config.MONGO_DB_URI)
 
 if session:
