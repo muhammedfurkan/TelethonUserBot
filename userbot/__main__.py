@@ -8,13 +8,13 @@
 import glob
 import logging
 import os
+import sys
 from pathlib import Path
 
 from sample_config import Config
-import sys
 from telethon.errors.rpcerrorlist import PhoneNumberInvalidError
 
-from userbot import bot
+from userbot import bot, tgbot
 from userbot.util import load_module, remove_plugin
 
 logging.basicConfig(format='[%(levelname) 5s/%(asctime)s] %(name)s: %(message)s',
@@ -27,6 +27,7 @@ INVALID_PH = '\nERROR: The phone no. entered is incorrect' \
 
 try:
     bot.start()
+    tgbot.start()
 except PhoneNumberInvalidError:
     print(INVALID_PH)
     sys.exit(1)
@@ -49,3 +50,4 @@ if SEM_TEST:
     bot.disconnect()
 else:
     bot.run_until_disconnected()
+    tgbot.run_until_disconnected()
