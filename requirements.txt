@@ -72,8 +72,8 @@ pygofile
 # googletrans==3.1.0a0
 # google_trans_new
 # remotezip
-# mongoengine #mongosession
-# telemongo #mongosession
+mongoengine #mongosession
+telemongo #mongosession
 # schedule
 # selenium
 # PyLyrics 
