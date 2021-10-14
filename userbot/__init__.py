@@ -15,11 +15,7 @@ from telethon.sessions import StringSession
 connect('telegramsession', host=Config.MONGO_DB_URI)
 session = MongoSession('telegramsession', host=Config.MONGO_DB_URI)
 
-if session:
-    bot = TelegramClient(session, Config.APP_ID, Config.API_HASH)
-else:
-    bot = TelegramClient("userbot", Config.APP_ID, Config.API_HASH)
-
+bot = TelegramClient(session, Config.APP_ID, Config.API_HASH)
 if Config.TG_BOT_TOKEN_BF_HER:
     tgbot = TelegramClient("bot", Config.APP_ID, Config.API_HASH).start(
         bot_token=Config.TG_BOT_TOKEN_BF_HER)
