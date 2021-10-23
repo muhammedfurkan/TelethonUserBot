@@ -1,11 +1,9 @@
 "get music from .m <music query>  Credits https://t.me/By_Azade"
 import asyncio
 import logging
-from asyncio.exceptions import TimeoutError
 
 from telethon import events
 from telethon.errors.rpcerrorlist import YouBlockedUserError
-
 from userbot import bot
 from userbot.util import admin_cmd, humanbytes
 
