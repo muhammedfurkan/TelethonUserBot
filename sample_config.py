@@ -51,10 +51,7 @@ class Config:
     # This is required for the plugins involving the file system.
     TMP_DOWNLOAD_DIRECTORY = os.environ.get(
         "TMP_DOWNLOAD_DIRECTORY", "./DOWNLOADS/")
-    # This is required for the speech to text module. Get your USERNAME from https://console.bluemix.net/docs/services/speech-to-text/getting-started.html
-    IBM_WATSON_CRED_URL = os.environ.get("IBM_WATSON_CRED_URL", None)
-    IBM_WATSON_CRED_PASSWORD = os.environ.get("IBM_WATSON_CRED_PASSWORD", None)
-    IBM_WATSON_CRED_USERNAME = os.environ.get("IBM_WATSON_CRED_USERNAME", None)
+
     # This is required for the hash to torrent file functionality to work.
     HASH_TO_TORRENT_API = os.environ.get(
         "HASH_TO_TORRENT_API", "https://example.com/torrent/{}")
