@@ -8,6 +8,7 @@
 #
 
 """RapidLeech plugin: Inspired by @SjProjects"""
+import ast
 import asyncio
 import json
 import logging
@@ -78,12 +79,12 @@ async def get_direct_ip_specific_link(link: str):
                         '= (?P<url>\".+\" \+ (?P<math>\(.+\)) .+);', script.text)
                     url_raw = regex_search_exp.group("url")
                     math = regex_search_exp.group("math")
-                    dl_url = url_raw.replace(math, '"' + str(eval(math)) + '"')
+                    dl_url = url_raw.replace(math, '"' + str(ast.literal_eval(math)) + '"')
                     break
             #
             base_url = re.search("http.+.com", link).group()
             dl_url = {
-                "url": base_url + eval(dl_url)
+                "url": base_url + ast.literal_eval(dl_url)
             }
     elif re.search(OPEN_LOAD_VALID_URL, link):
         # https://stackoverflow.com/a/47726003/4723940
