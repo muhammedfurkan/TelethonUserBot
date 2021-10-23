@@ -68,8 +68,8 @@ appdirs #aria
 cchardet #aiohttp
 aiodns #aiphttp
 pygofile
-mongoengine #mongosession
-telemongo #mongosession
+# mongoengine #mongosession
+# telemongo #mongosession
 # JustWatch
 # googletrans==3.1.0a0
 # google_trans_new
