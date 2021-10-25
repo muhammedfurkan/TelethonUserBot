@@ -7,7 +7,7 @@ if Config.HU_STRING_SESSION:
     bot = TelegramClient(StringSession(
         Config.HU_STRING_SESSION), Config.APP_ID, Config.API_HASH)
 else:
-    bot = TelegramClient("userbot", Config.APP_ID, Config.API_HASH)
+    bot = TelegramClient("telethonuserbot", Config.APP_ID, Config.API_HASH)
 
 # if Config.TG_BOT_TOKEN_BF_HER:
 #     tgbot = TelegramClient("bot", Config.APP_ID, Config.API_HASH).start(
