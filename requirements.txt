@@ -68,5 +68,3 @@ appdirs #aria
 cchardet #aiohttp
 aiodns #aiphttp
 pygofile
-mongoengine
-telemongo
