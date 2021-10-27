@@ -1,5 +1,7 @@
 FROM ubuntu:latest
 RUN apt-get -y update
+RUN apt-get -y upgrade
+RUN apt-get install -y ffmpeg
 RUN apt-get install python3 git python3-pip -y
 RUN apt-get update \
     && apt-get -y install libpq-dev gcc \
