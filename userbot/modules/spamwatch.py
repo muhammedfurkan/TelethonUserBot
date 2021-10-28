@@ -30,44 +30,42 @@ BANNED_RIGHTS = ChatBannedRights(
     embed_links=True,
 )
 
+if Config.SPAM_WATCHAPI:
+    @bot.on(events.ChatAction(func=lambda e: e.is_group))
+    async def spam_watch_(event):
 
-@bot.on(events.ChatAction(func=lambda e: e.is_group))
-async def spam_watch_(event):
-
-    if not Config.SPAM_WATCHAPI:
-        return
-    chat = await event.get_chat()
-    client = spamwatch.Client(Config.SPAM_WATCH_API)
-    user = await event.get_user()
-    try:
-        if (
-            not chat.admin_rights
-            and not chat.creator
-            or not event.user_joined
-            and not event.user_added
-        ):
-            return ""
+        chat = await event.get_chat()
+        client = spamwatch.Client(Config.SPAM_WATCH_API)
+        user = await event.get_user()
         try:
-            ban = client.get_ban(user.id)
-            if ban:
-                await event.client(
-                    EditBannedRequest(
-                        event.chat_id, user.id, BANNED_RIGHTS)
-                )
-            else:
+            if (
+                not chat.admin_rights
+                and not chat.creator
+                or not event.user_joined
+                and not event.user_added
+            ):
+                return ""
+            try:
+                ban = client.get_ban(user.id)
+                if ban:
+                    await event.client(
+                        EditBannedRequest(
+                            event.chat_id, user.id, BANNED_RIGHTS)
+                    )
+                else:
+                    return
+            except AttributeError:
                 return
+            except BadRequestError:
+                return
+            except ValueError:
+                return
+            if ENABLE_LOG:
+                await event.client.send_message(
+                    Config.SPAM_WATCH_LOG_CHANNEL,
+                    "#SPAMWATCH_BAN\n"
+                    f"USER: [{user.first_name}](tg://user?id={user.id})\n"
+                    f"CHAT: {event.chat.title}(`{event.chat_id}`)",
+                )
         except AttributeError:
             return
-        except BadRequestError:
-            return
-        except ValueError:
-            return
-        if ENABLE_LOG:
-            await event.client.send_message(
-                Config.SPAM_WATCH_LOG_CHANNEL,
-                "#SPAMWATCH_BAN\n"
-                f"USER: [{user.first_name}](tg://user?id={user.id})\n"
-                f"CHAT: {event.chat.title}(`{event.chat_id}`)",
-            )
-    except AttributeError:
-        return
