@@ -94,7 +94,6 @@ async def _(event):
             await bot.send_file(
                 entity=event.chat_id,
                 file=new_required_file_name,
-                caption=new_required_file_caption,
                 allow_cache=False,
                 silent=True,
                 force_document=force_document,

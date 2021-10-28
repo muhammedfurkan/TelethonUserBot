@@ -23,8 +23,8 @@ async def ff_mpeg_save_cmd(event):
     if event.fwd_from:
         return
     if not os.path.exists(FF_MPEG_DOWN_LOAD_MEDIA_PATH):
-        if not os.path.isdir(Config.TMP_DOWNLOAD_DIRECTORY):
-            os.makedirs(Config.TMP_DOWNLOAD_DIRECTORY)
+        if not os.path.isdir(FF_MPEG_DOWN_LOAD_MEDIA_PATH):
+            os.makedirs(FF_MPEG_DOWN_LOAD_MEDIA_PATH)
         if event.reply_to_msg_id:
             start = datetime.now()
             reply_message = await event.get_reply_message()
