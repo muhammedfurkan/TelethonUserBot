@@ -1,7 +1,8 @@
 FROM ubuntu:latest
 RUN apt-get -y update
 RUN apt-get -y upgrade
-RUN curl -L https://yt-dl.org/downloads/latest/youtube-dl -o /usr/local/bin/youtube-dl
+RUN apt-get install -y wget
+RUN wget https://yt-dl.org/downloads/latest/youtube-dl -O /usr/local/bin/youtube-dl
 RUN chmod a+rx /usr/local/bin/youtube-dl
 RUN apt-get install -y ffmpeg
 RUN apt-get install python3 git python3-pip -y
