@@ -1,9 +1,7 @@
 FROM ubuntu:latest
 RUN apt-get -y update
 RUN apt-get -y upgrade
-RUN apt-get install -y wget
-RUN wget https://yt-dl.org/downloads/latest/youtube-dl -O /usr/local/bin/youtube-dl
-RUN chmod a+rx /usr/local/bin/youtube-dl
+RUN apt-get install -y unace unrar zip unzip p7zip-full p7zip-rar sharutils rar
 RUN apt-get install -y ffmpeg
 RUN apt-get install python3 git python3-pip -y
 RUN apt-get update \
@@ -17,5 +15,5 @@ RUN cd /
 RUN git clone https://github.com/muhammedfurkan/TelethonUserBot.git
 RUN cd TelethonUserBot
 WORKDIR /TelethonUserBot
-RUN pip3 install -U -r requirements.txt
+RUN pip3 install --no-cache-dir -r requirements.txt
 CMD python3 -m userbot
