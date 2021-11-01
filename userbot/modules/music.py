@@ -155,20 +155,21 @@ async def _(event):
             try:
                 await conv.send_message(d_link)
                 details = await conv.get_response()
-                for row in details.buttons:
-                    for button in row:
-                        if button.text == "📲🎵Download this Song!":
-                            await button.click()
-                            first = await conv.get_response()
-                            if first.media:
-                                msj = f"[{first.media.document.attributes[1].file_name}](https://t.me/joinchat/AAAAAE8NqbV48l7ls-pFtQ)\n`{humanbytes(first.media.document.size)}`"
-                                await event.client.send_file(event.chat_id, first, caption=msj)
-                                await msg.delete()
-                            resp = await conv.get_response()
-                            if resp.media:
-                                msj = f"[{resp.media.document.attributes[1].file_name}](https://t.me/joinchat/AAAAAE8NqbV48l7ls-pFtQ)\n`{humanbytes(resp.media.document.size)}`"
-                                await event.client.send_file(event.chat_id, resp, caption=msj)
-                                await msg.delete()
+                if details.buttons:
+                    for row in details.buttons:
+                        for button in row:
+                            if button.text == "📲🎵Download this Song!":
+                                await button.click()
+                                first = await conv.get_response()
+                                if first.media:
+                                    msj = f"[{first.media.document.attributes[1].file_name}](https://t.me/joinchat/AAAAAE8NqbV48l7ls-pFtQ)\n`{humanbytes(first.media.document.size)}`"
+                                    await event.client.send_file(event.chat_id, first, caption=msj)
+                                    await msg.delete()
+                                resp = await conv.get_response()
+                                if resp.media:
+                                    msj = f"[{resp.media.document.attributes[1].file_name}](https://t.me/joinchat/AAAAAE8NqbV48l7ls-pFtQ)\n`{humanbytes(resp.media.document.size)}`"
+                                    await event.client.send_file(event.chat_id, resp, caption=msj)
+                                    await msg.delete()
             except YouBlockedUserError:
                 await event.edit("**Error:** `unblock` @DeezLoadBot `and retry!`")
             except TimeoutError:
