@@ -149,9 +149,9 @@ async def _(event):
         await event.edit("` I need a link to download something pro.`**(._.)**")
     else:
         msg = await event.edit("🎶**Müzik indirilip gönderiliyor..!**🎶")
-        bot = "@spotify_down_bot"
+        sbot = 1130976121
 
-        async with event.client.conversation(bot) as conv:
+        async with event.client.conversation(sbot) as conv:
             try:
                 await conv.send_message(d_link)
                 details = await conv.get_response()
