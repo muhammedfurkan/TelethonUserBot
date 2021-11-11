@@ -55,7 +55,7 @@ wget
 wikipedia
 pymongo 
 dnspython
-youtube-dl
+# youtube-dl
 soundcloud-lib
 heroku3
 pyquery
