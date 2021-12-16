@@ -80,7 +80,8 @@ class Config:
     # because of their ephemeral file system
     NO_LOAD = [
         "antispam",
-        "lydia"
+        "lydia",
+        "f_notification_p"
     ]
     # Get your own API key from https://www.remove.bg/ or
     # feel free to use http://telegram.dog/Remove_BGBot
