@@ -196,7 +196,8 @@ async def download_video(v_url):
             progress_callback=lambda d, t: asyncio.get_event_loop(
             ).create_task(
                 progress(d, t, v_url, c_time, "Uploading..",
-                         f"{title}.mp3")))
+                         f"{title}.mp3"))
+        )
         os.remove(out_folder+title+".mp3")
         await v_url.delete()
 
@@ -220,7 +221,8 @@ async def download_video(v_url):
             progress_callback=lambda d, t: asyncio.get_event_loop(
             ).create_task(
                 progress(d, t, v_url, c_time, "Uploading..",
-                         f"{title}.mp4")))
+                         f"{title}.mp4"))
+        )
         os.remove(out_folder+title+".mp4")
         await v_url.delete()
 
