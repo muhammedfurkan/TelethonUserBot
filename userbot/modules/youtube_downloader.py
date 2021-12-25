@@ -11,19 +11,11 @@ import math
 import os
 import shutil
 import time
-from typing import Dict, List
 
-import aiofiles
-import aiohttp
-import pafy
-import requests
-from pytube import YouTube
 from sample_config import Config
-from telethon.tl.types import (DocumentAttributeAudio,
-                               InputMediaDocumentExternal)
+from telethon.tl.types import DocumentAttributeAudio
 from userbot import bot
 from userbot.util import admin_cmd
-from yt_dlp import YoutubeDL as YtDL
 
 from youtube_dl import YoutubeDL
 from youtube_dl.utils import (ContentTooShortError, DownloadError,
@@ -37,75 +29,6 @@ logger = logging.getLogger(__name__)
 
 
 DELETE_TIMEOUT = 3
-
-
-def get_audio_direct_link(yt_url: str, audio_quality: str) -> str:
-    if audio_quality.lower() == "low":
-        with YoutubeDL({"format": "worstaudio"}) as yt_dls:
-            info = yt_dls.extract_info(yt_url, download=False)
-            return info["url"]
-    elif audio_quality.lower() in ["medium", "high"]:
-        with YoutubeDL({"format": "bestaudio"}) as yt_dls:
-            info = yt_dls.extract_info(yt_url, download=False)
-            return info["url"]
-
-
-def get_video_direct_link(yt_url: str, video_quality: str):
-    ydl = YtDL()
-    ress = ydl.extract_info(yt_url, download=False)
-    yt_res: List[Dict[str, str]] = []
-    for res in ress["formats"]:
-        if res["ext"] == "mp4":
-            if (
-                video_quality.lower() == "low"
-                and res["format_note"] == "360p"
-                and res["acodec"] != "none"
-            ):
-                rus = {"quality": res["format_note"], "direct_url": res["url"]}
-                yt_res.append(rus.copy())
-            if (
-                video_quality.lower() == "medium"
-                and res["format_note"] == "480p"
-                and res["acodec"] != "none"
-            ):
-                rus = {"quality": res["format_note"], "direct_url": res["url"]}
-                yt_res.append(rus.copy())
-            if (
-                video_quality.lower() == "high"
-                and res["format_note"] == "720p"
-                and res["acodec"] != "none"
-            ):
-                rus = {"quality": res["format_note"], "direct_url": res["url"]}
-                yt_res.append(rus.copy())
-            if not yt_res and (
-                res["format_note"] == "720p"
-                and res["acodec"] != "none"
-            ):
-                rus = {"quality": res["format_note"], "direct_url": res["url"]}
-                yt_res.append(rus.copy())
-    return yt_res[0]["direct_url"]
-
-
-def get_yt_details(link: str):
-    yt = YouTube(link)
-    return yt.title
-
-
-def download_yt_thumbnails(thumb_url, user_id):
-    r = requests.get(thumb_url)
-    with open(f"search/thumb{user_id}.jpg", "wb") as file:
-        for chunk in r.iter_content(1024):
-            file.write(chunk)
-    return f"search/thumb{user_id}.jpg"
-
-
-def format_count(number: int):
-    num = float(f"{number:.3g}")
-    magnitude = 0
-    while abs(num) >= 1000:
-        magnitude += 1
-        num /= 1000.0
-    return f"{str(num).rstrip('0').rstrip('.')}{['', 'K', 'M', 'B', 'T'][magnitude]}"
 
 
 async def progress(current, total, event, start, type_of_ps, file_name=None):
@@ -177,46 +100,167 @@ async def download_video(v_url):
         os.makedirs(out_folder)
 
     await v_url.edit("`Preparing to download...`")
-    c_time = time.time()
+
     if type == "a":
-        # song = get_audio_direct_link(url, 'high')
-        title = get_yt_details(url)
-        yt = YouTube(url)
-        yt.streams.all()  # list of all available streams
-        # gives the direct url link of first stream
-        direct_link = yt.streams[0].url
-        await v_url.client.send_file(
-            v_url.chat_id,
-            file=InputMediaDocumentExternal(direct_link),
-            reply_to=v_url.id,
-            caption=f"`{title}`",
-            supports_streaming=True,
-            progress_callback=lambda d, t: asyncio.get_event_loop(
-            ).create_task(
-                progress(d, t, v_url, c_time, "Uploading..",
-                         f"{title}.mp3"))
-        )
-        await v_url.delete()
+        opts = {
+            'format': 'bestaudio',
+            'addmetadata': True,
+            'key': 'FFmpegMetadata',
+            'writethumbnail': True,
+            'embedthumbnail': True,
+            'audioquality': 0,
+            'audioformat': 'mp3',
+            'prefer_ffmpeg': True,
+            'geo_bypass': True,
+            'nocheckcertificate': True,
+            'postprocessors': [{
+                'key': 'FFmpegExtractAudio',
+                'preferredcodec': 'mp3',
+                'preferredquality': '320',
+            }],
+            'outtmpl': out_folder+'%(title)s.mp3',
+            'quiet': True,
+            'logtostderr': False
+        }
+        video = False
+        song = True
 
     elif type == "v":
-        # video = get_video_direct_link(url, 'high')
-        title = get_yt_details(url)
-        yt = YouTube(url)
-        yt.streams.all()  # list of all available streams
-        # gives the direct url link of first stream
-        direct_link = yt.streams[0].url
+        opts = {
+            'format': 'best',
+            'addmetadata': True,
+            'key': 'FFmpegMetadata',
+            'writethumbnail': True,
+            'write_all_thumbnails': True,
+            'embedthumbnail': True,
+            'prefer_ffmpeg': True,
+            'hls_prefer_native': True,
+            'geo_bypass': True,
+            'nocheckcertificate': True,
+            'postprocessors': [{
+                'key': 'FFmpegVideoConvertor',
+                'preferedformat': 'mp4'
+            }],
+            'outtmpl': out_folder+'%(title)s.mp4',
+            'logtostderr': False,
+            'quiet': True
+        }
+        song = False
+        video = True
+
+    try:
+        await v_url.edit("`Fetching data, please wait..`")
+        with YoutubeDL(opts) as ytdl:
+            ytdl_data = ytdl.extract_info(url)
+        filename = sorted(get_lst_of_files(out_folder, []))
+    except DownloadError as DE:
+        await v_url.edit(f"`{str(DE)}`")
+        return
+    except ContentTooShortError:
+        await v_url.edit("`The download content was too short.`")
+        return
+    except GeoRestrictedError:
+        await v_url.edit(
+            "`Video is not available from your geographic location due to geographic restrictions imposed by a website.`"
+        )
+        return
+    except MaxDownloadsReached:
+        await v_url.edit("`Max-downloads limit has been reached.`")
+        return
+    except PostProcessingError:
+        await v_url.edit("`There was an error during post processing.`")
+        return
+    except UnavailableVideoError:
+        await v_url.edit("`Media is not available in the requested format.`")
+        return
+    except XAttrMetadataError as XAME:
+        await v_url.edit(f"`{XAME.code}: {XAME.msg}\n{XAME.reason}`")
+        return
+    except ExtractorError:
+        await v_url.edit("`There was an error during info extraction.`")
+        return
+    except Exception as e:
+        await v_url.edit(f"{str(type(e)): {str(e)}}")
+        return
+    c_time = time.time()
+
+    # cover_url = f"https://img.youtube.com/vi/{ytdl_data['id']}/0.jpg"
+    # thumb_path = wget.download(cover_url, out_folder + "cover.jpg")
+
+    # relevant_path = "./DOWNLOADS/youtubedl"
+    # included_extensions = ["mp4","mp3"]
+    # file_names = [fn for fn in os.listdir(relevant_path)
+    #             if any(fn.endswith(ext) for ext in included_extensions)]
+
+    if song:
+        relevant_path = "./DOWNLOADS/youtubedl"
+        included_extensions = ["mp3"]
+        file_names = [fn for fn in os.listdir(relevant_path)
+                      if any(fn.endswith(ext) for ext in included_extensions)]
+        img_extensions = ["webp", "jpg", "jpeg"]
+        img_filenames = [fn_img for fn_img in os.listdir(relevant_path) if any(
+            fn_img.endswith(ext_img) for ext_img in img_extensions)]
+        thumb_image = out_folder + img_filenames[0]
+
+        # thumb = out_folder + "cover.jpg"
+        file_path = out_folder + file_names[0]
+        song_size = file_size(file_path)
+        j = await v_url.edit(f"`Preparing to upload song:`\
+        \n**{ytdl_data['title']}**\
+        \nby *{ytdl_data['uploader']}*")
         await v_url.client.send_file(
             v_url.chat_id,
-            file=InputMediaDocumentExternal(direct_link),
-            reply_to=v_url.id,
-            caption=f"`{title}`",
+            file_path,
+            caption=ytdl_data['title'] + "\n" + f"`{song_size}`",
             supports_streaming=True,
+            thumb=thumb_image,
+            attributes=[
+                DocumentAttributeAudio(duration=int(ytdl_data['duration']),
+                                       title=str(ytdl_data['title']),
+                                       performer=str(ytdl_data['uploader']))
+            ],
             progress_callback=lambda d, t: asyncio.get_event_loop(
             ).create_task(
                 progress(d, t, v_url, c_time, "Uploading..",
-                         f"{title}.mp4"))
-        )
+                         f"{ytdl_data['title']}.mp3")))
+        # os.remove(file_path)
+        await asyncio.sleep(DELETE_TIMEOUT)
+        os.remove(thumb_image)
+        await j.delete()
+
+    elif video:
+        relevant_path = "./DOWNLOADS/youtubedl/"
+        included_extensions = ["mp4"]
+        file_names = [fn for fn in os.listdir(relevant_path)
+                      if any(fn.endswith(ext) for ext in included_extensions)]
+        img_extensions = ["webp", "jpg", "jpeg"]
+        img_filenames = [fn_img for fn_img in os.listdir(relevant_path) if any(
+            fn_img.endswith(ext_img) for ext_img in img_extensions)]
+        thumb_image = out_folder + img_filenames[0]
+
+        file_path = out_folder + file_names[0]
+        video_size = file_size(file_path)
+        # thumb = out_folder + "cover.jpg"
+
+        j = await v_url.edit(f"`Preparing to upload video:`\
+        \n**{ytdl_data['title']}**\
+        \nby *{ytdl_data['uploader']}*")
+        await v_url.client.send_file(
+            v_url.chat_id,
+            file_path,
+            supports_streaming=True,
+            caption=ytdl_data['title'] + "\n" + f"`{video_size}`",
+            thumb=thumb_image,
+            progress_callback=lambda d, t: asyncio.get_event_loop(
+            ).create_task(
+                progress(d, t, v_url, c_time, "Uploading..",
+                         f"{ytdl_data['title']}.mp4")))
+        os.remove(file_path)
+        await asyncio.sleep(DELETE_TIMEOUT)
+        os.remove(thumb_image)
         await v_url.delete()
+        await j.delete()
+    shutil.rmtree(out_folder)
 
 
 def get_lst_of_files(input_directory, output_lst):
