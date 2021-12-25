@@ -178,7 +178,7 @@ async def download_video(v_url):
     await v_url.edit("`Preparing to download...`")
     c_time = time.time()
     if type == "a":
-        song = get_audio_direct_link(url)
+        song = get_audio_direct_link(url, 'high')
         title = get_yt_details(url)
         if song is not None:
             async with aiohttp.ClientSession() as session:
@@ -202,7 +202,7 @@ async def download_video(v_url):
         await v_url.delete()
 
     elif type == "v":
-        video = get_video_direct_link(url)
+        video = get_video_direct_link(url, 'high')
         title = get_yt_details(url)
         if video is not None:
             async with aiohttp.ClientSession() as session:
