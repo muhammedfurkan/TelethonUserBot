@@ -197,28 +197,27 @@ async def download_video(v_url):
             ).create_task(
                 progress(d, t, v_url, c_time, "Uploading..",
                          f"{title}.mp3")))
-        )
         os.remove(out_folder+title+".mp3")
         await v_url.delete()
 
     elif type == "v":
-        video=get_video_direct_link(url)
-        title=get_yt_details(url)
+        video = get_video_direct_link(url)
+        title = get_yt_details(url)
         if video is not None:
             async with aiohttp.ClientSession() as session:
-                url=video
+                url = video
                 async with session.get(url) as resp:
                     if resp.status == 200:
-                        f=await aiofiles.open(out_folder+title+".mp4", mode = 'wb')
+                        f = await aiofiles.open(out_folder+title+".mp4", mode='wb')
                         await f.write(await resp.read())
                         await f.close()
         await v_url.client.send_file(
             v_url.chat_id,
             out_folder+title+".mp4",
-            reply_to = v_url.id,
-            caption = f"`{title}`",
-            supports_streaming = True,
-            progress_callback = lambda d, t: asyncio.get_event_loop(
+            reply_to=v_url.id,
+            caption=f"`{title}`",
+            supports_streaming=True,
+            progress_callback=lambda d, t: asyncio.get_event_loop(
             ).create_task(
                 progress(d, t, v_url, c_time, "Uploading..",
                          f"{title}.mp4")))
@@ -227,9 +226,9 @@ async def download_video(v_url):
 
 
 def get_lst_of_files(input_directory, output_lst):
-    filesinfolder= os.listdir(input_directory)
+    filesinfolder = os.listdir(input_directory)
     for file_name in filesinfolder:
-        current_file_name= os.path.join(input_directory, file_name)
+        current_file_name = os.path.join(input_directory, file_name)
         if os.path.isdir(current_file_name):
             return get_lst_of_files(current_file_name, output_lst)
         output_lst.append(current_file_name)
@@ -251,5 +250,5 @@ def file_size(file_path):
     this function will return the file size
     """
     if os.path.isfile(file_path):
-        file_info= os.stat(file_path)
+        file_info = os.stat(file_path)
         return convert_bytes(file_info.st_size)
