@@ -19,7 +19,8 @@ import pafy
 import requests
 from pytube import YouTube
 from sample_config import Config
-from telethon.tl.types import DocumentAttributeAudio
+from telethon.tl.types import (DocumentAttributeAudio,
+                               InputMediaDocumentExternal)
 from userbot import bot
 from userbot.util import admin_cmd
 from yt_dlp import YoutubeDL as YtDL
@@ -180,19 +181,20 @@ async def download_video(v_url):
     if type == "a":
         song = get_audio_direct_link(url, 'high')
         title = get_yt_details(url)
-        if song is not None:
-            async with aiohttp.ClientSession() as session:
-                url = song
-                async with session.get(url) as resp:
-                    if resp.status == 200:
-                        f = await aiofiles.open(out_folder+title+".mp3", mode='wb')
-                        await f.write(await resp.read())
-                        await f.close()
+        # if song is not None:
+        #     async with aiohttp.ClientSession() as session:
+        #         url = song
+        #         async with session.get(url) as resp:
+        #             if resp.status == 200:
+        #                 f = await aiofiles.open(out_folder+title+".mp3", mode='wb')
+        #                 await f.write(await resp.read())
+        #                 await f.close()
         await v_url.client.send_file(
             v_url.chat_id,
-            out_folder+title+".mp3",
+            file=InputMediaDocumentExternal(song),
             reply_to=v_url.id,
             caption=f"`{title}`",
+            supports_streaming=True,
             progress_callback=lambda d, t: asyncio.get_event_loop(
             ).create_task(
                 progress(d, t, v_url, c_time, "Uploading..",
@@ -204,17 +206,17 @@ async def download_video(v_url):
     elif type == "v":
         video = get_video_direct_link(url, 'high')
         title = get_yt_details(url)
-        if video is not None:
-            async with aiohttp.ClientSession() as session:
-                url = video
-                async with session.get(url) as resp:
-                    if resp.status == 200:
-                        f = await aiofiles.open(out_folder+title+".mp4", mode='wb')
-                        await f.write(await resp.read())
-                        await f.close()
+        # if video is not None:
+        #     async with aiohttp.ClientSession() as session:
+        #         url = video
+        #         async with session.get(url) as resp:
+        #             if resp.status == 200:
+        #                 f = await aiofiles.open(out_folder+title+".mp4", mode='wb')
+        #                 await f.write(await resp.read())
+        #                 await f.close()
         await v_url.client.send_file(
             v_url.chat_id,
-            out_folder+title+".mp4",
+            file=InputMediaDocumentExternal(video),
             reply_to=v_url.id,
             caption=f"`{title}`",
             supports_streaming=True,
