@@ -179,19 +179,15 @@ async def download_video(v_url):
     await v_url.edit("`Preparing to download...`")
     c_time = time.time()
     if type == "a":
-        song = get_audio_direct_link(url, 'high')
+        # song = get_audio_direct_link(url, 'high')
         title = get_yt_details(url)
-        # if song is not None:
-        #     async with aiohttp.ClientSession() as session:
-        #         url = song
-        #         async with session.get(url) as resp:
-        #             if resp.status == 200:
-        #                 f = await aiofiles.open(out_folder+title+".mp3", mode='wb')
-        #                 await f.write(await resp.read())
-        #                 await f.close()
+        yt = YouTube(url)
+        yt.streams.all()  # list of all available streams
+        # gives the direct url link of first stream
+        direct_link = yt.streams[0].url
         await v_url.client.send_file(
             v_url.chat_id,
-            file=InputMediaDocumentExternal(song),
+            file=InputMediaDocumentExternal(direct_link),
             reply_to=v_url.id,
             caption=f"`{title}`",
             supports_streaming=True,
@@ -200,23 +196,18 @@ async def download_video(v_url):
                 progress(d, t, v_url, c_time, "Uploading..",
                          f"{title}.mp3"))
         )
-        os.remove(out_folder+title+".mp3")
         await v_url.delete()
 
     elif type == "v":
-        video = get_video_direct_link(url, 'high')
+        # video = get_video_direct_link(url, 'high')
         title = get_yt_details(url)
-        # if video is not None:
-        #     async with aiohttp.ClientSession() as session:
-        #         url = video
-        #         async with session.get(url) as resp:
-        #             if resp.status == 200:
-        #                 f = await aiofiles.open(out_folder+title+".mp4", mode='wb')
-        #                 await f.write(await resp.read())
-        #                 await f.close()
+        yt = YouTube(url)
+        yt.streams.all()  # list of all available streams
+        # gives the direct url link of first stream
+        direct_link = yt.streams[0].url
         await v_url.client.send_file(
             v_url.chat_id,
-            file=InputMediaDocumentExternal(video),
+            file=InputMediaDocumentExternal(direct_link),
             reply_to=v_url.id,
             caption=f"`{title}`",
             supports_streaming=True,
@@ -225,7 +216,6 @@ async def download_video(v_url):
                 progress(d, t, v_url, c_time, "Uploading..",
                          f"{title}.mp4"))
         )
-        os.remove(out_folder+title+".mp4")
         await v_url.delete()
 
 
