@@ -6,6 +6,7 @@ import logging
 import os
 from datetime import datetime
 
+import webpage2telegraph
 from PIL import Image
 from sample_config import Config
 from userbot import bot
@@ -23,7 +24,7 @@ r = telegraph.create_account(short_name=Config.TELEGRAPH_SHORT_NAME)
 auth_url = r["auth_url"]
 
 
-@bot.on(admin_cmd(pattern="telegraph (media|text) ?(.*)"))
+@bot.on(admin_cmd(pattern="telegraph (media|text|url) ?(.*)"))
 async def _(event):
     if event.fwd_from:
         return
@@ -91,6 +92,15 @@ async def _(event):
             end = datetime.now()
             ms = (end - start).seconds
             await event.edit("Pasted to https://telegra.ph/{} in {} seconds.".format(response["path"], ms))
+        elif input_str == "url":
+            input_url = r_message.text
+            telegraph_url = webpage2telegraph.transfer(input_url)
+            if telegraph_url is None:
+                await event.edit("Transferring failed.")
+                return
+            end = datetime.now()
+            ms = (end - start).seconds
+            await event.edit("Transferred to https://{} in {} seconds.".format(telegraph_url, ms), link_preview=True)
     else:
         await event.edit("Reply to a message to get a permanent telegra.ph link. (Inspired by @ControllerBot)")
 

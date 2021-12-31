@@ -68,3 +68,4 @@ appdirs #aria
 cchardet #aiohttp
 aiodns #aiphttp
 pygofile
+webpage2telegraph
