@@ -39,7 +39,7 @@ async def namaz_(event):
         LOKASYON_2 = event.pattern_match.group(2)
         if LOKASYON_2:
             LOKASYON_2 = LOKASYON_2.replace('i', 'İ').upper()
-    yer = './bin/namaz_vakti/db/yerler.ndb'
+    yer = './userbot/bin/namaz_vakti/db/yerler.ndb'
     with open(yer, "r", encoding="utf-8") as f:
         yerler_json = json.load(f)
     namaz = namazvakti()
@@ -55,10 +55,10 @@ async def namaz_(event):
     istanbul_now = datetime.now(tz)
     bugun = istanbul_now.strftime("%d%m%Y")
 
-    gun = bugun[0:2]
+    gun = bugun[:2]
     ay = bugun[2:4]
     yil = bugun[4:]
-    tam_gun = gun + "." + ay + "." + yil
+    tam_gun = f'{gun}.{ay}.{yil}'
     yer = sonuc['veri']['yer_adi']
     if sonuc['veri']['vakit']['tarih'] == tam_gun:
         # print("tru")
