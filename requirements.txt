@@ -37,6 +37,7 @@ pysocks
 python-barcode
 python-magic
 pytube3
+pytz
 qrcode
 regex
 requests
