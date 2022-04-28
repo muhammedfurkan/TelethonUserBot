@@ -1,5 +1,5 @@
 git+https://github.com/LonamiWebs/Telethon.git
-cryptg
+pyaesni
 alive-progress
 Pillow
 PyDrive
