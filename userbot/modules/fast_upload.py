@@ -6,6 +6,7 @@ Available Commands:
 .upload <Path To File>
 .uploadir <Path To Directory>
 .uploadasstream <Path To File>"""
+
 import asyncio
 import logging
 import os
@@ -15,14 +16,14 @@ from datetime import datetime
 from hachoir.metadata import extractMetadata
 from hachoir.parser import createParser
 from sample_config import Config
-from telethon import utils
+from telethon import events, utils
 from telethon.tl import types
 from telethon.tl.types import DocumentAttributeAudio, DocumentAttributeVideo
 from userbot import bot
 from userbot.bin.FastTelethon import upload_file
 from userbot.util import admin_cmd, progress, take_screen_shot
 
-thumb_image_path = Config.TMP_DOWNLOAD_DIRECTORY + "/thumb_image.jpg"
+thumb_image_path = f"{Config.TMP_DOWNLOAD_DIRECTORY}/thumb_image.jpg"
 logging.basicConfig(format='[%(levelname) 5s/%(asctime)s] %(name)s: %(message)s',
                     level=logging.WARNING)
 logger = logging.getLogger(__name__)
@@ -39,29 +40,13 @@ def get_lst_of_files(input_directory, output_lst):
     return output_lst
 
 
-class Timer:
-    def __init__(self, time_between=2):
-        self.start_time = time.time()
-        self.time_between = time_between
-
-    def can_send(self):
-        if time.time() > (self.start_time + self.time_between):
-            self.start_time = time.time()
-            return True
-        return False
-
-
-@bot.on(admin_cmd(pattern="uploadir (.*)"))
+@bot.on(admin_cmd(pattern="updirfast (.*)"))
 async def _(event):
     if event.fwd_from:
         return
-    type_of = ""
-    timer = Timer()
 
-    async def progress_bar(current, total):
-        if timer.can_send():
-            await event.edit("{} {}%".format(type_of, current * 100 / total))
     input_str = event.pattern_match.group(1)
+    mone = await event.edit("Processing ...")
     if os.path.exists(input_str):
         start = datetime.now()
         # await event.edit("Processing ...")
@@ -125,13 +110,15 @@ async def _(event):
                     supports_streaming = True
                     force_document = False
                 try:
-                    type_of = "upload"
+                    c_time = time.time()
                     with open(single_file, "rb") as out:
 
                         res = await upload_file(
                             event.client,
                             out,
-                            progress_callback=progress_bar
+                            progress_callback=lambda d, t: asyncio.get_event_loop().create_task(
+                                progress(d, t, mone, c_time, "uploading")
+                            )
 
                         )
                         attributes, mime_type = utils.get_attributes(
@@ -181,7 +168,7 @@ async def _(event):
         await event.edit("404: Directory Not Found")
 
 
-@bot.on(admin_cmd(pattern="upload (.*)", allow_sudo=True))
+@bot.on(events.NewMessage(pattern=".ups ?(.*)"))
 async def _(event):
     if event.fwd_from:
         return
@@ -191,29 +178,49 @@ async def _(event):
     if os.path.exists(input_str):
         start = datetime.now()
         c_time = time.time()
-        await bot.send_file(
-            event.chat_id,
-            input_str,
-            force_document=True,
-            supports_streaming=False,
-            allow_cache=False,
-            reply_to=event.message.id,
-            thumb=thumb,
-            progress_callback=lambda d, t: asyncio.get_event_loop().create_task(
-                progress(d, t, mone, c_time, "trying to upload")
+        with open(input_str, "rb") as out:
+
+            res = await upload_file(
+                event.client,
+                out,
+                progress_callback=lambda d, t: asyncio.get_event_loop().create_task(
+                    progress(d, t, mone, c_time, "uploading")
+                )
+
             )
-        )
+            attributes, mime_type = utils.get_attributes(
+                input_str,
+            )
+            media = types.InputMediaUploadedDocument(
+                file=res,
+                mime_type=mime_type,
+                attributes=attributes,
+                thumb=thumb,
+            )
+            await event.reply(file=media)
+        # await bot.send_file(
+        #     event.chat_id,
+        #     input_str,
+        #     force_document=True,
+        #     supports_streaming=False,
+        #     allow_cache=False,
+        #     reply_to=event.message.id,
+        #     thumb=thumb,
+        #     progress_callback=lambda d, t: asyncio.get_event_loop().create_task(
+        #         progress(d, t, mone, c_time, "trying to upload")
+        #     )
+        # )
         end = datetime.now()
-        # os.remove(input_str)
+        os.remove(input_str)
         ms = (end - start).seconds
-        j = await mone.edit("Uploaded in {} seconds.".format(ms))
+        j = await mone.edit(f"Uploaded in {ms} seconds.")
         await asyncio.sleep(2)
         await j.delete()
     else:
         await mone.edit("404: File Not Found")
 
 
-@ bot.on(admin_cmd(pattern="uploadasstream (.*)", allow_sudo=True))
+@bot.on(admin_cmd(pattern="streamfast (.*)", allow_sudo=True))
 async def _(event):
     if event.fwd_from:
         return
@@ -249,33 +256,56 @@ async def _(event):
         # Bad Request: VIDEO_CONTENT_TYPE_INVALID
         c_time = time.time()
         try:
-            await bot.send_file(
-                event.chat_id,
-                file_name,
-                thumb=thumb,
-                caption=input_str,
-                force_document=False,
-                allow_cache=False,
-                reply_to=event.message.id,
-                attributes=[
-                    DocumentAttributeVideo(
-                        duration=duration,
-                        w=width,
-                        h=height,
-                        round_message=False,
-                        supports_streaming=True
+            start = datetime.now()
+            with open(file_name, "rb") as out:
+
+                res = await upload_file(
+                    event.client,
+                    out,
+                    progress_callback=lambda d, t: asyncio.get_event_loop().create_task(
+                        progress(d, t, mone, c_time, "uploading as a stream")
                     )
-                ],
-                progress_callback=lambda d, t: asyncio.get_event_loop().create_task(
-                    progress(d, t, mone, c_time, "trying to upload")
                 )
-            )
+
+                attributes, mime_type = utils.get_attributes(
+                    input_str,
+                )
+
+                media = types.InputMediaUploadedDocument(
+                    file=res,
+                    mime_type=mime_type,
+                    attributes=[DocumentAttributeVideo(
+                        duration=duration, w=width, h=height, round_message=False, supports_streaming=True)],
+                    thumb=thumb,
+                )
+                await event.reply(file=media)
+            # await bot.send_file(
+            #     event.chat_id,
+            #     file_name,
+            #     thumb=thumb,
+            #     caption=input_str,
+            #     force_document=False,
+            #     allow_cache=False,
+            #     reply_to=event.message.id,
+            #     attributes=[
+            #         DocumentAttributeVideo(
+            #             duration=duration,
+            #             w=width,
+            #             h=height,
+            #             round_message=False,
+            #             supports_streaming=True
+            #         )
+            #     ],
+            #     progress_callback=lambda d, t: asyncio.get_event_loop().create_task(
+            #         progress(d, t, mone, c_time, "trying to upload")
+            #     )
+            # )
         except Exception as e:
             await mone.edit(str(e))
         else:
             end = datetime.now()
             os.remove(input_str)
             ms = (end - start).seconds
-            await mone.edit("Uploaded in {} seconds.".format(ms))
+            await mone.edit(f"Uploaded in {ms} seconds.")
     else:
         await mone.edit("404: File Not Found")

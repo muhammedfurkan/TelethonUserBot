@@ -11,6 +11,7 @@ from datetime import datetime
 
 from pySmartDL import SmartDL
 from sample_config import Config
+from telethon import events
 from userbot import bot
 from userbot.bin.FastTelethon import download_file
 from userbot.util import admin_cmd, humanbytes, progress
@@ -20,30 +21,11 @@ logging.basicConfig(format='[%(levelname) 5s/%(asctime)s] %(name)s: %(message)s'
 logger = logging.getLogger(__name__)
 
 
-class Timer:
-    def __init__(self, time_between=2):
-        self.start_time = time.time()
-        self.time_between = time_between
-
-    def can_send(self):
-        if time.time() > (self.start_time + self.time_between):
-            self.start_time = time.time()
-            return True
-        return False
-
-
-@bot.on(admin_cmd(pattern="fdownload ?(.*)", allow_sudo=True))
+@bot.on(events.NewMessage(pattern=".down ?(.*)"))
 async def _(event):
     if event.fwd_from:
         return
 
-    type_of = ""
-    msg = None
-    timer = Timer()
-
-    async def progress_bar(current, total):
-        if timer.can_send():
-            await msg.edit(f"{type_of} {current * 100 / total}%")
     mone = await event.edit("Processing ...")
     input_str = event.pattern_match.group(1)
     if not os.path.isdir(Config.TMP_DOWNLOAD_DIRECTORY):
@@ -52,13 +34,15 @@ async def _(event):
         start = datetime.now()
         reply_message = await event.get_reply_message()
         try:
-            type_of = "download"
-            with open(reply_message, 'wb') as out:
+            c_time = time.time()
+            with open(Config.TMP_DOWNLOAD_DIRECTORY+reply_message.file.name, 'wb') as out:
                 downloaded_file_name = await download_file(
                     event.client,
+                    reply_message.document,
                     out,
-                    Config.TMP_DOWNLOAD_DIRECTORY,
-                    progress_callback=progress_bar
+                    progress_callback=lambda d, t: asyncio.get_event_loop().create_task(
+                        progress(d, t, mone, c_time, "downloading")
+                    )
                 )
             # downloaded_file_name = await event.client.download_media(
             #     reply_message,
@@ -72,7 +56,7 @@ async def _(event):
         else:
             end = datetime.now()
             ms = (end - start).seconds
-            await mone.edit(f"Downloaded to `{downloaded_file_name}` in {ms} seconds.")
+            await mone.edit(f"Downloaded to `{Config.TMP_DOWNLOAD_DIRECTORY+reply_message.file.name}` in {ms} seconds.")
     elif input_str:
         start = datetime.now()
         url = input_str
