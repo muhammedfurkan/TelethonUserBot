@@ -7,16 +7,10 @@ import logging
 import os
 from datetime import datetime
 
-from telethon.tl import functions
-
 from sample_config import Config
+from telethon.tl import functions
 from userbot import bot
 from userbot.util import admin_cmd
-
-logging.basicConfig(format='[%(levelname) 5s/%(asctime)s] %(name)s: %(message)s',
-                    level=logging.WARNING)
-logger = logging.getLogger(__name__)
-
 
 logging.basicConfig(format='[%(levelname) 5s/%(asctime)s] %(name)s: %(message)s',
                     level=logging.WARNING)

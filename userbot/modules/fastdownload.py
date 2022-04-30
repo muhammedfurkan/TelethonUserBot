@@ -10,25 +10,20 @@ import aria2p
 from userbot import bot
 from userbot.util import admin_cmd
 
-logging.basicConfig(format='[%(levelname) 5s/%(asctime)s] %(name)s: %(message)s',
-                    level=logging.WARNING)
+logging.basicConfig(
+    format="[%(levelname) 5s/%(asctime)s] %(name)s: %(message)s", level=logging.WARNING
+)
 logger = logging.getLogger(__name__)
 cmd = "aria2c --enable-rpc --rpc-listen-all=false --rpc-listen-port 6800  --max-connection-per-server=10 --rpc-max-request-size=1024M --seed-time=0.01 --min-split-size=10M --follow-torrent=mem --split=10 --daemon=true"
 
 aria2_is_running = os.system(cmd)
 
-aria2 = aria2p.API(
-    aria2p.Client(
-        host="http://localhost",
-        port=6800,
-        secret=""
-    )
-)
+aria2 = aria2p.API(aria2p.Client(host="http://localhost", port=6800, secret=""))
 
 EDIT_SLEEP_TIME_OUT = 10
 
 
-@ bot.on(admin_cmd(pattern="ariaurl ?(.*)"))
+@bot.on(admin_cmd(pattern="ariaurl ?(.*)"))
 async def magnet_download(event):
     if event.fwd_from:
         return
@@ -52,8 +47,19 @@ async def magnet_download(event):
         file = aria2.get_download(gid)
         complete = file.is_complete
         try:
-            msg = "**Downloading File:** "+str(file.name) + "\n**Speed:** " + str(file.download_speed_string())+"\n**Progress:** "+str(
-                file.progress_string())+"\n**Total Size:** "+str(file.total_length_string())+"\n**ETA:**  "+str(file.eta_string())+"\n\n"
+            msg = (
+                "**Downloading File:** "
+                + str(file.name)
+                + "\n**Speed:** "
+                + str(file.download_speed_string())
+                + "\n**Progress:** "
+                + str(file.progress_string())
+                + "\n**Total Size:** "
+                + str(file.total_length_string())
+                + "\n**ETA:**  "
+                + str(file.eta_string())
+                + "\n\n"
+            )
             await event.edit(msg)
             await asyncio.sleep(10)
         except Exception as e:
@@ -68,8 +74,29 @@ async def progress_status(gid, event, previous):
         file = aria2.get_download(gid)
         if not file.is_complete:
             if not file.error_message:
-                msg = "Downloading File: `"+str(file.name) + "`\nSpeed: " + str(file.download_speed_string())+"\nProgress: "+str(file.progress_string(
-                ))+"\nTotal Size: "+str(file.total_length_string())+"\nStatus: "+str(file.status)+"\nETA:  "+str(file.eta_string())+"\n\n"
+                msg = (
+                    (
+                        (
+                            (
+                                (
+                                    f"Downloading File: `{str(file.name)}"
+                                    + "`\nSpeed: "
+                                    + str(file.download_speed_string())
+                                    + "\nProgress: "
+                                    + str(file.progress_string())
+                                )
+                                + "\nTotal Size: "
+                            )
+                            + str(file.total_length_string())
+                            + "\nStatus: "
+                        )
+                        + str(file.status)
+                        + "\nETA:  "
+                    )
+                    + str(file.eta_string())
+                    + "\n\n"
+                )
+
                 if previous != msg:
                     await event.edit(msg)
                     previous = msg
@@ -88,7 +115,11 @@ async def progress_status(gid, event, previous):
             return
         if " depth exceeded" in str(e):
             file.remove(force=True)
-            await event.edit("Download Auto Canceled :\n`{}`\nYour Torrent/Link is Dead.".format(file.name))
+            await event.edit(
+                "Download Auto Canceled :\n`{}`\nYour Torrent/Link is Dead.".format(
+                    file.name
+                )
+            )
         else:
             logger.info(str(e))
             await event.edit("Error :\n`{}`".format(str(e)))
@@ -98,5 +129,5 @@ async def progress_status(gid, event, previous):
 async def check_metadata(gid):
     file = aria2.get_download(gid)
     new_gid = file.followed_by_ids[0]
-    logger.info("Changing GID "+gid+" to "+new_gid)
+    logger.info(f"Changing GID {gid} to {new_gid}")
     return new_gid
