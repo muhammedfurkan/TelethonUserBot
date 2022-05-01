@@ -213,11 +213,13 @@ async def _(event):
         end = datetime.now()
         os.remove(input_str)
         ms = (end - start).seconds
-        j = await mone.edit(f"Uploaded in {ms} seconds.")
+        j = await event.reply(f"Uploaded in {ms} seconds.")
         await asyncio.sleep(2)
         await j.delete()
     else:
-        await mone.edit("404: File Not Found")
+        k = await event.reply("404: File Not Found")
+        await asyncio.sleep(2)
+        await k.delete()
 
 
 @bot.on(admin_cmd(pattern="streamfast (.*)", allow_sudo=True))
