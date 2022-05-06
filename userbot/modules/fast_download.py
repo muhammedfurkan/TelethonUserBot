@@ -10,8 +10,9 @@ import time
 from datetime import datetime
 
 from pySmartDL import SmartDL
-from sample_config import Config
 from telethon import events
+
+from sample_config import Config
 from userbot import bot
 from userbot.bin.FastTelethon import download_file
 from userbot.util import admin_cmd, humanbytes, progress
