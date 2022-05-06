@@ -22,7 +22,7 @@ logging.basicConfig(format='[%(levelname) 5s/%(asctime)s] %(name)s: %(message)s'
 logger = logging.getLogger(__name__)
 
 
-@bot.on(events.NewMessage(pattern=".down ?(.*)"))
+@bot.on(events.NewMessage(pattern=".fasdown ?(.*)"))
 async def _(event):
     if event.fwd_from:
         return
