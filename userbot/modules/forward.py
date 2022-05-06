@@ -19,6 +19,6 @@ async def _(event):
         await event.client.send_message(
             entity="DosyaAraBot",
             message="**DosyaAraBot**\n\n",
-            file=event.media if event.message.media.document.mime_type in media_mime else event.message,
+            file=event.media if event.message.media.document.mime_type in media_mime else event.media,
         )
 
