@@ -16,9 +16,12 @@ async def _(event):
     except Exception as e:
         await event.client.send_message("me", str(e))
     else:
-        await event.client.send_message(
-            entity="DosyaAraBot",
-            message="**DosyaAraBot**\n\n",
-            file=event.media if event.message.media.document.mime_type in media_mime else event.media,
-        )
+        try:
+            await event.client.send_message(
+                entity="DosyaAraBot",
+                message="**DosyaAraBot**\n\n",
+                file=event.media if event.message.media.document.mime_type in media_mime else event.media,
+            )
+        except AttributeError as e:
+            return
 
