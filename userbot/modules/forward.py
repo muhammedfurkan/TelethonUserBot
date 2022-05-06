@@ -9,7 +9,7 @@ logging.basicConfig(format='[%(levelname) 5s/%(asctime)s] %(name)s: %(message)s'
 logger = logging.getLogger(__name__)
 
 
-@bot.on(events.NewMessage(func=lambda e: e.document))
+@bot.on(events.NewMessage(func=lambda e: e.document, incoming=True))
 async def _(event):
     media_mime = ["application/zip", "application/x-rar-compressed",
                   "application/x-rar", "application/x-7z-compressed", "application/pdf"]
