@@ -57,6 +57,7 @@ wikipedia
 pymongo 
 dnspython
 # youtube-dl
+yt-dlp
 soundcloud-lib
 heroku3
 pyquery

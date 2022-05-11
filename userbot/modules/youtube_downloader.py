@@ -12,16 +12,22 @@ import os
 import shutil
 import time
 
-from sample_config import Config
 from telethon.tl.types import DocumentAttributeAudio
+from yt_dlp import YoutubeDL
+from yt_dlp.utils import (ContentTooShortError, DownloadError, ExtractorError,
+                          GeoRestrictedError, MaxDownloadsReached,
+                          PostProcessingError, UnavailableVideoError,
+                          XAttrMetadataError)
+
+from sample_config import Config
 from userbot import bot
 from userbot.util import admin_cmd
 
-from youtube_dl import YoutubeDL
-from youtube_dl.utils import (ContentTooShortError, DownloadError,
-                              ExtractorError, GeoRestrictedError,
-                              MaxDownloadsReached, PostProcessingError,
-                              UnavailableVideoError, XAttrMetadataError)
+# from youtube_dl import YoutubeDL
+# from youtube_dl.utils import (ContentTooShortError, DownloadError,
+#                               ExtractorError, GeoRestrictedError,
+#                               MaxDownloadsReached, PostProcessingError,
+#                               UnavailableVideoError, XAttrMetadataError)
 
 logging.basicConfig(format='[%(levelname) 5s/%(asctime)s] %(name)s: %(message)s',
                     level=logging.WARNING)
@@ -29,6 +35,7 @@ logger = logging.getLogger(__name__)
 
 
 DELETE_TIMEOUT = 3
+loop = asyncio.get_event_loop()
 
 
 async def progress(current, total, event, start, type_of_ps, file_name=None):
@@ -41,10 +48,9 @@ async def progress(current, total, event, start, type_of_ps, file_name=None):
         elapsed_time = round(diff) * 1000
         time_to_completion = round((total - current) / speed) * 1000
         estimated_total_time = elapsed_time + time_to_completion
-        progress_str = "{0}{1} {2}%\n".format(
-            ''.join("█" for i in range(math.floor(percentage / 10))),
-            ''.join("░" for i in range(10 - math.floor(percentage / 10))),
-            round(percentage, 2))
+        progress_str = "{0}{1} {2}%\n".format(''.join("█" for _ in range(math.floor(
+            percentage / 10))), ''.join("░" for _ in range(10 - math.floor(percentage / 10))), round(percentage, 2))
+
         tmp = progress_str + \
             "{0} of {1}\nETA: {2}".format(
                 humanbytes(current),
@@ -77,7 +83,7 @@ def humanbytes(size):
 def time_formatter(milliseconds: int) -> str:
     """Inputs time in milliseconds, to get beautified time,
     as string"""
-    seconds, milliseconds = divmod(int(milliseconds), 1000)
+    seconds, milliseconds = divmod(milliseconds, 1000)
     minutes, seconds = divmod(seconds, 60)
     hours, minutes = divmod(minutes, 60)
     days, hours = divmod(hours, 24)
@@ -90,7 +96,7 @@ def time_formatter(milliseconds: int) -> str:
 
 
 @bot.on(admin_cmd(pattern="yt(a|v) (.*)"))
-async def download_video(v_url):
+async def download_video(v_url):  # sourcery skip: avoid-builtin-shadow
     """ For .ytdl command, download media from YouTube and many other sites. """
     url = v_url.pattern_match.group(2)
     type = v_url.pattern_match.group(1).lower()
@@ -151,7 +157,7 @@ async def download_video(v_url):
     try:
         await v_url.edit("`Fetching data, please wait..`")
         with YoutubeDL(opts) as ytdl:
-            ytdl_data = ytdl.extract_info(url)
+            ytdl_data = await loop.run_in_executor(None, ytdl.extract_info, url)
         filename = sorted(get_lst_of_files(out_folder, []))
     except DownloadError as DE:
         await v_url.edit(f"`{str(DE)}`")
