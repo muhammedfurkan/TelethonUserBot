@@ -11,16 +11,16 @@ import time
 
 from hachoir.metadata import extractMetadata
 from hachoir.parser import createParser
-from sample_config import Config
 from telethon.tl.types import DocumentAttributeVideo
+from yt_dlp import YoutubeDL
+from yt_dlp.utils import (ContentTooShortError, DownloadError, ExtractorError,
+                          GeoRestrictedError, MaxDownloadsReached,
+                          PostProcessingError, UnavailableVideoError,
+                          XAttrMetadataError)
+
+from sample_config import Config
 from userbot import bot
 from userbot.util import admin_cmd, progress
-
-from youtube_dl import YoutubeDL
-from youtube_dl.utils import (ContentTooShortError, DownloadError,
-                              ExtractorError, GeoRestrictedError,
-                              MaxDownloadsReached, PostProcessingError,
-                              UnavailableVideoError, XAttrMetadataError)
 
 logging.basicConfig(format='[%(levelname) 5s/%(asctime)s] %(name)s: %(message)s',
                     level=logging.WARNING)
@@ -28,6 +28,7 @@ logger = logging.getLogger(__name__)
 
 
 DELETE_TIMEOUT = 5
+loop = asyncio.get_event_loop()
 
 
 @bot.on(admin_cmd(pattern="playlist(a|v) (.*)"))
@@ -91,7 +92,7 @@ async def download_video(v_url):
     try:
         await v_url.edit("`Fetching playlist data, please wait..`")
         with YoutubeDL(opts) as ytdl:
-            ytdl_data = ytdl.extract_info(url)
+            ytdl_data = await loop.run_in_executor(None, ytdl.extract_info, url)
             # print(ytdl_data['thumbnail'])
         filename = sorted(get_lst_of_files(out_folder, []))
     except DownloadError as DE:
