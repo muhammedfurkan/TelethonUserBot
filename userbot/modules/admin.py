@@ -895,13 +895,13 @@ async def _(event):
         await event.delete()
 
 
-@bot.on(events.NewMessage(incoming=True, func=lambda e: e.mentioned))
-async def delete_mention_bot(event):
-    who_ = await event.client.get_entity(event.sender_id)
-    if (who_.verified or who_.support):
-        return
-    where_ = await event.client.get_entity(event.chat_id)
-    await event.client.send_read_acknowledge(where_.id, clear_mentions=True)
+# @bot.on(events.NewMessage(incoming=True, func=lambda e: e.mentioned))
+# async def delete_mention_bot(event):
+#     who_ = await event.client.get_entity(event.sender_id)
+#     if (who_.verified or who_.support):
+#         return
+#     where_ = await event.client.get_entity(event.chat_id)
+#     await event.client.send_read_acknowledge(where_.id, clear_mentions=True)
 #     async for message in event.client.iter_dialogs():
 #         if message.is_bot:
 #             await event.client.send_read_acknowledge(message.id, clear_mentions=True)
