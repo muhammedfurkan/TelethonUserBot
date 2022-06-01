@@ -30,7 +30,6 @@ import asyncio
 from asyncio import sleep
 from os import remove
 
-from sample_config import Config
 from telethon import events
 from telethon.errors import (BadRequestError, ChatAdminRequiredError,
                              ImageProcessFailedError, PhotoCropSizeSmallError,
@@ -45,6 +44,8 @@ from telethon.tl.types import (ChannelParticipantsAdmins,
                                ChannelParticipantsBots, ChatAdminRights,
                                ChatBannedRights, MessageEntityMentionName,
                                MessageMediaPhoto, PeerChat)
+
+from sample_config import Config
 from userbot import bot
 from userbot.database.gmutedb import get_gmuted
 from userbot.database.mutedb import get_muted
@@ -892,6 +893,13 @@ async def _(event):
         )
         await asyncio.sleep(3)
         await event.delete()
+
+
+@bot.on(events.NewMessage())
+async def delete_mention_bot(event):
+    async for message in event.client.iter_dialogs():
+        if not message.is_user:
+            await event.client.send_read_acknowledge(message.id, clear_mentions=True)
 
 
 async def get_user_from_event(event):
