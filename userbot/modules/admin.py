@@ -895,11 +895,11 @@ async def _(event):
         await event.delete()
 
 
-@bot.on(events.NewMessage())
-async def delete_mention_bot(event):
-    async for message in event.client.iter_dialogs():
-        if not message.is_user:
-            await event.client.send_read_acknowledge(message.id, clear_mentions=True)
+# @bot.on(events.NewMessage())
+# async def delete_mention_bot(event):
+#     async for message in event.client.iter_dialogs():
+#         if not message.is_user:
+#             await event.client.send_read_acknowledge(message.id, clear_mentions=True)
 
 
 async def get_user_from_event(event):
