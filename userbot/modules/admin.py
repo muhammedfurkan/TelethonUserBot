@@ -895,7 +895,7 @@ async def _(event):
         await event.delete()
 
 
-@bot.on(events.NewMessage(incoming=True, func=lambda e: e.is_mentioned))
+@bot.on(events.NewMessage(incoming=True, func=lambda e: e.mentioned))
 async def delete_mention_bot(event):
     who_ = await event.client.get_entity(event.sender_id)
     if (who_.verified or who_.support):
