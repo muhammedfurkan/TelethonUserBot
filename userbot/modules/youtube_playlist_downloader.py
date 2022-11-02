@@ -93,7 +93,6 @@ async def download_video(v_url):
         await v_url.edit("`Fetching playlist data, please wait..`")
         with YoutubeDL(opts) as ytdl:
             ytdl_data = await loop.run_in_executor(None, ytdl.extract_info, url)
-            # print(ytdl_data['thumbnail'])
         filename = sorted(get_lst_of_files(out_folder, []))
     except DownloadError as DE:
         await v_url.edit(f"`{str(DE)}`")
@@ -206,14 +205,6 @@ async def download_video(v_url):
                                 supports_streaming=True,
                             )
                         ]
-                    # print(ytdl_data)
-                    # for file in os.listdir("./DOWNLOADS/youtubedl/"):
-                    #     if file.endswith(".jpg"):
-                    #         thumb = "./DOWNLOADS/youtubedl/" + file
-                        # print(os.path.join("./DOWNLOADS/youtubedl/", file))
-                    # image_link = ytdl_data['thumbnail']
-                    # downloaded_image = wget.download(image_link,out_folder)
-                    # thumb = ytdl_data_name_video + ".jpg"
                     file_path = single_file
                     video_size = file_size(file_path)
                     try:

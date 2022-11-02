@@ -63,7 +63,6 @@ async def magnet_download(event):
             await event.edit(msg)
             await asyncio.sleep(10)
         except Exception as e:
-            # print(str(e))
             pass
 
     await event.edit("**File Downloaded Successfully:** `{}`".format(file.name))

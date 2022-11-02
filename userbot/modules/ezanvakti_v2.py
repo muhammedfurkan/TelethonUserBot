@@ -61,7 +61,6 @@ async def namaz_(event):
     tam_gun = f'{gun}.{ay}.{yil}'
     yer = sonuc['veri']['yer_adi']
     if sonuc['veri']['vakit']['tarih'] == tam_gun:
-        # print("tru")
         tarih = sonuc['veri']['vakit']['uzun_tarih']
         hicri_tarih = sonuc['veri']['vakit']['hicri_uzun']
         imsak = sonuc['veri']['vakit']['imsak']
