@@ -23,11 +23,6 @@ from sample_config import Config
 from userbot import bot
 from userbot.util import admin_cmd
 
-# from youtube_dl import YoutubeDL
-# from youtube_dl.utils import (ContentTooShortError, DownloadError,
-#                               ExtractorError, GeoRestrictedError,
-#                               MaxDownloadsReached, PostProcessingError,
-#                               UnavailableVideoError, XAttrMetadataError)
 
 logging.basicConfig(format='[%(levelname) 5s/%(asctime)s] %(name)s: %(message)s',
                     level=logging.WARNING)
@@ -190,13 +185,7 @@ async def download_video(v_url):  # sourcery skip: avoid-builtin-shadow
         return
     c_time = time.time()
 
-    # cover_url = f"https://img.youtube.com/vi/{ytdl_data['id']}/0.jpg"
-    # thumb_path = wget.download(cover_url, out_folder + "cover.jpg")
 
-    # relevant_path = "./DOWNLOADS/youtubedl"
-    # included_extensions = ["mp4","mp3"]
-    # file_names = [fn for fn in os.listdir(relevant_path)
-    #             if any(fn.endswith(ext) for ext in included_extensions)]
 
     if song:
         relevant_path = "./DOWNLOADS/youtubedl"
@@ -208,7 +197,6 @@ async def download_video(v_url):  # sourcery skip: avoid-builtin-shadow
             fn_img.endswith(ext_img) for ext_img in img_extensions)]
         thumb_image = out_folder + img_filenames[0]
 
-        # thumb = out_folder + "cover.jpg"
         file_path = out_folder + file_names[0]
         song_size = file_size(file_path)
         j = await v_url.edit(f"`Preparing to upload song:`\
@@ -246,7 +234,6 @@ async def download_video(v_url):  # sourcery skip: avoid-builtin-shadow
 
         file_path = out_folder + file_names[0]
         video_size = file_size(file_path)
-        # thumb = out_folder + "cover.jpg"
 
         j = await v_url.edit(f"`Preparing to upload video:`\
         \n**{ytdl_data['title']}**\
