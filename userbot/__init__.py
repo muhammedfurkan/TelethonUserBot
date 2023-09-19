@@ -1,7 +1,8 @@
 
-from sample_config import Config
 from telethon import TelegramClient
 from telethon.sessions import StringSession
+
+from sample_config import Config
 
 if Config.HU_STRING_SESSION:
     bot = TelegramClient(StringSession(

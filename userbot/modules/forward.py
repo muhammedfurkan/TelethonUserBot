@@ -3,6 +3,7 @@ import logging
 
 from telethon import events
 from telethon.errors import FloodWaitError
+
 from userbot import bot
 
 logging.basicConfig(
@@ -23,8 +24,8 @@ async def _(event):
     try:
         if event.media.document.mime_type in media_mime:
             await event.client.send_message(
-                entity="DosyaAraBot",
-                message="**DosyaAraBot**\n\n",
+                entity="PDFAramaBot",
+                message="**@PDFAramaBot**\n\n",
                 file=event.media,
             )
     except AttributeError:
