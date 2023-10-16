@@ -11,6 +11,7 @@ RUN apt-get update \
     && find / -name '*.pyc' -delete \
     && find / -name '*__pycache__*' -delete
 RUN pip3 install -U psycopg2-binary
+RUN python3 -m pip install -U yt-dlp
 RUN cd /
 RUN git clone https://github.com/muhammedfurkan/TelethonUserBot.git
 RUN cd TelethonUserBot
