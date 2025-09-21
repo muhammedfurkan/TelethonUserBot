@@ -47,10 +47,14 @@ async def unblock_users_or_bots(event):
         for blocked in result.blocked:
             try:
                 user_obj = await event.client.get_entity(blocked.peer_id.user_id)
-                if hasattr(user_obj, 'bot') and user_obj.bot and not getattr(user_obj, 'deleted', True):
+                # Check if user is not deleted and categorize
+                if hasattr(user_obj, 'deleted') and user_obj.deleted:
+                    continue  # Skip deleted accounts
+                
+                if hasattr(user_obj, 'bot') and user_obj.bot:
                     bot_count += 1
                     bots.append(user_obj.id)
-                elif not getattr(user_obj, 'deleted', True):
+                else:
                     user_count += 1
                     users.append(user_obj.id)
             except Exception as e:
